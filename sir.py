@@ -51,4 +51,10 @@ if __name__ == "__main__":
     time_steps = np.linspace(0, 60, 1001)
     u, t = solver.solve(time_steps)
 
+    plt.plot(t, u[:, 0], label="Susceptible")
+    plt.plot(t, u[:, 1], label="Infected")
+    plt.plot(t, u[:, 2], label="Recovered")
+    plt.legend() # To see our labels
+    plt.show()
+
 

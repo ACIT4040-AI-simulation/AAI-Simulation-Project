@@ -6,12 +6,12 @@ class ODESolver:
     Any classes inheriting from this superclass must implement advance() method.
     """
 
-    def __init__(self, f):
-        self.f = f 
+    def __init__(self, k):
+        self.k = k 
         # The problem will define it the SIR.py file.
 
     def advance(self): 
-        # The mai method which advances our problem on one step. 
+        # The main method which advances our problem on one step. 
         # Advance solution one time step.
         raise NotImplementedError
 
@@ -31,22 +31,22 @@ class ODESolver:
         self.t = np.asarray(time_points)
         n = self.t.size
 
-        self.u = np.zeros((n, self.number_of_equations))
+        self.uu = np.zeros((n, self.number_of_equations))
 
-        self.u[0, :] = self.U0
+        self.uu[0, :] = self.U0
 
         # Integrate 
 
         for i in range (n - 1):
             self.i = i
-            self.u[i + 1] = self.advance()
+            self.uu[i + 1] = self.advance()
 
-        return self.u[:i + 2], self.t[:i + 2]
+        return self.uu[:i + 2], self.t[:i + 2]
 
 class ForwardEuler(ODESolver):
 
     def advance(self):
-        u, f, i, t = self.u, self.f, self.i, self.t
+        u, f, i, t = self.uu, self.k, self.i, self.t
         dt = t[i + 1] - t[i]
         return u[i, :] + dt * f(u[i, :], t[i])
 
