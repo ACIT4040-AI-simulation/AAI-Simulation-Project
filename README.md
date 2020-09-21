@@ -10,3 +10,6 @@ The development team is working with the sir.py and ODESolver.py file
 Matplotlib
 numpy
 scipy
+
+# RANDOM JSON API
+https://next.json-generator.com/api/json/get/Nyak4bMHF, did also add a file if API does not work, some of the numbers are from VG
