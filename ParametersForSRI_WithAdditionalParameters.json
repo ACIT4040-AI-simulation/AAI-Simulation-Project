@@ -1,0 +1,83 @@
+[
+  {
+    "PopulationS0": 20000,
+    "TransitionRateSusceptibleToInfected": "0.6",
+    "TransitionRateInfectedToRecovered": "0.5",
+    "InfectedPersonsI0": 12500,
+    "RecoveredPersonsR0": 47,
+    "TimeStep": "19 months",
+    "Resolution": "1427 days",
+    "Protection": [
+      {
+        "SanitizedHands": true,
+        "WearingGloves": true,
+        "WearingMask": false,
+        "DistanceBetweenPeople": "2 meters",
+        "RoomSize": "4 square meters"
+      },
+      {
+        "SanitizedHands": false,
+        "WearingGloves": true,
+        "WearingMask": false,
+        "DistanceBetweenPeople": "5 meters",
+        "RoomSize": "20 square meters"
+      },
+      {
+        "SanitizedHands": false,
+        "WearingGloves": false,
+        "WearingMask": true,
+        "DistanceBetweenPeople": "3 meters",
+        "RoomSize": "7 square meters"
+      },
+      {
+        "SanitizedHands": false,
+        "WearingGloves": false,
+        "WearingMask": true,
+        "DistanceBetweenPeople": "5 meters",
+        "RoomSize": "15 square meters"
+      },
+      {
+        "SanitizedHands": false,
+        "WearingGloves": true,
+        "WearingMask": true,
+        "DistanceBetweenPeople": "5 meters",
+        "RoomSize": "6 square meters"
+      },
+      {
+        "SanitizedHands": true,
+        "WearingGloves": true,
+        "WearingMask": true,
+        "DistanceBetweenPeople": "3 meters",
+        "RoomSize": "17 square meters"
+      },
+      {
+        "SanitizedHands": false,
+        "WearingGloves": false,
+        "WearingMask": true,
+        "DistanceBetweenPeople": "5 meters",
+        "RoomSize": "40 square meters"
+      },
+      {
+        "SanitizedHands": true,
+        "WearingGloves": false,
+        "WearingMask": false,
+        "DistanceBetweenPeople": "5 meters",
+        "RoomSize": "20 square meters"
+      },
+      {
+        "SanitizedHands": false,
+        "WearingGloves": false,
+        "WearingMask": false,
+        "DistanceBetweenPeople": "0 meters",
+        "RoomSize": "36 square meters"
+      },
+      {
+        "SanitizedHands": false,
+        "WearingGloves": true,
+        "WearingMask": false,
+        "DistanceBetweenPeople": "3 meters",
+        "RoomSize": "13 square meters"
+      }
+    ]
+  }
+]
