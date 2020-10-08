@@ -52,3 +52,9 @@ THEN start continuing your work in your branch
 
 **WHEN EVERYTHING IS FINISHED**, we will merge the develop branch into master.
 
+## Gitk - see changes made in the repository
+From time to time it is useful to run this command:
+```
+COMMAND: gitk &
+```
+It will open a graphical user interface where you can browse the commit-history, see which files were changed in each commit, and the commit-messages.
