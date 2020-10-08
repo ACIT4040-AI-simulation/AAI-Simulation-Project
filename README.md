@@ -57,4 +57,4 @@ From time to time it is useful to run this command:
 ```
 COMMAND: gitk &
 ```
-It will open a graphical user interface where you can browse the commit-history, see which files were changed in each commit, and the commit-messages.
+It will open a graphical user interface where you can browse the commit-history, see which files were changed in each commit, by which person, and the commit-messages.
