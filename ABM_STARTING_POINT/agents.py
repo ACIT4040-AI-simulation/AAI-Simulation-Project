@@ -36,7 +36,10 @@ def main():
     agenList = json.load(open("agentdata.json"))
 
     for agent in agenList:
-        temp = agent_1(agent['name'], agent['age'], agent['gender'], agent['status'], agent['mask'], agent['antibact'], agent['socialDistance'])
+        temp = agent_1(agent['name'], agent['age'], 
+                       agent['gender'], agent['status'],
+                       agent['mask'], agent['antibact'], 
+                       agent['socialDistance'])
         print(temp.tostring())
 
 
