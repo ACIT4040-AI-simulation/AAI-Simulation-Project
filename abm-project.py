@@ -139,7 +139,7 @@ def update():
         t += 1. / len(agents)
         #update_one_agent()
 
-    rdata.append(sum([1 for x in agents if x.type == 'r']))
-    fdata.append(sum([1 for x in agents if x.type == 'f']))
+    # rdata.append(sum([1 for x in agents if x.type == 'r']))
+    # fdata.append(sum([1 for x in agents if x.type == 'f']))
 
 pycxsimulator.GUI().start(func=[initialize, observe, update])
