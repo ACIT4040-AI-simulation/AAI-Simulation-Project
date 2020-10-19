@@ -1,0 +1,18 @@
+
+[
+    '{{repeat(10)}}',
+    {
+      
+      class_id: '{{index()}}',
+      class_type: '{{random("Office", "Lectureroom", "Lab","Commonarea", "Coridor")}}',
+      length:'{{integer()}}',
+      width:'{{integer()}}',
+      sitting_capacity:'{{integer()}}',
+      cleaning_cycle:'{{integer()}}',
+      clean_status: '{{bool()}}',	
+      antibac_dispenser: '{{bool()}}',
+      ventilation_grade: '{{integer(1,6)}}'
+      
+    }
+  
+]
