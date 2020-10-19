@@ -1,0 +1,112 @@
+[
+  {
+    "class_id": 0,
+    "class_type": "Commonarea",
+    "length": 7,
+    "width": 1,
+    "sitting_capacity": 9,
+    "cleaning_cycle": 8,
+    "clean_status": true,
+    "antibac_dispenser": false,
+    "ventilation_grade": 1
+  },
+  {
+    "class_id": 1,
+    "class_type": "Lectureroom",
+    "length": 4,
+    "width": 10,
+    "sitting_capacity": 2,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 2
+  },
+  {
+    "class_id": 2,
+    "class_type": "Lectureroom",
+    "length": 7,
+    "width": 0,
+    "sitting_capacity": 6,
+    "cleaning_cycle": 0,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 2
+  },
+  {
+    "class_id": 3,
+    "class_type": "Lectureroom",
+    "length": 4,
+    "width": 9,
+    "sitting_capacity": 2,
+    "cleaning_cycle": 6,
+    "clean_status": true,
+    "antibac_dispenser": true,
+    "ventilation_grade": 3
+  },
+  {
+    "class_id": 4,
+    "class_type": "Commonarea",
+    "length": 3,
+    "width": 9,
+    "sitting_capacity": 2,
+    "cleaning_cycle": 5,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 5
+  },
+  {
+    "class_id": 5,
+    "class_type": "Coridor",
+    "length": 0,
+    "width": 9,
+    "sitting_capacity": 0,
+    "cleaning_cycle": 7,
+    "clean_status": true,
+    "antibac_dispenser": false,
+    "ventilation_grade": 4
+  },
+  {
+    "class_id": 6,
+    "class_type": "Commonarea",
+    "length": 7,
+    "width": 7,
+    "sitting_capacity": 9,
+    "cleaning_cycle": 7,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 3
+  },
+  {
+    "class_id": 7,
+    "class_type": "Lab",
+    "length": 3,
+    "width": 3,
+    "sitting_capacity": 1,
+    "cleaning_cycle": 4,
+    "clean_status": true,
+    "antibac_dispenser": false,
+    "ventilation_grade": 3
+  },
+  {
+    "class_id": 8,
+    "class_type": "Office",
+    "length": 10,
+    "width": 1,
+    "sitting_capacity": 8,
+    "cleaning_cycle": 9,
+    "clean_status": true,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  },
+  {
+    "class_id": 9,
+    "class_type": "Commonarea",
+    "length": 10,
+    "width": 0,
+    "sitting_capacity": 4,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  }
+]

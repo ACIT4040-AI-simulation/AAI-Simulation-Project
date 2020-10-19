@@ -1,0 +1,24 @@
+[
+  {
+    "class_id": 1,
+    "class_type": "Lectureroom",
+    "length": 4,
+    "width": 10,
+    "sitting_capacity": 2,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 2
+  },
+  {
+    "class_id": 9,
+    "class_type": "Commonarea",
+    "length": 10,
+    "width": 6,
+    "sitting_capacity": 4,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  }
+]
