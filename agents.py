@@ -27,17 +27,7 @@ class agent():
         print(self.antibac)
         print(self.socilDistance)
         print("----------------------------")
-        
-    #perceptionsList is a list of objects around (object, agent, ..... # )
-    # The behavior function is a function that classify perceptionList. The perceptionList is an agent(person, chair, table, ...) 
-    def behavior(self,perceptionsList):
-    #iterate perseption list
-        for perception in perceptionsList:
-            if isinstance(perception, agent):
-                perceptAgent(self,perception)
-            else:
-                pass
-            
+
     def perceptAgent(self, agent_in):
         #agent_actions = [[1,"passing"], [2,"cuffing"],[3,"greeting_by_hand"], [4,"talking_to"],[5,"moving_class"]]
         myaction = 3  
@@ -75,7 +65,17 @@ class agent():
         elif myaction == 5:
             pass
         elif myaction == 6:
-            pass
+            pass    
+        
+    #perceptionsList is a list of objects around (object, agent, ..... # )
+    # The behavior function is a function that classify perceptionList. The perceptionList is an agent(person, chair, table, ...) 
+    def behavior(self,perceptionsList):
+    #iterate perseption list
+        for perception in perceptionsList:
+            if isinstance(perception, agent):
+                perceptAgent(self,perception)
+            else:
+                pass
                     
     def perceptObject(self, object):
         #to be coded after we implment classrooms and object classes.
