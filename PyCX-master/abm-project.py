@@ -3,7 +3,9 @@ from pylab import *
 from agent import agent
 from classRoom import classRoom
 import json
-from random import randint as randint
+import random
+
+
 
 import copy as cp
 p_init = 100. #initial population
@@ -20,19 +22,8 @@ rf = 0.5 # reproduction rate of foxes
 
 cd = 0.02 # radius for collision detection
 cdsq = cd ** 2
-
-# =============================================================================
-# class agent:
-#     def __init__(self, status,mask,antibac, sdistance):
-#         self.status = status #infected, recoverd, normal, exposed, dead,
-#         self.mask = mask
-#         self.antibac = antibac #rate 1-6
-#         self.sdistance = sdistance # rate setted with local agency
-#     def setStatus(self, status):
-#         self.status = status
 # =============================================================================
     
-
 def upload_agents_json(fileName):
     agenList = json.load(open(fileName))
     agentObjList = []
@@ -57,17 +48,21 @@ def initializeAgents():
     n_inf_agents = p_init * inf_rate
     
     #randomly assighn mask to the population as per rate of mask usage data
-    for i in range(int(p_init*mask_rate)):
-        agentsList[randint(0, p_init-1)].mask= True
+    maskedList = random.sample(agentsList,int(p_init*mask_rate))
+    for ag in maskedList:
+        ag.mask= True
         
     #randomly make ppl infected as per rate of infection rate data
-    for i in range(int(p_init*inf_rate)):
-        agentsList[randint(0, p_init-1)].status= 'I'
-
+    infectedList = random.sample(agentsList,int(p_init*inf_rate))
+    for ag in infectedList:
+        ag.status= 'I'
+    
+#this loop will be taken out to classrooms acording to the sizes.
     for ag in agentsList:
-        ag.x = random()
-        ag.y = random()
+        ag.x = random.random()
+        ag.y = random.random()
     return agentsList
+
 def initializeRooms():
     classRoomList = upload_classroom_json('classrooms2.json')
     return classRoomList
@@ -89,16 +84,10 @@ def initialize():
         
     alocateAgentsinclass(agentsList, classRoomList)
     
-   
-    
-        
-    
-    
-
 def observe():
     global agentsList, classRoomList, rdata, fdata
 
-    subplot(2, 1, 1)
+    subplot(2, 2, 1)
     cla()
     infected = [ag for ag in classRoomList[0].agentsList if ag.status == 'I']
     if len(infected) > 0:
@@ -113,8 +102,9 @@ def observe():
         plot(x, y, 'b.')
     axis('image')
     axis([0, 1, 0, 1])
+    title('classRoom 1')
     
-    subplot(2, 1, 2)
+    subplot(2, 2, 2)
     cla()
     infected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'I']
     if len(infected) > 0:
@@ -129,15 +119,42 @@ def observe():
         plot(x, y, 'b.')
     axis('image')
     axis([0, 1, 0, 1])
-# =============================================================================
-# 
-#     subplot(2, 1, 2)
-#     cla()
-#     plot(rdata, label = 'prey')
-#     plot(fdata, label = 'predator')
-#     legend()
-# 
-# =============================================================================
+    title('classRoom 2')
+
+    subplot(2, 2, 3)
+    cla()
+    infected = [ag for ag in classRoomList[0].agentsList if ag.status == 'I']
+    if len(infected) > 0:
+        x = [ag.x for ag in infected]
+        y = [ag.y for ag in infected]
+        plot(x, y, 'ro')
+    
+    suspected = [ag for ag in classRoomList[0].agentsList if ag.status == 'S']
+    if len(suspected) > 0:
+        x = [ag.x for ag in suspected]
+        y = [ag.y for ag in suspected]
+        plot(x, y, 'b.')
+    axis('image')
+    axis([0, 1, 0, 1])
+    title('classRoom 3')
+    
+    subplot(2, 2, 4)
+    cla()
+    infected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'I']
+    if len(infected) > 0:
+        x = [ag.x for ag in infected]
+        y = [ag.y for ag in infected]
+        plot(x, y, 'ro')
+    
+    suspected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'S']
+    if len(suspected) > 0:
+        x = [ag.x for ag in suspected]
+        y = [ag.y for ag in suspected]
+        plot(x, y, 'b.')
+    axis('image')
+    axis([0, 1, 0, 1])
+    title('classRoom 4')
+   
 def update_one_agent():
     global agentsList
     if agents == []:

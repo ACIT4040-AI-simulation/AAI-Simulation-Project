@@ -43,12 +43,12 @@ def observe():
     if len(rabbits) > 0:
         x = [ag.x for ag in rabbits]
         y = [ag.y for ag in rabbits]
-        plot(x, y, 'b.')
+        plot(x, y, 'b웃')
     foxes = [ag for ag in agents if ag.type == 'f']
     if len(foxes) > 0:
         x = [ag.x for ag in foxes]
         y = [ag.y for ag in foxes]
-        plot(x, y, 'ro')
+        plot(x, y, 'r웃')
     axis('image')
     axis([0, 1, 0, 1])
 
