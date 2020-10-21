@@ -40,7 +40,7 @@ class agent():
     #iterate perseption list
         for perception in perceptionsList:
             if isinstance(perception, agent):
-                perceptAgent(self,perception)
+                self.perceptAgent(self,perception)
             else:
                 pass
             '''
