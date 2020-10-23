@@ -36,7 +36,7 @@ def upload_agents_json(filepath):
 
 
 def upload_classroom_json(filepath):
-    with open('PyCX-master/agentdata.json', 'r') as data: 
+    with open('PyCX-master/'+filepath, 'r') as data: 
         CLASSROOM_DATA = json.load(data)
     CLASS_AGENTS_ARRAY = []
 
