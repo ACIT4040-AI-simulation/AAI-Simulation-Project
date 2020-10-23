@@ -16,7 +16,7 @@ dr = 1.0 # death rate of infected ppl
 rr = 0.1 # recovery rate
 
 f_init = 0.10 # initial fox population
-mf = 0.05 # magnitude of movement of foxes
+mA = 0.05 # magnitude of movement of agents move
 df = 0.1 # death rate of foxes when there is no food
 rf = 0.5 # reproduction rate of foxes
 
@@ -71,7 +71,7 @@ def alocateAgentsinclass(agentlist, roomlist):
     x = 0
     for ag in agentlist:
         roomlist[x%15].agentsList.append(ag)
-        ag.whereAmI = roomlist[x%15].class_id
+        ag.whereAmI = roomlist[x%15]
         x+=1
         
 def initialize():
@@ -205,37 +205,27 @@ def update_one_agent():
     ag = choice(agentsList)
 
     # simulating random movement
-    m = mr if ag.type == 'r' else mf
+    m = mA
     ag.x += uniform(-m, m)
     ag.y += uniform(-m, m)
     ag.x = 1 if ag.x > 1 else 0 if ag.x < 0 else ag.x
     ag.y = 1 if ag.y > 1 else 0 if ag.y < 0 else ag.y
 
     # detecting collision and simulating death or birth
-    neighbors = [nb for nb in agents if nb.type != ag.type
-                 and (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
-
-    if ag.type == 'r':
-        if len(neighbors) > 0: # if there are foxes nearby
-            if random() < dr:
-                agents.remove(ag)
-                return
-        if random() < rr*(1-sum([1 for x in agents if x.type == 'r'])/nr):
-            agents.append(cp.copy(ag))
-    else:
-        if len(neighbors) == 0: # if there are no rabbits nearby
-            if random() < df:
-                agents.remove(ag)
-                return
-        else: # if there are rabbits nearby
-            if random() < rf:
-                agents.append(cp.copy(ag))
-
+# =============================================================================
+#     neighbors = [nb for nb in agents if nb.type != ag.type
+#                  and (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
+# 
+# =============================================================================
+    classroom = ag.whereAmI
+    neighbors = [nb for nb in classroom.agentsList if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
+    
 def update():
-    global agentList, classRoomList
+    global agentsList, classRoomList
     t = 0.
-    while t < 1. and len(agents) > 0:
-        t += 1. / len(agents)
-        #update_one_agent()
+    while t < 1. and len(agentsList) > 0:
+        t += 1. / len(agentsList)
+        
+        update_one_agent()
 
 pycxsimulator.GUI().start(func=[initialize, observe, update])
