@@ -24,68 +24,70 @@ cd = 0.02 # radius for collision detection
 cdsq = cd ** 2
 # =============================================================================
     
-def upload_agents_json(fileName):
-    agenList = json.load(open(fileName))
-    agentObjList = []
+def upload_agents_json(filepath):
+    with open('PyCX-master/'+filepath, 'r') as data: 
+        AGENT_DATA = json.load(data)
+    AGENT_ARRAY = []
 
-    for agentObj in agenList:
-        temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'], agentObj['antibact'], agentObj['socialDistance'])
-        agentObjList.append(temp)
-    return agentObjList
+    for agent in AGENT_DATA:
+        temp = agent(agent['id_no'], agent['age'], agent['gender'], agent['status'], agent['mask'], agent['antibact'], agent['socialDistance'])
+        AGENT_ARRAY.append(temp)
+    return AGENT_ARRAY
 
 
-def upload_classroom_json(fileName):
-    classRoomList = json.load(open(fileName))
-    classAgentsList = []
+def upload_classroom_json(filepath):
+    with open('PyCX-master/agentdata.json', 'r') as data: 
+        CLASSROOM_DATA = json.load(data)
+    CLASS_AGENTS_ARRAY = []
 
-    for classroom in classRoomList:
+    for classroom in CLASSROOM_DATA:
         temp = classRoom(classroom['class_id'], classroom['class_type'], classroom['length'], classroom['width'], classroom['sitting_capacity'], classroom['cleaning_cycle'], classroom['clean_status'], classroom['antibac_dispenser'], classroom['ventilation_grade'])
-        classAgentsList.append(temp)
-    return classAgentsList    
+        CLASS_AGENTS_ARRAY.append(temp)
+    return CLASS_AGENTS_ARRAY    
 
 def initializeAgents():
-    agentsList = upload_agents_json("agent1000.json")
+    AGENTS_LIST = upload_agents_json("agent1000.json")
     n_inf_agents = p_init * inf_rate
     
     #randomly assighn mask to the population as per rate of mask usage data
-    maskedList = random.sample(agentsList,int(p_init*mask_rate))
-    for ag in maskedList:
+    MASKED_LIST = random.sample(AGENTS_LIST,int(p_init*mask_rate))
+    for ag in MASKED_LIST:
         ag.mask= True
         
     #randomly make ppl infected as per rate of infection rate data
-    infectedList = random.sample(agentsList,int(p_init*inf_rate))
-    for ag in infectedList:
+    INFECTED_LIST = random.sample(AGENTS_LIST,int(p_init*inf_rate))
+    for ag in INFECTED_LIST:
         ag.status= 'I'
     
 #this loop will be taken out to classrooms acording to the sizes.
-    for ag in agentsList:
+    for ag in AGENTS_LIST:
         ag.x = random.random()
         ag.y = random.random()
-    return agentsList
+    return AGENTS_LIST
 
 def initializeRooms():
-    classRoomList = upload_classroom_json('classrooms2.json')
-    return classRoomList
+    CLASSROOM_DATA = upload_classroom_json('classrooms2.json')
+    return CLASSROOM_DATA
         
 def alocateAgentsinclass(agentlist, roomlist):
     x = 0
     for ag in agentlist:
-        roomlist[x%15].agentsList.append(ag)
+        roomlist[x%15].AGENTS_LIST.append(ag)
         ag.whereAmI = roomlist[x%15]
         x+=1
         
 def initialize():
-    global agentsList,inf_data, classRoomList
+    global AGENTS_LIST,inf_data, CLASSROOM_DATA
 
-    agentsList = initializeAgents()
-    classRoomList = initializeRooms()
+    AGENTS_LIST = initializeAgents()
+    CLASSROOM_DATA = initializeRooms()
         
-    alocateAgentsinclass(agentsList, classRoomList)
+    alocateAgentsinclass(AGENTS_LIST, CLASSROOM_DATA)
     
 def observe():
-    global agentsList, classRoomList
+    global AGENTS_LIST, CLASSROOM_DATA
     
-    no_classes = len(classRoomList)
+    no_classes = len(CLASSROOM_DATA)
     print('no classes = ', no_classes )
     row = 5
     col = 3
@@ -93,13 +95,13 @@ def observe():
     for i in range(15):  
         subplot(row, col, i+1)
         cla()
-        infected = [ag for ag in classRoomList[i].agentsList if ag.status == 'I']
+        infected = [ag for ag in CLASSROOM_DATA[i].AGENTS_LIST if ag.status == 'I']
         if len(infected) > 0:
             x = [ag.x for ag in infected]
             y = [ag.y for ag in infected]
             plot(x, y, 'ro')
         
-        suspected = [ag for ag in classRoomList[i].agentsList if ag.status == 'S']
+        suspected = [ag for ag in CLASSROOM_DATA[i].AGENTS_LIST if ag.status == 'S']
         if len(suspected) > 0:
             x = [ag.x for ag in suspected]
             y = [ag.y for ag in suspected]
@@ -110,11 +112,11 @@ def observe():
         
 
 def update_one_agent():
-    global agentsList
-    if agentsList == []:
+    global AGENTS_LIST
+    if AGENTS_LIST == []:
         return
 
-    ag = choice(agentsList)
+    ag = choice(AGENTS_LIST)
 
     # simulating random movement
     m = mA
@@ -130,13 +132,13 @@ def update_one_agent():
 # 
 # =============================================================================
     classroom = ag.whereAmI
-    neighbors = [nb for nb in classroom.agentsList if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
+    neighbors = [nb for nb in classroom.AGENTS_LIST if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
     
 def update():
-    global agentsList, classRoomList
+    global AGENTS_LIST, CLASSROOM_DATA
     t = 0.
-    while t < 1. and len(agentsList) > 0:
-        t += 1. / len(agentsList)
+    while t < 1. and len(AGENTS_LIST) > 0:
+        t += 1. / len(AGENTS_LIST)
         
         update_one_agent()
 
