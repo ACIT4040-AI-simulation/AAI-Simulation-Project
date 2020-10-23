@@ -30,8 +30,8 @@ def upload_agents_json(filepath):
     AGENT_ARRAY = []
 
     for agent in AGENT_DATA:
-        temp = agent(agent['id_no'], agent['age'], agent['gender'], agent['status'], agent['mask'], agent['antibact'], agent['socialDistance'])
-        AGENT_ARRAY.append(temp)
+        #temp = agent(agent['id_no'], agent['age'], agent['gender'], agent['status'], agent['mask'], agent['antibact'], agent['socialDistance'])
+        AGENT_ARRAY.append(agent)
     return AGENT_ARRAY
 
 
@@ -41,8 +41,8 @@ def upload_classroom_json(filepath):
     CLASS_AGENTS_ARRAY = []
 
     for classroom in CLASSROOM_DATA:
-        temp = classRoom(classroom['class_id'], classroom['class_type'], classroom['length'], classroom['width'], classroom['sitting_capacity'], classroom['cleaning_cycle'], classroom['clean_status'], classroom['antibac_dispenser'], classroom['ventilation_grade'])
-        CLASS_AGENTS_ARRAY.append(temp)
+        #temp = classRoom(classroom['class_id'], classroom['class_type'], classroom['length'], classroom['width'], classroom['sitting_capacity'], classroom['cleaning_cycle'], classroom['clean_status'], classroom['antibac_dispenser'], classroom['ventilation_grade'])
+        CLASS_AGENTS_ARRAY.append(classroom)
     return CLASS_AGENTS_ARRAY    
 
 def initializeAgents():
@@ -52,17 +52,17 @@ def initializeAgents():
     #randomly assighn mask to the population as per rate of mask usage data
     MASKED_LIST = random.sample(AGENTS_LIST,int(p_init*mask_rate))
     for ag in MASKED_LIST:
-        ag.mask= True
+        ag["mask"]= True
         
     #randomly make ppl infected as per rate of infection rate data
     INFECTED_LIST = random.sample(AGENTS_LIST,int(p_init*inf_rate))
     for ag in INFECTED_LIST:
-        ag.status= 'I'
+        ag["status"]= 'I'
     
 #this loop will be taken out to classrooms acording to the sizes.
     for ag in AGENTS_LIST:
-        ag.x = random.random()
-        ag.y = random.random()
+        ag["x"] = random.random()
+        ag["y"] = random.random()
     return AGENTS_LIST
 
 def initializeRooms():
@@ -73,7 +73,7 @@ def alocateAgentsinclass(agentlist, roomlist):
     x = 0
     for ag in agentlist:
         roomlist[x%15].AGENTS_LIST.append(ag)
-        ag.whereAmI = roomlist[x%15]
+        ag['whereAmI'] = roomlist[x%15]
         x+=1
         
 def initialize():
