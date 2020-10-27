@@ -1,6 +1,5 @@
 import pycxsimulator
 from pylab import *
-import random
 
 import copy as cp
 
@@ -17,6 +16,7 @@ df = 0.1 # death rate of foxes when there is no food
 rf = 0.5 # reproduction rate of foxes
 
 cd = 0.02 # radius for collision detection
+
 cdsq = cd ** 2
 
 class agent:
@@ -30,8 +30,8 @@ def initialize():
     for i in range(r_init + f_init):
         ag = agent()
         ag.type = 'r' if i < r_init else 'f'
-        ag.x = random.random()
-        ag.y = random.random()
+        ag.x = random()
+        ag.y = random()
         agents.append(ag)
 
 def observe():
@@ -54,18 +54,9 @@ def observe():
 
     subplot(2, 1, 2)
     cla()
-    rabbits = [ag for ag in agents if ag.type == 'r']
-    if len(rabbits) > 0:
-        x = [ag.x for ag in rabbits]
-        y = [ag.y for ag in rabbits]
-        plot(x, y, 'b.')
-    foxes = [ag for ag in agents if ag.type == 'f']
-    if len(foxes) > 0:
-        x = [ag.x for ag in foxes]
-        y = [ag.y for ag in foxes]
-        plot(x, y, 'ro')
-    axis('image')
-    axis([0, 1, 0, 1])
+    plot(rdata, label = 'prey')
+    plot(fdata, label = 'predator')
+    legend()
 
 def update_one_agent():
     global agents

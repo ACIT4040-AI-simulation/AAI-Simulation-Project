@@ -8,6 +8,8 @@ Created on Mon Oct 12 21:30:26 2020
 
 import json
 import random
+from numpy.random import choice
+
 from math import sqrt
 
 s_distance_standard = 0.01
@@ -38,7 +40,7 @@ class agent():
         
     #perceptionsList is a list of objects around (object, agent, .....
     # )
-    def distance(self ag):
+    def distance(self, agent_in):
         return sqrt((self.x-agent_in.x)**2 + (self.y-agent_in.y)**2)
     
     def behavior(self,perceptionsList):
@@ -54,36 +56,31 @@ class agent():
             pass
         elif myaction == 2:
             for ag in perceptionsList:
-                will_get_infected(ag)
+                self.will_get_infected(ag)
         elif myaction == 3: 
             ag = choice(perceptionsList) 
-            will_get_infected(ag)
+            self.will_get_infected(ag)
 
         elif myaction == 4:
             ag = choice(perceptionsList) 
-            will_get_infected(ag)
+            self.will_get_infected(ag)
 
         elif myaction == 5:
             for ag in perceptionsList:
-                will_get_infected(ag)
+                self.will_get_infected(ag)
      
-        for perception in perceptionsList:
-            if isinstance(perception, agent):
-                self.perceptAgent(perception)
-            else:
-                pass
             
     def will_get_infected(self, agent_in):
                
             if (self.status == 'I' and agent_in.status != 'I'):
-                prob = calcprobablity(self, agent)
+                prob = self.calcprobablity(agent_in)
                 if  choice([True, False], 1, p=[prob, 1-prob]):
                     agent_in.status =  'I'
                     agent_in.infect_By = self
                     self.infect_to_List.append(agent_in)
                 
             elif(self.status != 'I' and agent_in.status == 'I'):
-                prob = calcprobablity(self, agent)
+                prob = self.calcprobablity(agent_in)
                 if  choice([True, False], 1, p=[prob, 1-prob]):
                     self.status =  'I'
                     self.infect_By = agent_in
@@ -100,28 +97,28 @@ class agent():
         #agent.infect_to_List.append(self)
 
 
-    def calcprobablity(self, agent_in)    :
+    def calcprobablity(self, agent_in):
         #mask
         tr = 0
        
-        if (self.mask == True and agent_in.mask == True):
+        if ((self.mask == True) and (agent_in.mask == True)):
             tr = 0.015
-        elif ((self.mask == True and agent_in.mask == False) or (self.mask == False and agent_in.mask == True):
+        elif ((self.mask == True and agent_in.mask == False) or (self.mask == False and agent_in.mask == True)):
             tr = 0.05
         else:
             tr = 0.70
         
-        #Sanitiser
-        if (self.antibac >3 and agent_in.antibac >3):
+        #Sanitiser antibac
+        if ((self.antibac > 3 )and (agent_in.antibac > 3)):
             tr = tr*0.16
-        elif (self.antibac >=5 or agent_in.antibac >=5):
+        elif ((self.antibac > 5) or (agent_in.antibac > 5)):
             tr = tr*0.16  
         
 # =============================================================================
 #         #distance
 #         distance = sqrt((self.x-agent_in.x)**2 + (self.y-agent_in.y)**2)
 # =============================================================================
-        if distance(self, agent_in) >= s_distance_standard:
+        if self.distance(agent_in) >= s_distance_standard:
             tr = tr * 0.82
         return tr
 # =============================================================================
@@ -134,10 +131,20 @@ class agent():
 def main():
 
     agenList = json.load(open("agentdata.json"))
+    agentObjList = []
 
     for agentObj in agenList:
         temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'], agentObj['antibact'], agentObj['socialDistance'])
+        temp.x = random.random()
+        temp.y = random.random()
+        agentObjList.append(temp)
         print(temp.tostring())
+    
+    ag = agentObjList[1]
+    ag.status = "I"
+    neighbors = [nb for nb in agentObjList if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < 0.2]
+
+    ag.behavior(neighbors)
         
 
 if __name__ == "__main__":

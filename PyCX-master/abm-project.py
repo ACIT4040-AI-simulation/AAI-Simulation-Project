@@ -76,7 +76,7 @@ def alocateAgentsinclass(agentlist, roomlist):
         x+=1
         
 def initialize():
-    global agentsList,inf_data, classRoomList
+    global agentsList,inf_data,sdata, idata
 
     agentsList = initializeAgents()
     classRoomList = initializeRooms()
@@ -84,11 +84,11 @@ def initialize():
     alocateAgentsinclass(agentsList, classRoomList)
     
 def observe():
-    global agentsList, classRoomList
+    global agentsList, classRoomList, sdata, idata
     
     no_classes = len(classRoomList)
     print('no classes = ', no_classes )
-    row = 5
+    row = 6
     col = 3
     
     for i in range(15):  
@@ -108,6 +108,12 @@ def observe():
         axis('image')
         axis([0, 1, 0, 1])
         title('classRoom ')
+   
+    subplot(row,col , 17)
+    cla()
+    plot(sdata, label = 'prey')
+    plot(idata, label = 'predator')
+    legend()     
         
 
 def update_one_agent():
@@ -132,14 +138,20 @@ def update_one_agent():
 # =============================================================================
     classroom = ag.whereAmI
     neighbors = [nb for nb in classroom.agentsList if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
+    print('Gorebetoch =', len(neighbors))
     ag.behavior(neighbors)
     
+    
+    
+    
 def update():
-    global agentsList, classRoomList
+    global agentsList, classRoomList, sdata, idata
     t = 0.
     while t < 1. and len(agentsList) > 0:
         t += 1. / len(agentsList)
         
         update_one_agent()
+    sdata.append(sum([1 for x in agentsList if x.status == 'S']))
+    idata.append(sum([1 for x in agentlist if x.status == 'I']))
 
 pycxsimulator.GUI().start(func=[initialize, observe, update])
