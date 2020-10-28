@@ -9,6 +9,8 @@ Created on Mon Oct 12 21:30:26 2020
 import json
 import random
 from numpy.random import choice
+import itertools  
+
 
 from math import sqrt
 
@@ -44,12 +46,13 @@ class agent():
         return sqrt((self.x-agent_in.x)**2 + (self.y-agent_in.y)**2)
     
     def behavior(self,perceptionsList):
-# # =============================================================================
-# #     #agent actions[   [1,"passing"], 
+# =============================================================================
+#       #agent actions[   [1,"passing"], 
 #                         [2,"cuffing"],
 #                         [3,"greeting_by_hand"], 
-# #                       [4,"talking_to_one"],
+#                         [4,"talking_to_one"],
 #                         [5,"Talking with group"]]
+#
 # =============================================================================
         myaction = random.randint(1,5)
         if myaction ==1:
@@ -60,11 +63,9 @@ class agent():
         elif myaction == 3: 
             ag = choice(perceptionsList) 
             self.will_get_infected(ag)
-
         elif myaction == 4:
             ag = choice(perceptionsList) 
             self.will_get_infected(ag)
-
         elif myaction == 5:
             for ag in perceptionsList:
                 self.will_get_infected(ag)
@@ -76,6 +77,7 @@ class agent():
                 prob = self.calcprobablity(agent_in)
                 if  choice([True, False], 1, p=[prob, 1-prob]):
                     agent_in.status =  'I'
+                    print(agent_in.id_no, 'get infected', agent_in.status)
                     agent_in.infect_By = self
                     self.infect_to_List.append(agent_in)
                 
@@ -83,6 +85,7 @@ class agent():
                 prob = self.calcprobablity(agent_in)
                 if  choice([True, False], 1, p=[prob, 1-prob]):
                     self.status =  'I'
+                    print(agent_in.id_no, 'get infected', agent_in.status)
                     self.infect_By = agent_in
                     agent_in.infect_to_List.append(self)
                     
@@ -138,14 +141,43 @@ def main():
         temp.x = random.random()
         temp.y = random.random()
         agentObjList.append(temp)
-        print(temp.tostring())
+        #print(temp.tostring())
     
     ag = agentObjList[1]
     ag.status = "I"
-    neighbors = [nb for nb in agentObjList if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < 0.2]
+    ag.mask = False
+    
+# =============================================================================
+#     #testag1 = 
+#     ag1 = agentObjList[3]
+#     ag2= agentObjList[5]
+#     ag3 = agentObjList[10]
+#     agentObjList[29].status='I'
+#     ag4 = agentObjList[29]
+#     ag5 = agentObjList[40]
+#     agentObjList[40].status='I'
+#     
+#     ag6 = agentObjList[22]
+# =============================================================================
 
+
+    neighbors = [nb for nb in agentObjList if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < 0.08**2]
+    
+    #neighbors = [ag1,ag2,ag3, ag4,ag5,ag6]
+    copyneighbors = neighbors.copy()
+    for ag1 in neighbors:
+         print('Before Agent', ag1.id_no, 'was = ' , ag1.status)
     ag.behavior(neighbors)
-        
+    for ag1 in neighbors:
+         print('After :Agent', ag1.id_no, 'was = ' , ag1.status)
+# =============================================================================
+#     for (agNow, agWas) in zip(neighbors,copyneighbors):
+#         if agNow.status != agWas.status:
+#             pass
+#         print('Agent', agWas.id_no, 'was = ' , agWas.status, 'now = ',agNow.id_no, ' =', agNow.status)
+#         
+# =============================================================================
+
 
 if __name__ == "__main__":
     main()

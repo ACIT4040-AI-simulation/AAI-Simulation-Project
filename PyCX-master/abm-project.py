@@ -4,9 +4,6 @@ from agent import agent
 from classRoom import classRoom
 import json
 import random
-
-
-
 import copy as cp
 p_init = 1000. #initial population
 
@@ -21,8 +18,10 @@ mA = 0.05 # magnitude of movement of agents move
 df = 0.1 # death rate of foxes when there is no food
 rf = 0.5 # reproduction rate of foxes
 
-cd = 0.02 # radius for collision detection
+cd = 0.05 # radius for collision detection
 cdsq = cd ** 2
+sdata = []
+idata = []
 # =============================================================================
     
 def upload_agents_json(fileName):
@@ -33,7 +32,6 @@ def upload_agents_json(fileName):
         temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'], agentObj['antibact'], agentObj['socialDistance'])
         agentObjList.append(temp)
     return agentObjList
-
 
 def upload_classroom_json(fileName):
     classRoomList = json.load(open(fileName))
@@ -57,6 +55,7 @@ def initializeAgents():
     infectedList = random.sample(agentsList,int(p_init*inf_rate))
     for ag in infectedList:
         ag.status= 'I'
+        
     
 #this loop will be taken out to classrooms acording to the sizes.
     for ag in agentsList:
@@ -76,7 +75,7 @@ def alocateAgentsinclass(agentlist, roomlist):
         x+=1
         
 def initialize():
-    global agentsList,inf_data,sdata, idata
+    global agentsList,inf_data,classRoomList,sdata, idata
 
     agentsList = initializeAgents()
     classRoomList = initializeRooms()
@@ -106,15 +105,14 @@ def observe():
             y = [ag.y for ag in suspected]
             plot(x, y, 'b.')
         axis('image')
-        axis([0, 1, 0, 1])
+        axis([0, 1, 0, 1]) # we will scale it acording to the size
         title('classRoom ')
    
     subplot(row,col , 17)
     cla()
     plot(sdata, label = 'prey')
     plot(idata, label = 'predator')
-    legend()     
-        
+    legend()             
 
 def update_one_agent():
     global agentsList
@@ -122,7 +120,6 @@ def update_one_agent():
         return
 
     ag = choice(agentsList)
-
     # simulating random movement
     m = mA
     ag.x += uniform(-m, m)
@@ -130,28 +127,19 @@ def update_one_agent():
     ag.x = 1 if ag.x > 1 else 0 if ag.x < 0 else ag.x
     ag.y = 1 if ag.y > 1 else 0 if ag.y < 0 else ag.y
 
-    # detecting collision and simulating death or birth
-# =============================================================================
-#     neighbors = [nb for nb in agents if nb.type != ag.type
-#                  and (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
-# 
-# =============================================================================
     classroom = ag.whereAmI
     neighbors = [nb for nb in classroom.agentsList if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
     print('Gorebetoch =', len(neighbors))
     ag.behavior(neighbors)
     
-    
-    
-    
 def update():
     global agentsList, classRoomList, sdata, idata
     t = 0.
     while t < 1. and len(agentsList) > 0:
-        t += 1. / len(agentsList)
-        
+        t += 1. / len(agentsList)        
         update_one_agent()
+
     sdata.append(sum([1 for x in agentsList if x.status == 'S']))
-    idata.append(sum([1 for x in agentlist if x.status == 'I']))
+    idata.append(sum([1 for x in agentsList if x.status == 'I']))
 
 pycxsimulator.GUI().start(func=[initialize, observe, update])
