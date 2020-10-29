@@ -4,6 +4,9 @@ from agent import agent
 from classRoom import classRoom
 import json
 import random
+
+
+
 import copy as cp
 p_init = 1000. #initial population
 
@@ -18,10 +21,8 @@ mA = 0.05 # magnitude of movement of agents move
 df = 0.1 # death rate of foxes when there is no food
 rf = 0.5 # reproduction rate of foxes
 
-cd = 0.05 # radius for collision detection
+cd = 0.02 # radius for collision detection
 cdsq = cd ** 2
-sdata = []
-idata = []
 # =============================================================================
     
 def upload_agents_json(filepath):
@@ -89,7 +90,7 @@ def observe():
     
     no_classes = len(CLASSROOM_DATA)
     print('no classes = ', no_classes )
-    row = 6
+    row = 5
     col = 3
     
     for i in range(15):  
@@ -107,14 +108,9 @@ def observe():
             y = [ag.y for ag in suspected]
             plot(x, y, 'b.')
         axis('image')
-        axis([0, 1, 0, 1]) # we will scale it acording to the size
+        axis([0, 1, 0, 1])
         title('classRoom ')
-   
-    subplot(row,col , 17)
-    cla()
-    plot(sdata, label = 'prey')
-    plot(idata, label = 'predator')
-    legend()             
+        
 
 def update_one_agent():
     global AGENTS_LIST
@@ -130,8 +126,19 @@ def update_one_agent():
     ag.x = 1 if ag.x > 1 else 0 if ag.x < 0 else ag.x
     ag.y = 1 if ag.y > 1 else 0 if ag.y < 0 else ag.y
 
+    # detecting collision and simulating death or birth
+# =============================================================================
+#     neighbors = [nb for nb in agents if nb.type != ag.type
+#                  and (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
+# 
+# =============================================================================
     classroom = ag.whereAmI
+<<<<<<< HEAD
+    neighbors = [nb for nb in classroom.agentsList if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
+    ag.behavior(neighbors)
+=======
     neighbors = [nb for nb in classroom.AGENTS_LIST if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
+>>>>>>> cd3ea2c272b0ac1b87902c96b4f3ead41d8bcc3c
     
 def update():
     global AGENTS_LIST, CLASSROOM_DATA
@@ -140,8 +147,5 @@ def update():
         t += 1. / len(AGENTS_LIST)
         
         update_one_agent()
-
-    sdata.append(sum([1 for x in AGENTS_LIST if x.status == 'S']))
-    idata.append(sum([1 for x in AGENTS_LIST if x.status == 'I']))
 
 pycxsimulator.GUI().start(func=[initialize, observe, update])

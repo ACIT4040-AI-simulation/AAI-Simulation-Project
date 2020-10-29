@@ -1,0 +1,178 @@
+[
+  {
+    "class_id": 1,
+    "class_type": "Lectureroom",
+    "length": 4,
+    "width": 10,
+    "sitting_capacity": 2,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 2
+  },
+  {
+    "class_id": 9,
+    "class_type": "Commonarea",
+    "length": 10,
+    "width": 6,
+    "sitting_capacity": 4,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  },
+  {
+    "class_id": 3,
+    "class_type": "Lectureroom",
+    "length": 4,
+    "width": 10,
+    "sitting_capacity": 2,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 2
+  },
+  {
+    "class_id": 4,
+    "class_type": "Commonarea",
+    "length": 10,
+    "width": 6,
+    "sitting_capacity": 4,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  },
+  {
+    "class_id": 10,
+    "class_type": "Lectureroom",
+    "length": 4,
+    "width": 10,
+    "sitting_capacity": 2,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 2
+  },
+  {
+    "class_id": 12,
+    "class_type": "Commonarea",
+    "length": 10,
+    "width": 6,
+    "sitting_capacity": 4,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  },
+  {
+    "class_id": 13,
+    "class_type": "Lectureroom",
+    "length": 4,
+    "width": 10,
+    "sitting_capacity": 2,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 2
+  },
+  {
+    "class_id": 90,
+    "class_type": "Commonarea",
+    "length": 10,
+    "width": 6,
+    "sitting_capacity": 4,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  },
+  {
+    "class_id": 91,
+    "class_type": "Commonarea",
+    "length": 10,
+    "width": 6,
+    "sitting_capacity": 4,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  },
+  {
+    "class_id": 95,
+    "class_type": "Commonarea",
+    "length": 10,
+    "width": 6,
+    "sitting_capacity": 4,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  },
+  {
+    "class_id": 96,
+    "class_type": "Commonarea",
+    "length": 10,
+    "width": 6,
+    "sitting_capacity": 4,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  },
+  {
+    "class_id": 97,
+    "class_type": "Commonarea",
+    "length": 10,
+    "width": 6,
+    "sitting_capacity": 4,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  },
+  {
+    "class_id": 98,
+    "class_type": "Commonarea",
+    "length": 10,
+    "width": 6,
+    "sitting_capacity": 4,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  },
+  {
+    "class_id": 99,
+    "class_type": "Commonarea",
+    "length": 10,
+    "width": 6,
+    "sitting_capacity": 4,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  },
+  {
+    "class_id": 81,
+    "class_type": "Commonarea",
+    "length": 10,
+    "width": 6,
+    "sitting_capacity": 4,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  },
+  {
+    "class_id": 85,
+    "class_type": "Commonarea",
+    "length": 10,
+    "width": 6,
+    "sitting_capacity": 4,
+    "cleaning_cycle": 8,
+    "clean_status": false,
+    "antibac_dispenser": false,
+    "ventilation_grade": 6
+  }
+]

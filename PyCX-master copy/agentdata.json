@@ -1,0 +1,902 @@
+[
+  {
+    "id_no": 0,
+    "age": 23,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 1,
+    "age": 34,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 2,
+    "age": 38,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 0,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 3,
+    "age": 39,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 6,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 4,
+    "age": 26,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 5,
+    "age": 29,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 6,
+    "age": 39,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 7,
+    "age": 34,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 8,
+    "age": 27,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 6,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 9,
+    "age": 23,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 10,
+    "age": 29,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 11,
+    "age": 27,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 1,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 12,
+    "age": 30,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 13,
+    "age": 22,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 1,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 14,
+    "age": 31,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 15,
+    "age": 28,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 6,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 16,
+    "age": 24,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 1,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 17,
+    "age": 34,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 18,
+    "age": 24,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 19,
+    "age": 29,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 0,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 20,
+    "age": 38,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 0,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 21,
+    "age": 20,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 1,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 22,
+    "age": 23,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 6,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 23,
+    "age": 26,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 24,
+    "age": 30,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 25,
+    "age": 32,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 26,
+    "age": 20,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 6,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 27,
+    "age": 32,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 28,
+    "age": 36,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 29,
+    "age": 29,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 30,
+    "age": 36,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 1,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 31,
+    "age": 27,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 32,
+    "age": 24,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 1,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 33,
+    "age": 23,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 34,
+    "age": 30,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 35,
+    "age": 30,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 6,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 36,
+    "age": 21,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 37,
+    "age": 22,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 6,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 38,
+    "age": 23,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 39,
+    "age": 30,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 40,
+    "age": 25,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 41,
+    "age": 22,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 42,
+    "age": 24,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 6,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 43,
+    "age": 35,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 0,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 44,
+    "age": 34,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 45,
+    "age": 40,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 46,
+    "age": 20,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 47,
+    "age": 32,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 48,
+    "age": 37,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 0,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 49,
+    "age": 24,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 50,
+    "age": 28,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 1,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 51,
+    "age": 21,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 52,
+    "age": 30,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 0,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 53,
+    "age": 34,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 1,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 54,
+    "age": 38,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 55,
+    "age": 34,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 0,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 56,
+    "age": 25,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 57,
+    "age": 27,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 58,
+    "age": 39,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 0,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 59,
+    "age": 20,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 60,
+    "age": 38,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 61,
+    "age": 27,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 62,
+    "age": 40,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 63,
+    "age": 33,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 64,
+    "age": 22,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 65,
+    "age": 34,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 66,
+    "age": 39,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 0,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 67,
+    "age": 27,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 0,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 68,
+    "age": 26,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 1,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 69,
+    "age": 37,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 6,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 70,
+    "age": 39,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 71,
+    "age": 20,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 72,
+    "age": 33,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 73,
+    "age": 29,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 0,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 74,
+    "age": 33,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 75,
+    "age": 20,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 1,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 76,
+    "age": 24,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 77,
+    "age": 31,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 1,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 78,
+    "age": 40,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 79,
+    "age": 27,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 80,
+    "age": 39,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 81,
+    "age": 34,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 82,
+    "age": 40,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 6,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 83,
+    "age": 30,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 84,
+    "age": 34,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 4,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 85,
+    "age": 30,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 6,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 86,
+    "age": 39,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 0,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 87,
+    "age": 21,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 6,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 88,
+    "age": 36,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 1,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 89,
+    "age": 23,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 1,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 90,
+    "age": 39,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 6,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 91,
+    "age": 20,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 92,
+    "age": 39,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 93,
+    "age": 30,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 5,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 94,
+    "age": 34,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 95,
+    "age": 37,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 6,
+    "socialDistance": 1
+  },
+  {
+    "id_no": 96,
+    "age": 25,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 97,
+    "age": 33,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 0,
+    "socialDistance": 0
+  },
+  {
+    "id_no": 98,
+    "age": 20,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 2,
+    "socialDistance": 2
+  },
+  {
+    "id_no": 99,
+    "age": 20,
+    "gender": "male",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 0
+  }
+]
