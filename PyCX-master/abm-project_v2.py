@@ -3,6 +3,7 @@ from pylab import *
 from agent import agent
 import json
 from random import randint as randint
+import requests
 
 import copy as cp
 p_init = 100. #initial population
@@ -20,6 +21,10 @@ mf = 0.05 # magnitude of movement of foxes
 cd = 0.02 # radius for collision detection
 cdsq = cd ** 2
 
+buildings_in_pilestredet = "https://api.mazemap.com/api/buildings/?campusid=53&srid=4326"
+flooroutline_4th_floor = "https://api.mazemap.com/api/flooroutlines/?campusid=53&srid=4326"
+POI_4th_floor = "https://api.mazemap.com/api/pois/562437/?srid=900913"
+
 # =============================================================================
 # class agent:
 #     def __init__(self, status,mask,antibac, sdistance):
@@ -30,10 +35,14 @@ cdsq = cd ** 2
 #     def setStatus(self, status):
 #         self.status = status
 # =============================================================================
-    
+def connect_to_api(api_url):
+    response = requests.get(api_url)
+    extractP35data = response.json()['buildings'][11]
+    fourth_floor_p35 = extractP35data['floors'][4]
+    print(extractP35data)
 
 def upload_json():
-    agenList = json.load(open("agentdata.json"))
+    agenList = json.load(open("PyCX-master/agentdata.json"))
     agentObjList = []
 
     for agentObj in agenList:
@@ -74,7 +83,7 @@ def initialize():
 def observe():
     global agentsList, rdata, fdata
 
-    subplot(2, 1, 1)
+    subplot(1, 1, 1)
     cla()
     infected = [ag for ag in agentsList if ag.status == 'I']
     if len(infected) > 0:
@@ -88,7 +97,8 @@ def observe():
         y = [ag.y for ag in suspected]
         plot(x, y, 'b.')
     axis('image')
-    axis([0, 1, 0, 1])
+    axis([-1, 100, -1, 100])
+    
 # =============================================================================
 # 
 #     subplot(2, 1, 2)
@@ -141,5 +151,5 @@ def update():
 
     # rdata.append(sum([1 for x in agents if x.type == 'r']))
     # fdata.append(sum([1 for x in agents if x.type == 'f']))
-
-pycxsimulator.GUI().start(func=[initialize, observe, update])
+connect_to_api(buildings_in_pilestredet)
+#pycxsimulator.GUI().start(func=[initialize, observe, update])
