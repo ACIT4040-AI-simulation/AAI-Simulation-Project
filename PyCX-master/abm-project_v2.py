@@ -38,8 +38,23 @@ POI_4th_floor = "https://api.mazemap.com/api/pois/562437/?srid=900913"
 def connect_to_api(api_url):
     response = requests.get(api_url)
     extractP35data = response.json()['buildings'][11]
-    fourth_floor_p35 = extractP35data['floors'][4]
-    print(extractP35data)
+    floorOutlineId4thFloor = extractP35data['floors'][4]['floorOutlineId']
+    #print(floorOutlineId4thFloor)
+    return floorOutlineId4thFloor
+
+def retriveJsonFromAPI(api_url):
+    response = requests.get(api_url)
+    floor_features = response.json()['features']
+    subplot(1,1,1)
+    for target_list in floor_features:
+        if(target_list['geometry'] != None):
+            for coordinates in target_list['geometry']['coordinates']:
+                #print(len(coordinates))
+                for coordinate in coordinates:
+                    plot(coordinate[0], coordinate[1], 'b*')
+    gca()
+    axis('scaled')
+    show()
 
 def upload_json():
     agenList = json.load(open("PyCX-master/agentdata.json"))
@@ -151,5 +166,7 @@ def update():
 
     # rdata.append(sum([1 for x in agents if x.type == 'r']))
     # fdata.append(sum([1 for x in agents if x.type == 'f']))
-connect_to_api(buildings_in_pilestredet)
+#connect_to_api(buildings_in_pilestredet)
+retriveJsonFromAPI(flooroutline_4th_floor)
 #pycxsimulator.GUI().start(func=[initialize, observe, update])
+
