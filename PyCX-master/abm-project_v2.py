@@ -3,6 +3,8 @@ from pylab import *
 from agent import agent
 import json
 from random import randint as randint
+import geopandas
+from shapely.geometry import mapping, shape
 import requests
 
 import copy as cp
@@ -22,7 +24,7 @@ cd = 0.02 # radius for collision detection
 cdsq = cd ** 2
 
 buildings_in_pilestredet = "https://api.mazemap.com/api/buildings/?campusid=53&srid=4326"
-flooroutline_4th_floor = "https://api.mazemap.com/api/flooroutlines/?campusid=53&srid=4326"
+flooroutline_4th_floor = "https://api.mazemap.com/api/flooroutlines/?campusid=53&srid=4326" #Coordinates are now saved in geoJson file, so internet is no longer needed
 POI_4th_floor = "https://api.mazemap.com/api/pois/562437/?srid=900913"
 
 # =============================================================================
@@ -38,20 +40,13 @@ POI_4th_floor = "https://api.mazemap.com/api/pois/562437/?srid=900913"
 def connect_to_api(api_url):
     response = requests.get(api_url)
     extractP35data = response.json()['buildings'][11]
-    floorOutlineId4thFloor = extractP35data['floors'][4]['floorOutlineId']
+    floorOutlineId4thFloor = extractP35data['floors'][4]['floorOutlineId'] # "floorOutlineId": 1146047,
     #print(floorOutlineId4thFloor)
     return floorOutlineId4thFloor
 
-def retriveJsonFromAPI(api_url):
-    response = requests.get(api_url)
-    floor_features = response.json()['features']
-    subplot(1,1,1)
-    for target_list in floor_features:
-        if(target_list['geometry'] != None):
-            for coordinates in target_list['geometry']['coordinates']:
-                #print(len(coordinates))
-                for coordinate in coordinates:
-                    plot(coordinate[0], coordinate[1], 'b*')
+def retriveJsonFromFile():
+    shapefile = geopandas.read_file("PyCX-master/geoShapeFile/layers/POLYGON.shp")
+    shapefile.plot()
     gca()
     axis('scaled')
     show()
@@ -166,7 +161,9 @@ def update():
 
     # rdata.append(sum([1 for x in agents if x.type == 'r']))
     # fdata.append(sum([1 for x in agents if x.type == 'f']))
+
+
 #connect_to_api(buildings_in_pilestredet)
-retriveJsonFromAPI(flooroutline_4th_floor)
+retriveJsonFromFile()
 #pycxsimulator.GUI().start(func=[initialize, observe, update])
 
