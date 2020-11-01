@@ -1,9 +1,10 @@
+from datetime import time
 from random import choice, uniform
 import pycxsimulator
 from agent import agent
 from classRoom import classRoom
 import matplotlib.pyplot as plt
-from matplotlib.pyplot import axis, plot
+from matplotlib.pyplot import axis, cla, plot, title
 from matplotlib.patches import Polygon
 from shapely.geometry import mapping, shape
 import json
@@ -12,8 +13,6 @@ import geopandas
 import requests
 import numpy as np
 import copy as cp
-
-
 
 
 p_init = 100. #initial population
@@ -74,6 +73,7 @@ def upload_agents_json(fileName):
  
 
 def initializeAgents():
+    print("initializeAgents")
     agentsList = upload_agents_json("PyCX-master/agentdata.json")
     n_inf_agents = p_init * inf_rate
     
@@ -95,7 +95,7 @@ def initializeAgents():
         
 def observe():
     global agentsList
-
+    ax.cla()
     infected = [ag for ag in agentsList if ag.status == 'I']
     if len(infected) > 0:
         xCoord = [ag.x for ag in infected]
@@ -108,8 +108,14 @@ def observe():
         xCoord = [ag.x for ag in suspected]
         yCoord = [ag.y for ag in suspected]
         ax.plot(xCoord, yCoord, 'b.')
+    title('C-19 Mobility fourth floor P35')
+    #retriveJsonFromFile()
+    #connect_to_api(POI_ON_P35)
+
+
         
 def initialize():
+    print("initialize")
     global agentsList
     agentsList = initializeAgents()
     retriveJsonFromFile()
@@ -122,22 +128,15 @@ def update_one_agent():
         return
 
     ag = choice(agentsList)
-
+    noiseLevel = random.uniform(-0.000001, 0.000008)
     # simulating random movement
-    m = mA
-    ag.x += random.uniform(0.000099459776635,0.000099459779999)
-    ag.y += random.uniform(0.00014,0.000009000945)
-    #ag.x = 1 if ag.x > 1 else 0 if ag.x < 0 else ag.x
-    #ag.y = 1 if ag.y > 1 else 0 if ag.y < 0 else ag.y
+    #ag.x += random.uniform(-0.000001, 0.000008)
+    #ag.y += random.uniform(-0.000001, 0.000009)
+    ag.x =  (ag.x + noiseLevel) if (ag.x + noiseLevel) <= 100 else 100-(ag.x + noiseLevel)
+    ag.y +=  noiseLevel
     axis('scaled')
-    plt.show()
-    # detecting collision and simulating death or birth
-# =============================================================================
-#     neighbors = [nb for nb in agents if nb.type != ag.type
-#                  and (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
-# 
-# =============================================================================
-    neighbors = [nb for nb in agentsList if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
+
+    
     
 def update():
     global agentsList

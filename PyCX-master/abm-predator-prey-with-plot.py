@@ -87,18 +87,18 @@ def update_one_agent():
 
     if ag.type == 'r':
         if len(neighbors) > 0: # if there are foxes nearby
-            if random() < dr:
+            if random.random() < dr:
                 agents.remove(ag)
                 return
-        if random() < rr*(1-sum([1 for x in agents if x.type == 'r'])/nr):
+        if random.random() < rr*(1-sum([1 for x in agents if x.type == 'r'])/nr):
             agents.append(cp.copy(ag))
     else:
         if len(neighbors) == 0: # if there are no rabbits nearby
-            if random() < df:
+            if random.random() < df:
                 agents.remove(ag)
                 return
         else: # if there are rabbits nearby
-            if random() < rf:
+            if random.random() < rf:
                 agents.append(cp.copy(ag))
 
 def update():
