@@ -72,7 +72,7 @@ def initializeRooms():
 def alocateAgentsinclass(agentlist, roomlist):
     x = 0
     for ag in agentlist:
-        roomlist[x%15].AGENTS_LIST.append(ag)
+       # roomlist[x%15].AGENTS_LIST.append(ag)
         ag['whereAmI'] = roomlist[x%15]
         x+=1
         
@@ -95,7 +95,7 @@ def observe():
     for i in range(15):  
         subplot(row, col, i+1)
         cla()
-        infected = [ag for ag in CLASSROOM_DATA[i].AGENTS_LIST if ag.status == 'I']
+        infected = [ag for ag in CLASSROOM_DATA[i] if ag.status == 'I']
         if len(infected) > 0:
             x = [ag.x for ag in infected]
             y = [ag.y for ag in infected]
