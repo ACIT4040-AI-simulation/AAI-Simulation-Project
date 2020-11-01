@@ -1,12 +1,15 @@
+from PIL.Image import alpha_composite
+import matplotlib.pyplot as plt
+from matplotlib.pyplot import axis
 import pycxsimulator
-from pylab import *
+from matplotlib.patches import Polygon
 from agent import agent
 import json
 from random import randint as randint
 import geopandas
 from shapely.geometry import mapping, shape
 import requests
-
+import numpy as np
 import copy as cp
 p_init = 100. #initial population
 
@@ -23,9 +26,13 @@ mf = 0.05 # magnitude of movement of foxes
 cd = 0.02 # radius for collision detection
 cdsq = cd ** 2
 
-buildings_in_pilestredet = "https://api.mazemap.com/api/buildings/?campusid=53&srid=4326"
+buildings_in_pilestredet = "https://api.mazemap.com/api/buildings/?campusid=53&srid=4326" #buildingID 471, id 3991, 4th floor id 1772  "floorOutlineId": 1146047,
 flooroutline_4th_floor = "https://api.mazemap.com/api/flooroutlines/?campusid=53&srid=4326" #Coordinates are now saved in geoJson file, so internet is no longer needed
 POI_4th_floor = "https://api.mazemap.com/api/pois/562437/?srid=900913"
+POI_ON_P35 = "https://api.mazemap.com/api/campus/53/pois/?identifier=P35-P35&floorId=1772&srid=4326"
+
+fig,ax = plt.subplots()
+
 
 # =============================================================================
 # class agent:
@@ -39,17 +46,20 @@ POI_4th_floor = "https://api.mazemap.com/api/pois/562437/?srid=900913"
 # =============================================================================
 def connect_to_api(api_url):
     response = requests.get(api_url)
-    extractP35data = response.json()['buildings'][11]
-    floorOutlineId4thFloor = extractP35data['floors'][4]['floorOutlineId'] # "floorOutlineId": 1146047,
-    #print(floorOutlineId4thFloor)
-    return floorOutlineId4thFloor
+    pois = response.json()['pois']
+    p = None
+    for floor in pois:
+        if (floor['floorId'] == 1772 and floor['title'] != None):
+            #print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
+            for coordinates in floor['geometry']['coordinates']:
+                y = np.array(coordinates)
+                p = Polygon(y, facecolor = '#CEBBB7')
+                ax.add_patch(p)
 
 def retriveJsonFromFile():
     shapefile = geopandas.read_file("PyCX-master/geoShapeFile/layers/POLYGON.shp")
-    shapefile.plot()
-    gca()
-    axis('scaled')
-    show()
+    # print(shapefile.to_csv()) to get values 
+    shapefile.plot(ax = ax,color='white', edgecolor='k',linewidth = 4)
 
 def upload_json():
     agenList = json.load(open("PyCX-master/agentdata.json"))
@@ -162,8 +172,9 @@ def update():
     # rdata.append(sum([1 for x in agents if x.type == 'r']))
     # fdata.append(sum([1 for x in agents if x.type == 'f']))
 
-
-#connect_to_api(buildings_in_pilestredet)
 retriveJsonFromFile()
+connect_to_api(POI_ON_P35)
 #pycxsimulator.GUI().start(func=[initialize, observe, update])
 
+axis('scaled')
+plt.show()
