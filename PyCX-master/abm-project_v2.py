@@ -6,6 +6,7 @@ from matplotlib.patches import Polygon
 from agent import agent
 import json
 from random import randint as randint
+import random
 import geopandas
 from shapely.geometry import mapping, shape
 import requests
@@ -94,8 +95,8 @@ def initialize():
     
     
     for ag in agentsList:
-        ag.x = random()
-        ag.y = random()
+        ag.x = random.uniform(10.73,10.74)
+        ag.y = random.uniform(59.91,59.92)
         
     
     
@@ -103,21 +104,20 @@ def initialize():
 def observe():
     global agentsList, rdata, fdata
 
-    subplot(1, 1, 1)
-    cla()
     infected = [ag for ag in agentsList if ag.status == 'I']
     if len(infected) > 0:
-        x = [ag.x for ag in infected]
-        y = [ag.y for ag in infected]
-        plot(x, y, 'ro')
+        xCoord = [ag.x for ag in infected]
+        yCoord = [ag.y for ag in infected]
+        print(xCoord)
+        plt.plot(ax =ax, x=xCoord, y=yCoord, color='ro')
     
     suspected = [ag for ag in agentsList if ag.status == 'S']
     if len(suspected) > 0:
-        x = [ag.x for ag in suspected]
-        y = [ag.y for ag in suspected]
-        plot(x, y, 'b.')
-    axis('image')
-    axis([-1, 100, -1, 100])
+        xCoord = [ag.x for ag in suspected]
+        yCoord = [ag.y for ag in suspected]
+        plt.plot(ax = ax, x=xCoord, y=yCoord, color='b.')
+    # axis('image')
+    # axis([-1, 100, -1, 100])
     
 # =============================================================================
 # 
@@ -174,7 +174,7 @@ def update():
 
 retriveJsonFromFile()
 connect_to_api(POI_ON_P35)
-#pycxsimulator.GUI().start(func=[initialize, observe, update])
+pycxsimulator.GUI().start(func=[initialize, observe, update])
 
 axis('scaled')
 plt.show()
