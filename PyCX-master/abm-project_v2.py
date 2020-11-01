@@ -95,8 +95,8 @@ def initialize():
     
     
     for ag in agentsList:
-        ag.x = random.uniform(10.73,10.74)
-        ag.y = random.uniform(59.91,59.92)
+        ag.x = random.uniform(10.734699459776635,10.735943200721804)
+        ag.y = random.uniform(59.91914,59.919899000945)
         
     
     
@@ -108,16 +108,14 @@ def observe():
     if len(infected) > 0:
         xCoord = [ag.x for ag in infected]
         yCoord = [ag.y for ag in infected]
-        print(xCoord)
-        plt.plot(ax =ax, x=xCoord, y=yCoord, color='ro')
+        #print(xCoord)
+        ax.plot(xCoord, yCoord, 'ro')
     
     suspected = [ag for ag in agentsList if ag.status == 'S']
     if len(suspected) > 0:
         xCoord = [ag.x for ag in suspected]
         yCoord = [ag.y for ag in suspected]
-        plt.plot(ax = ax, x=xCoord, y=yCoord, color='b.')
-    # axis('image')
-    # axis([-1, 100, -1, 100])
+        ax.plot(xCoord, yCoord, 'b.')
     
 # =============================================================================
 # 
