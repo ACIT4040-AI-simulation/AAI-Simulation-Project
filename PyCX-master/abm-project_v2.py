@@ -1,74 +1,31 @@
-from PIL.Image import alpha_composite
-import matplotlib.pyplot as plt
-from matplotlib.pyplot import axis, plot
-from shapely.geometry.point import Point
 import pycxsimulator
-from matplotlib.patches import Polygon
+from pylab import *
 from agent import agent
+from classRoom import classRoom
 import json
-from random import choice, randint as randint, uniform
 import random
-import geopandas
-from shapely.geometry import mapping, shape
-import requests
-import numpy as np
+
+
+
 import copy as cp
-p_init = 100. #initial population
+p_init = 1000. #initial population
 
 inf_rate = 0.10 # initial infaction rate in a population
 mask_rate = 0.4 # percentage of mask users
-# dr = 1.0 # death rate of infected ppl
-# rr = 0.1 # recovery rate
+dr = 1.0 # death rate of infected ppl
+rr = 0.1 # recovery rate
 
 f_init = 0.10 # initial fox population
 mf = 0.05 # magnitude of movement of foxes
-# df = 0.1 # death rate of foxes when there is no food
-# rf = 0.5 # reproduction rate of foxes
+df = 0.1 # death rate of foxes when there is no food
+rf = 0.5 # reproduction rate of foxes
 
 cd = 0.02 # radius for collision detection
 cdsq = cd ** 2
-
-buildings_in_pilestredet = "https://api.mazemap.com/api/buildings/?campusid=53&srid=4326" #buildingID 471, id 3991, 4th floor id 1772  "floorOutlineId": 1146047,
-flooroutline_4th_floor = "https://api.mazemap.com/api/flooroutlines/?campusid=53&srid=4326" #Coordinates are now saved in geoJson file, so internet is no longer needed
-POI_4th_floor = "https://api.mazemap.com/api/pois/562437/?srid=900913"
-POI_ON_P35 = "https://api.mazemap.com/api/campus/53/pois/?identifier=P35-P35&floorId=1772&srid=4326"
-
-fig,ax = plt.subplots()
-
-
 # =============================================================================
-# class agent:
-#     def __init__(self, status,mask,antibac, sdistance):
-#         self.status = status #infected, recoverd, normal, exposed, dead,
-#         self.mask = mask
-#         self.antibac = antibac #rate 1-6
-#         self.sdistance = sdistance # rate setted with local agency
-#     def setStatus(self, status):
-#         self.status = status
-# =============================================================================
-def connect_to_api(api_url):
-    response = requests.get(api_url)
-    pois = response.json()['pois']
-    p = None
-    for floor in pois:
-        if (floor['floorId'] == 1772 and floor['title'] != None):
-            #print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
-            for coordinates in floor['geometry']['coordinates']:
-                y = np.array(coordinates)
-                p = Polygon(y, facecolor = '#CEBBB7')
-                ax.add_patch(p)
-        if(floor['floorId'] == 1772 and floor['title'] == None):
-            #print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
-            coordinates = floor['geometry']['coordinates']
-            ax.plot(coordinates[0],coordinates[1], 'g+')
-
-def retriveJsonFromFile():
-    shapefile = geopandas.read_file("PyCX-master/geoShapeFile/layers/POLYGON.shp")
-    # print(shapefile.to_csv()) to get values 
-    shapefile.plot(ax = ax,color='white', edgecolor='k',linewidth = 4)
-
-def upload_json():
-    agenList = json.load(open("PyCX-master/agentdata.json"))
+    
+def upload_agents_json(fileName):
+    agenList = json.load(open(fileName))
     agentObjList = []
 
     for agentObj in agenList:
@@ -76,64 +33,172 @@ def upload_json():
         agentObjList.append(temp)
     return agentObjList
 
-def initialize():
-    global agentsList,inf_data
-    
-# =============================================================================
-    agentsList = upload_json()
-#     
-#     lectroom1= classRom(agentsList[0:100])
-#     lectroom2= classRom(agentsList[100:200])
-# ============================================================================
-    
-    inf_data = []
-   
+
+def upload_classroom_json(fileName):
+    classRoomList = json.load(open(fileName))
+    classAgentsList = []
+
+    for classroom in classRoomList:
+        temp = classRoom(classroom['class_id'], classroom['class_type'], classroom['length'], classroom['width'], classroom['sitting_capacity'], classroom['cleaning_cycle'], classroom['clean_status'], classroom['antibac_dispenser'], classroom['ventilation_grade'])
+        classAgentsList.append(temp)
+    return classAgentsList    
+
+def initializeAgents():
+    agentsList = upload_agents_json("PyCX-master/agent1000.json")
     n_inf_agents = p_init * inf_rate
     
     #randomly assighn mask to the population as per rate of mask usage data
-    for i in range(int(p_init*mask_rate)):
-        agentsList[randint(0, p_init-1)].mask= True
+    maskedList = random.sample(agentsList,int(p_init*mask_rate))
+    for ag in maskedList:
+        ag.mask= True
         
     #randomly make ppl infected as per rate of infection rate data
-    for i in range(int(p_init*inf_rate)):
-        agentsList[randint(0, p_init-1)].status= 'I'
+    infectedList = random.sample(agentsList,int(p_init*inf_rate))
+    for ag in infectedList:
+        ag.status= 'I'
     
-    
+#this loop will be taken out to classrooms acording to the sizes.
     for ag in agentsList:
-        ag.x = random.uniform(10.734699459776635,10.735943200721804)
-        ag.y = random.uniform(59.91914,59.919899000945)
+        ag.x = random.random()
+        ag.y = random.random()
+    return agentsList
+
+def initializeRooms():
+    classRoomList = upload_classroom_json('PyCX-master/classrooms2.json')
+    return classRoomList
         
-    
-    
+def alocateAgentsinclass(agentlist, roomlist):
+    x = 0
+    for ag in agentlist:
+        roomlist[x%15].agentsList.append(ag)
+        ag.whereAmI = roomlist[x%15].class_id
+        x+=1
+        
+def initialize():
+    global agentsList,inf_data, classRoomList
 
+    agentsList = initializeAgents()
+    classRoomList = initializeRooms()
+        
+    alocateAgentsinclass(agentsList, classRoomList)
+    
 def observe():
-    global agentsList, rdata, fdata
-
-    infected = [ag for ag in agentsList if ag.status == 'I']
-    if len(infected) > 0:
-        xCoord = [ag.x for ag in infected]
-        yCoord = [ag.y for ag in infected]
-        #print(xCoord)
-        ax.plot(xCoord, yCoord, 'ro')
+    global agentsList, classRoomList
     
-    suspected = [ag for ag in agentsList if ag.status == 'S']
-    if len(suspected) > 0:
-        xCoord = [ag.x for ag in suspected]
-        yCoord = [ag.y for ag in suspected]
-        ax.plot(xCoord, yCoord, 'b.')
+    no_classes = len(classRoomList)
+    print('no classes = ', no_classes )
+    row = 5
+    col = 3
     
+    for i in range(15):  
+        subplot(row, col, i+1)
+        cla()
+        infected = [ag for ag in classRoomList[i].agentsList if ag.status == 'I']
+        if len(infected) > 0:
+            x = [ag.x for ag in infected]
+            y = [ag.y for ag in infected]
+            plot(x, y, 'ro')
+        
+        suspected = [ag for ag in classRoomList[i].agentsList if ag.status == 'S']
+        if len(suspected) > 0:
+            x = [ag.x for ag in suspected]
+            y = [ag.y for ag in suspected]
+            plot(x, y, 'b.')
+        axis('image')
+        axis([0, 1, 0, 1])
+        title('classRoom ')
+        
+        
 # =============================================================================
-# 
-#     subplot(2, 1, 2)
+#     subplot(2, 3, 2)
 #     cla()
-#     plot(rdata, label = 'prey')
-#     plot(fdata, label = 'predator')
-#     legend()
+#     infected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'I']
+#     if len(infected) > 0:
+#         x = [ag.x for ag in infected]
+#         y = [ag.y for ag in infected]
+#         plot(x, y, 'ro')
+#     
+#     suspected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'S']
+#     if len(suspected) > 0:
+#         x = [ag.x for ag in suspected]
+#         y = [ag.y for ag in suspected]
+#         plot(x, y, 'b.')
+#     axis('image')
+#     axis([0, 1, 0, 1])
+#     title('classRoom 2')
 # 
+#     subplot(2, 3, 3)
+#     cla()
+#     infected = [ag for ag in classRoomList[0].agentsList if ag.status == 'I']
+#     if len(infected) > 0:
+#         x = [ag.x for ag in infected]
+#         y = [ag.y for ag in infected]
+#         plot(x, y, 'ro')
+#     
+#     suspected = [ag for ag in classRoomList[0].agentsList if ag.status == 'S']
+#     if len(suspected) > 0:
+#         x = [ag.x for ag in suspected]
+#         y = [ag.y for ag in suspected]
+#         plot(x, y, 'b.')
+#     axis('image')
+#     axis([0, 1, 0, 1])
+#     title('classRoom 3')
+#     
+#     subplot(2, 3, 4)
+#     cla()
+#     infected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'I']
+#     if len(infected) > 0:
+#         x = [ag.x for ag in infected]
+#         y = [ag.y for ag in infected]
+#         plot(x, y, 'ro')
+#     
+#     suspected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'S']
+#     if len(suspected) > 0:
+#         x = [ag.x for ag in suspected]
+#         y = [ag.y for ag in suspected]
+#         plot(x, y, 'b.')
+#     axis('image')
+#     axis([0, 1, 0, 1])
+#     title('classRoom 4')
+#    
+#     subplot(2, 3, 5)
+#     cla()
+#     infected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'I']
+#     if len(infected) > 0:
+#         x = [ag.x for ag in infected]
+#         y = [ag.y for ag in infected]
+#         plot(x, y, 'ro')
+#     
+#     suspected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'S']
+#     if len(suspected) > 0:
+#         x = [ag.x for ag in suspected]
+#         y = [ag.y for ag in suspected]
+#         plot(x, y, 'b.')
+#     axis('image')
+#     axis([0, 1, 0, 1])
+#     title('classRoom 4')
+# 
+#     subplot(2, 3, 6)
+#     cla()
+#     infected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'I']
+#     if len(infected) > 0:
+#         x = [ag.x for ag in infected]
+#         y = [ag.y for ag in infected]
+#         plot(x, y, 'ro')
+#     
+#     suspected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'S']
+#     if len(suspected) > 0:
+#         x = [ag.x for ag in suspected]
+#         y = [ag.y for ag in suspected]
+#         plot(x, y, 'b.')
+#     axis('image')
+#     axis([0, 1, 0, 1])
+#     title('classRoom 4')
+#    
 # =============================================================================
+
 def update_one_agent():
     global agentsList
-    
     if agentsList == []:
         return
 
@@ -147,38 +212,30 @@ def update_one_agent():
     ag.y = 1 if ag.y > 1 else 0 if ag.y < 0 else ag.y
 
     # detecting collision and simulating death or birth
-    neighbors = [nb for nb in agentsList if nb.type != ag.type
+    neighbors = [nb for nb in agents if nb.type != ag.type
                  and (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
 
     if ag.type == 'r':
         if len(neighbors) > 0: # if there are foxes nearby
-            if random.random() < dr:
-                agentsList.remove(ag)
+            if random() < dr:
+                agents.remove(ag)
                 return
-        if random.random() < rr*(1-sum([1 for x in agentsList if x.type == 'r'])/nr):
-            agentsList.append(cp.copy(ag))
+        if random() < rr*(1-sum([1 for x in agents if x.type == 'r'])/nr):
+            agents.append(cp.copy(ag))
     else:
         if len(neighbors) == 0: # if there are no rabbits nearby
-            if random.andom() < df:
-                agentsList.remove(ag)
+            if random() < df:
+                agents.remove(ag)
                 return
         else: # if there are rabbits nearby
-            if random.random() < rf:
-                agentsList.append(cp.copy(ag))
+            if random() < rf:
+                agents.append(cp.copy(ag))
 
 def update():
-    global agentsList, rdata, fdata
+    global agentList, classRoomList
     t = 0.
-    while t < 1. and len(agentsList) > 0:
-        t += 1. / len(agentsList)
+    while t < 1. and len(agents) > 0:
+        t += 1. / len(agents)
         #update_one_agent()
 
-    # rdata.append(sum([1 for x in agents if x.type == 'r']))
-    # fdata.append(sum([1 for x in agents if x.type == 'f']))
-
-retriveJsonFromFile()
-connect_to_api(POI_ON_P35)
 pycxsimulator.GUI().start(func=[initialize, observe, update])
-
-axis('scaled')
-plt.show()

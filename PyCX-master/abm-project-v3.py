@@ -13,6 +13,7 @@ import geopandas
 import requests
 import numpy as np
 import copy as cp
+import os
 
 
 p_init = 100. #initial population
@@ -44,20 +45,20 @@ def connect_to_api(api_url):
     pois = response.json()['pois']
     p = None
     for floor in pois:
+        xyCoord = floor['geometry']['coordinates']
         if (floor['floorId'] == 1772 and floor['title'] != None):
-            #print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
+            print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
             for coordinates in floor['geometry']['coordinates']:
                 y = np.array(coordinates)
                 p = Polygon(y, facecolor = '#CEBBB7')
                 ax.add_patch(p)
+                #ax.text(y[0], y[1], s=floor['title'], horizontalalignment='center', bbox={'facecolor': 'white', 'alpha':0.8, 'pad': 2, 'edgecolor':'none'})
         if(floor['floorId'] == 1772 and floor['title'] == None):
             #print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
-            coordinates = floor['geometry']['coordinates']
-            ax.plot(coordinates[0],coordinates[1], 'g+')
-
+            ax.plot(xyCoord[0],xyCoord[1], 'g+')
 
 def retriveJsonFromFile():
-    shapefile = geopandas.read_file("PyCX-master/geoShapeFile/layers/POLYGON.shp")
+    shapefile = geopandas.read_file(os.path.abspath(os.path.dirname(__file__)) + "/geoShapeFile/layers/POLYGON.shp")
     # print(shapefile.to_csv()) to get values 
     shapefile.plot(ax = ax,color='white', edgecolor='k',linewidth = 4)
     
@@ -109,8 +110,8 @@ def observe():
         yCoord = [ag.y for ag in suspected]
         ax.plot(xCoord, yCoord, 'b.')
     title('C-19 Mobility fourth floor P35')
-    #retriveJsonFromFile()
-    #connect_to_api(POI_ON_P35)
+    retriveJsonFromFile()
+    connect_to_api(POI_ON_P35)
 
 
         
