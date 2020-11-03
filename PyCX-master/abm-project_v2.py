@@ -4,6 +4,7 @@ from agent import agent
 from classRoom import classRoom
 import json
 import random
+from random import choice, uniform
 
 
 
@@ -108,94 +109,6 @@ def observe():
         axis([0, 1, 0, 1])
         title('classRoom ')
         
-        
-# =============================================================================
-#     subplot(2, 3, 2)
-#     cla()
-#     infected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'I']
-#     if len(infected) > 0:
-#         x = [ag.x for ag in infected]
-#         y = [ag.y for ag in infected]
-#         plot(x, y, 'ro')
-#     
-#     suspected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'S']
-#     if len(suspected) > 0:
-#         x = [ag.x for ag in suspected]
-#         y = [ag.y for ag in suspected]
-#         plot(x, y, 'b.')
-#     axis('image')
-#     axis([0, 1, 0, 1])
-#     title('classRoom 2')
-# 
-#     subplot(2, 3, 3)
-#     cla()
-#     infected = [ag for ag in classRoomList[0].agentsList if ag.status == 'I']
-#     if len(infected) > 0:
-#         x = [ag.x for ag in infected]
-#         y = [ag.y for ag in infected]
-#         plot(x, y, 'ro')
-#     
-#     suspected = [ag for ag in classRoomList[0].agentsList if ag.status == 'S']
-#     if len(suspected) > 0:
-#         x = [ag.x for ag in suspected]
-#         y = [ag.y for ag in suspected]
-#         plot(x, y, 'b.')
-#     axis('image')
-#     axis([0, 1, 0, 1])
-#     title('classRoom 3')
-#     
-#     subplot(2, 3, 4)
-#     cla()
-#     infected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'I']
-#     if len(infected) > 0:
-#         x = [ag.x for ag in infected]
-#         y = [ag.y for ag in infected]
-#         plot(x, y, 'ro')
-#     
-#     suspected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'S']
-#     if len(suspected) > 0:
-#         x = [ag.x for ag in suspected]
-#         y = [ag.y for ag in suspected]
-#         plot(x, y, 'b.')
-#     axis('image')
-#     axis([0, 1, 0, 1])
-#     title('classRoom 4')
-#    
-#     subplot(2, 3, 5)
-#     cla()
-#     infected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'I']
-#     if len(infected) > 0:
-#         x = [ag.x for ag in infected]
-#         y = [ag.y for ag in infected]
-#         plot(x, y, 'ro')
-#     
-#     suspected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'S']
-#     if len(suspected) > 0:
-#         x = [ag.x for ag in suspected]
-#         y = [ag.y for ag in suspected]
-#         plot(x, y, 'b.')
-#     axis('image')
-#     axis([0, 1, 0, 1])
-#     title('classRoom 4')
-# 
-#     subplot(2, 3, 6)
-#     cla()
-#     infected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'I']
-#     if len(infected) > 0:
-#         x = [ag.x for ag in infected]
-#         y = [ag.y for ag in infected]
-#         plot(x, y, 'ro')
-#     
-#     suspected = [ag for ag in classRoomList[1].agentsList  if ag.status == 'S']
-#     if len(suspected) > 0:
-#         x = [ag.x for ag in suspected]
-#         y = [ag.y for ag in suspected]
-#         plot(x, y, 'b.')
-#     axis('image')
-#     axis([0, 1, 0, 1])
-#     title('classRoom 4')
-#    
-# =============================================================================
 
 def update_one_agent():
     global agentsList
@@ -203,39 +116,40 @@ def update_one_agent():
         return
 
     ag = choice(agentsList)
-
+    agents = agentsList
+    #print(vars(ag))
     # simulating random movement
-    m = mr if ag.type == 'r' else mf
+    m = mr if ag.status == 'r' else mf
     ag.x += uniform(-m, m)
     ag.y += uniform(-m, m)
     ag.x = 1 if ag.x > 1 else 0 if ag.x < 0 else ag.x
     ag.y = 1 if ag.y > 1 else 0 if ag.y < 0 else ag.y
 
     # detecting collision and simulating death or birth
-    neighbors = [nb for nb in agents if nb.type != ag.type
+    neighbors = [nb for nb in agents if nb.status != ag.status
                  and (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
 
-    if ag.type == 'r':
+    if ag.status == 'r':
         if len(neighbors) > 0: # if there are foxes nearby
-            if random() < dr:
+            if random.random() < dr:
                 agents.remove(ag)
                 return
-        if random() < rr*(1-sum([1 for x in agents if x.type == 'r'])/nr):
+        if random.random() < rr*(1-sum([1 for x in agents if x.status == 'r'])/nr):
             agents.append(cp.copy(ag))
     else:
         if len(neighbors) == 0: # if there are no rabbits nearby
-            if random() < df:
+            if random.random() < df:
                 agents.remove(ag)
                 return
         else: # if there are rabbits nearby
-            if random() < rf:
+            if random.random() < rf:
                 agents.append(cp.copy(ag))
 
 def update():
-    global agentList, classRoomList
+    global agentsList, classRoomList
     t = 0.
-    while t < 1. and len(agents) > 0:
-        t += 1. / len(agents)
-        #update_one_agent()
+    while t < 1. and len(agentsList) > 0:
+        t += 1. / len(agentsList)
+        update_one_agent()
 
 pycxsimulator.GUI().start(func=[initialize, observe, update])

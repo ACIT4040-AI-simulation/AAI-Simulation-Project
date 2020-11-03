@@ -1,18 +1,12 @@
-from datetime import time
-from random import choice, uniform
+from random import choice
 import pycxsimulator
 from agent import agent
-from classRoom import classRoom
 import matplotlib.pyplot as plt
-from matplotlib.pyplot import axis, cla, plot, title
+from matplotlib.pyplot import axis, title
 from matplotlib.patches import Polygon
-from shapely.geometry import mapping, shape
 import json
 import random
 import geopandas
-import requests
-import numpy as np
-import copy as cp
 import os
 
 
@@ -32,32 +26,35 @@ cd = 0.02 # radius for collision detection
 cdsq = cd ** 2
 # =============================================================================
 
-buildings_in_pilestredet = "https://api.mazemap.com/api/buildings/?campusid=53&srid=4326" #buildingID 471, id 3991, 4th floor id 1772  "floorOutlineId": 1146047,
-flooroutline_4th_floor = "https://api.mazemap.com/api/flooroutlines/?campusid=53&srid=4326" #Coordinates are now saved in geoJson file, so internet is no longer needed
-POI_4th_floor = "https://api.mazemap.com/api/pois/562437/?srid=900913"
-POI_ON_P35 = "https://api.mazemap.com/api/campus/53/pois/?identifier=P35-P35&floorId=1772&srid=4326"
-
+#buildingID 471, id 3991, 4th floor id 1772  "floorOutlineId": 1146047,
 fig,ax = plt.subplots()
 
+def find_center_of_polygon(vertexes):
+     _x_list = [vertex [0] for vertex in vertexes]
+     _y_list = [vertex [1] for vertex in vertexes]
+     _len = len(vertexes)
+     _x = sum(_x_list) / _len
+     _y = sum(_y_list) / _len
+     return(_x, _y)
 
-def connect_to_api(api_url):
-    response = requests.get(api_url)
-    pois = response.json()['pois']
+def plot_4thfloor_rooms():
+    response = json.load(open(os.path.abspath(os.path.dirname(__file__)) + "/P35_4thfloor_rooms.json"))
+    pois = response['pois']
     p = None
     for floor in pois:
         xyCoord = floor['geometry']['coordinates']
         if (floor['floorId'] == 1772 and floor['title'] != None):
-            print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
+            #print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
             for coordinates in floor['geometry']['coordinates']:
-                y = np.array(coordinates)
-                p = Polygon(y, facecolor = '#CEBBB7')
+                p = Polygon(coordinates, facecolor = '#CEBBB7')
                 ax.add_patch(p)
-                #ax.text(y[0], y[1], s=floor['title'], horizontalalignment='center', bbox={'facecolor': 'white', 'alpha':0.8, 'pad': 2, 'edgecolor':'none'})
+                center = find_center_of_polygon(coordinates)
+                ax.text(center[0], center[1], floor['title'], ha="center", family='sans-serif', size=5)
         if(floor['floorId'] == 1772 and floor['title'] == None):
             #print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
             ax.plot(xyCoord[0],xyCoord[1], 'g+')
 
-def retriveJsonFromFile():
+def createFloorOutline():
     shapefile = geopandas.read_file(os.path.abspath(os.path.dirname(__file__)) + "/geoShapeFile/layers/POLYGON.shp")
     # print(shapefile.to_csv()) to get values 
     shapefile.plot(ax = ax,color='white', edgecolor='k',linewidth = 4)
@@ -75,7 +72,7 @@ def upload_agents_json(fileName):
 
 def initializeAgents():
     print("initializeAgents")
-    agentsList = upload_agents_json("PyCX-master/agentdata.json")
+    agentsList = upload_agents_json(os.path.abspath(os.path.dirname(__file__)) + "/agentdata.json")
     n_inf_agents = p_init * inf_rate
     
     #randomly assighn mask to the population as per rate of mask usage data
@@ -101,7 +98,6 @@ def observe():
     if len(infected) > 0:
         xCoord = [ag.x for ag in infected]
         yCoord = [ag.y for ag in infected]
-        #print(xCoord)
         ax.plot(xCoord, yCoord, 'ro')
     
     suspected = [ag for ag in agentsList if ag.status == 'S']
@@ -109,9 +105,8 @@ def observe():
         xCoord = [ag.x for ag in suspected]
         yCoord = [ag.y for ag in suspected]
         ax.plot(xCoord, yCoord, 'b.')
-    title('C-19 Mobility fourth floor P35')
-    retriveJsonFromFile()
-    connect_to_api(POI_ON_P35)
+    createFloorOutline()
+    plot_4thfloor_rooms()
 
 
         
@@ -119,8 +114,8 @@ def initialize():
     print("initialize")
     global agentsList
     agentsList = initializeAgents()
-    retriveJsonFromFile()
-    connect_to_api(POI_ON_P35)
+    title('C-19 Mobility fourth floor P35')
+
 
         
 def update_one_agent():
@@ -129,12 +124,11 @@ def update_one_agent():
         return
 
     ag = choice(agentsList)
-    noiseLevel = random.uniform(-0.000001, 0.000008)
-    # simulating random movement
-    #ag.x += random.uniform(-0.000001, 0.000008)
-    #ag.y += random.uniform(-0.000001, 0.000009)
-    ag.x =  (ag.x + noiseLevel) if (ag.x + noiseLevel) <= 100 else 100-(ag.x + noiseLevel)
-    ag.y +=  noiseLevel
+    XnoiseLevel = random.uniform(-0.000050, 0.000050)
+    YnoiseLevel = random.uniform(-0.0000300,0.0000300)
+    
+    ag.x =  (ag.x + XnoiseLevel) if (ag.x + XnoiseLevel) <= 100 else 100-(ag.x + XnoiseLevel)
+    ag.y +=  YnoiseLevel
     axis('scaled')
 
     
@@ -148,3 +142,4 @@ def update():
         update_one_agent()
 
 pycxsimulator.GUI().start(func=[initialize, observe, update])
+
