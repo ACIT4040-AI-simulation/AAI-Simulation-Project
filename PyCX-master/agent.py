@@ -22,6 +22,7 @@ class agent():
         self.infected_By = ''
         self.infect_to_List = []
         self.whereAmI = 0
+        self.classGroup = 1
         
         # print("agents class design is under development")
     

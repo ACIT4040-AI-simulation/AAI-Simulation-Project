@@ -4,6 +4,7 @@ from agent import agent
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import axis, title
 from matplotlib.patches import Polygon
+from matplotlib.widgets import Button
 from shapely.geometry.polygon import Polygon as ply
 from shapely.geometry.point import Point
 import json
@@ -28,9 +29,12 @@ cd = 0.02 # radius for collision detection
 cdsq = cd ** 2
 # =============================================================================
 
-p35_outline = any
+p35_outline = []
+numberOfAgentsInP35 = 0
 #buildingID 471, id 3991, 4th floor id 1772  "floorOutlineId": 1146047,
 fig,ax = plt.subplots()
+
+pycx = pycxsimulator.GUI()
 
 def find_center_of_polygon(vertexes):
      _x_list = [vertex [0] for vertex in vertexes]
@@ -43,7 +47,6 @@ def find_center_of_polygon(vertexes):
 def plot_4thfloor_rooms():
     response = json.load(open(os.path.abspath(os.path.dirname(__file__)) + "/P35_4thfloor_rooms.json"))
     pois = response['pois']
-    p = None
     for floor in pois:
         xyCoord = floor['geometry']['coordinates']
         if (floor['floorId'] == 1772 and floor['title'] != None):
@@ -67,14 +70,14 @@ def givelabelstoclassroom(coordinates, floor):
 
 
 def checkIfAgentIsInARoom(coordinates, floor):
-    global agentsList
+    global agentsList, numberOfAgentsInP35
     for agent in agentsList:
         agentPoint = Point(agent.x,agent.y)
         isWithin = checkAgentInClassroom(agentPoint,ply(coordinates))
         if(isWithin):
+            numberOfAgentsInP35 += 1
             agent.whereAmI = floor['poiId']
-            print(agent.id_no, " with coordinates ", agentPoint , " is inside ", floor['title'])
-
+            #print(agent.id_no, " with coordinates ", agentPoint , " is inside ", floor['title'])
 def checkAgentInClassroom(point, polygon):
     return point.within(polygon)
 
@@ -98,6 +101,7 @@ def upload_agents_json(fileName):
  
 
 def initializeAgents():
+    global p35_outline
     print("initializeAgents")
     agentsList = upload_agents_json(os.path.abspath(os.path.dirname(__file__)) + "/agentdata.json")
     n_inf_agents = p_init * inf_rate
@@ -114,12 +118,19 @@ def initializeAgents():
     
 #this loop will be taken out to classrooms acording to the sizes.
     for ag in agentsList:
+        ag.classGroup = random.randint(1,3)
         ag.x = random.uniform(10.734699459776635,10.735943200721804)
         ag.y = random.uniform(59.91914,59.919899000945)
+        isWithin = checkAgentInClassroom(Point(ag.x,ag.y),ply(p35_outline))
+        if(isWithin is False):
+            ag.x = random.uniform(10.734699459776635,10.735943200721804)
+            ag.y = random.uniform(59.91914,59.919899000945)
+            
     return agentsList
         
 def observe():
-    global agentsList
+    global agentsList, numberOfAgentsInP35
+    numberOfAgentsInP35 = 0
     ax.cla()
     infected = [ag for ag in agentsList if ag.status == 'I']
     if len(infected) > 0:
@@ -134,6 +145,13 @@ def observe():
         ax.plot(xCoord, yCoord, 'b.')
     createFloorOutline()
     plot_4thfloor_rooms()
+    print("There are ", 100-numberOfAgentsInP35, "students just outside P35 at the moment")
+    if(numberOfAgentsInP35 <= 30):
+        pycx.running = False
+        print("Simulation stopped because number of agents inside reached 0")
+    plt.title('Minimize this figure')
+    fig.suptitle('C-19 Mobility; {} students in P35'.format(numberOfAgentsInP35))
+
 
 
         
@@ -141,9 +159,6 @@ def initialize():
     print("initialize")
     global agentsList
     agentsList = initializeAgents()
-    title('C-19 Mobility fourth floor P35')
-
-
         
 def update_one_agent():
     global agentsList
@@ -172,5 +187,5 @@ def update():
         
         update_one_agent()
 
-pycxsimulator.GUI().start(func=[initialize, observe, update])
+pycx.start(func=[initialize, observe, update])
 
