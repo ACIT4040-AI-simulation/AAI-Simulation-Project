@@ -4,6 +4,8 @@ from agent import agent
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import axis, title
 from matplotlib.patches import Polygon
+from shapely.geometry.polygon import Polygon as ply
+from shapely.geometry.point import Point
 import json
 import random
 import geopandas
@@ -26,6 +28,7 @@ cd = 0.02 # radius for collision detection
 cdsq = cd ** 2
 # =============================================================================
 
+p35_outline = any
 #buildingID 471, id 3991, 4th floor id 1772  "floorOutlineId": 1146047,
 fig,ax = plt.subplots()
 
@@ -45,19 +48,43 @@ def plot_4thfloor_rooms():
         xyCoord = floor['geometry']['coordinates']
         if (floor['floorId'] == 1772 and floor['title'] != None):
             #print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
-            for coordinates in floor['geometry']['coordinates']:
-                p = Polygon(coordinates, facecolor = '#CEBBB7')
-                ax.add_patch(p)
-                center = find_center_of_polygon(coordinates)
-                ax.text(center[0], center[1], floor['title'], ha="center", family='sans-serif', size=5)
+            drawRoomsAndAnnotateLabels(floor)
         if(floor['floorId'] == 1772 and floor['title'] == None):
             #print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
             ax.plot(xyCoord[0],xyCoord[1], 'g+')
 
+def drawRoomsAndAnnotateLabels(floor):
+    for coordinates in floor['geometry']['coordinates']:
+        p = Polygon(coordinates, facecolor = '#CEBBB7')
+        ax.add_patch(p)
+        #givelabelstoclassroom(coordinates, floor) uncomment if seeing labels
+        checkIfAgentIsInARoom(coordinates, floor)
+
+
+def givelabelstoclassroom(coordinates, floor):
+    center = find_center_of_polygon(coordinates)
+    ax.text(center[0], center[1], floor['title'], ha="center", family='sans-serif', size=5)
+
+
+def checkIfAgentIsInARoom(coordinates, floor):
+    global agentsList
+    for agent in agentsList:
+        agentPoint = Point(agent.x,agent.y)
+        isWithin = checkAgentInClassroom(agentPoint,ply(coordinates))
+        if(isWithin):
+            agent.whereAmI = floor['poiId']
+            print(agent.id_no, " with coordinates ", agentPoint , " is inside ", floor['title'])
+
+def checkAgentInClassroom(point, polygon):
+    return point.within(polygon)
+
+
 def createFloorOutline():
-    shapefile = geopandas.read_file(os.path.abspath(os.path.dirname(__file__)) + "/geoShapeFile/layers/POLYGON.shp")
-    # print(shapefile.to_csv()) to get values 
-    shapefile.plot(ax = ax,color='white', edgecolor='k',linewidth = 4)
+    response = json.load(open(os.path.abspath(os.path.dirname(__file__)) + "/P35_FloorOutline.geojson"))
+    p35_outline = response['features'][0]['geometry']['coordinates']
+    for coordinates in p35_outline:
+        p = Polygon(coordinates, facecolor = 'white', edgecolor='k',linewidth = 4)
+        ax.add_patch(p)
     
 def upload_agents_json(fileName):
     agenList = json.load(open(fileName))
@@ -124,14 +151,18 @@ def update_one_agent():
         return
 
     ag = choice(agentsList)
-    XnoiseLevel = random.uniform(-0.000050, 0.000050)
-    YnoiseLevel = random.uniform(-0.0000300,0.0000300)
-    
-    ag.x =  (ag.x + XnoiseLevel) if (ag.x + XnoiseLevel) <= 100 else 100-(ag.x + XnoiseLevel)
-    ag.y +=  YnoiseLevel
+    XnoiseLevel = random.uniform(-5*10**-5, 5*10**-5)
+    YnoiseLevel = random.uniform(-3*10**-5,3*10**-5)
+    minX = 10.734699459776635
+    maxX = 10.735943200721804
+    minY = 59.91914
+    maxY = 59.919899000945
+    #print(vars(ag))
+    if(minX < ag.x < maxX and minY < ag.y < maxY):
+        ag.x += XnoiseLevel
+        ag.y += YnoiseLevel    
     axis('scaled')
-
-    
+   
     
 def update():
     global agentsList
