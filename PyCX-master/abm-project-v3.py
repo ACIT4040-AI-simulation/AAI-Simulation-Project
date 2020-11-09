@@ -1,10 +1,15 @@
 from random import choice
+
+from matplotlib import colors
 import pycxsimulator
 from agent import agent
+from PIL import Image as img
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import axis, title
+import matplotlib.image as mpimg
 from matplotlib.patches import Polygon
 from matplotlib.widgets import Button
+import matplotlib.colors as colors
 from shapely.geometry.polygon import Polygon as ply
 from shapely.geometry.point import Point
 import json
@@ -28,7 +33,7 @@ rf = 0.5 # reproduction rate of foxes
 cd = 0.02 # radius for collision detection
 cdsq = cd ** 2
 # =============================================================================
-
+imgPath = os.path.abspath(os.path.dirname(__file__)) + "/p35-4thfloor_withdoors.png"
 p35_outline = []
 numberOfAgentsInP35 = 0
 #buildingID 471, id 3991, 4th floor id 1772  "floorOutlineId": 1146047,
@@ -78,6 +83,10 @@ def checkIfAgentIsInARoom(coordinates, floor):
             numberOfAgentsInP35 += 1
             agent.whereAmI = floor['poiId']
             #print(agent.id_no, " with coordinates ", agentPoint , " is inside ", floor['title'])
+        # else:
+        #     print("not within", agent.id_no)
+        #     agentsList.remove(agent)
+
 def checkAgentInClassroom(point, polygon):
     return point.within(polygon)
 
@@ -86,7 +95,7 @@ def createFloorOutline():
     response = json.load(open(os.path.abspath(os.path.dirname(__file__)) + "/P35_FloorOutline.geojson"))
     p35_outline = response['features'][0]['geometry']['coordinates']
     for coordinates in p35_outline:
-        p = Polygon(coordinates, facecolor = 'white', edgecolor='k',linewidth = 4)
+        p = Polygon(coordinates, facecolor = '#F4F4F4', edgecolor='k',linewidth = 4)
         ax.add_patch(p)
     
 def upload_agents_json(fileName):
@@ -119,15 +128,21 @@ def initializeAgents():
 #this loop will be taken out to classrooms acording to the sizes.
     for ag in agentsList:
         ag.classGroup = random.randint(1,3)
-        ag.x = random.uniform(10.734699459776635,10.735943200721804)
-        ag.y = random.uniform(59.91914,59.919899000945)
-        isWithin = checkAgentInClassroom(Point(ag.x,ag.y),ply(p35_outline))
-        if(isWithin is False):
-            ag.x = random.uniform(10.734699459776635,10.735943200721804)
-            ag.y = random.uniform(59.91914,59.919899000945)
+        ag.x = random.uniform(600,1800)
+        ag.y = random.uniform(300,1200)
+        getRGB_Color(ag)
+        
             
     return agentsList
-        
+
+def getRGB_Color(ag):
+    data = []
+    data.append((ag.x, ag.y))
+    im = plt.imshow(data)
+    rgb = im.cmap(im.norm( (ag.x,ag.y) ))
+    getHex = colors.rgb2hex(rgb[0])
+    #print(getHex)
+
 def observe():
     global agentsList, numberOfAgentsInP35
     numberOfAgentsInP35 = 0
@@ -143,14 +158,21 @@ def observe():
         xCoord = [ag.x for ag in suspected]
         yCoord = [ag.y for ag in suspected]
         ax.plot(xCoord, yCoord, 'b.')
-    createFloorOutline()
-    plot_4thfloor_rooms()
-    print("There are ", 100-numberOfAgentsInP35, "students just outside P35 at the moment")
-    if(numberOfAgentsInP35 <= 30):
-        pycx.running = False
-        print("Simulation stopped because number of agents inside reached 0")
+    #createFloorOutline()
+    #plot_4thfloor_rooms()
+    #if(numberOfAgentsInP35 <= -1):
+     #   pycx.running = False
+        #print("Simulation stopped because number of agents inside reached 0")
     plt.title('Minimize this figure')
     fig.suptitle('C-19 Mobility; {} students in P35'.format(numberOfAgentsInP35))
+    plotImage()
+
+def plotImage():
+    picture = mpimg.imread(imgPath)
+    ax.imshow(picture)
+    #print(img[2105,1120])
+    #print(img[2038,1120])
+    axis('scaled')
 
 
 
@@ -166,17 +188,27 @@ def update_one_agent():
         return
 
     ag = choice(agentsList)
-    XnoiseLevel = random.uniform(-5*10**-5, 5*10**-5)
-    YnoiseLevel = random.uniform(-3*10**-5,3*10**-5)
-    minX = 10.734699459776635
-    maxX = 10.735943200721804
-    minY = 59.91914
-    maxY = 59.919899000945
-    #print(vars(ag))
+    XnoiseLevel = random.randint(-50, 50)
+    YnoiseLevel = random.randint(-50,50)
+    im = img.open(imgPath) # Can be many different formats.
+    pix = im.load()
+    #print (im.size)  # Get the width and hight of the image for iterating over
+    minX = 600
+    maxX = 1800
+    minY = 300
+    maxY = 1200   
     if(minX < ag.x < maxX and minY < ag.y < maxY):
         ag.x += XnoiseLevel
-        ag.y += YnoiseLevel    
-    axis('scaled')
+        ag.y += YnoiseLevel
+        try:
+            #print(pix[ag.y,ag.x])  # Get the RGBA Value of the a pixel of an image
+            if(pix[ag.y,ag.x] != (255,255,255) or (0,0,0) ):
+                ag.x -= XnoiseLevel
+                ag.y -= YnoiseLevel
+        except IndexError as e:
+            pass
+  
+    
    
     
 def update():
