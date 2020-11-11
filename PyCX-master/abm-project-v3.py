@@ -2,7 +2,7 @@ from random import choice
 
 from matplotlib import colors
 import pycxsimulator
-from agent import agent
+from evo_agent import evo_agent as agent
 from PIL import Image as img
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import axis, title
@@ -207,6 +207,9 @@ def update_one_agent():
                 ag.y -= YnoiseLevel
         except IndexError as e:
             pass
+    neighbors = [nb for nb in classroom.agentsList if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
+    print('len =', len(neighbors))
+    ag.behavior(neighbors)
   
     
    
