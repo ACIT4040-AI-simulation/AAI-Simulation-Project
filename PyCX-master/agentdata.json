@@ -1,5 +1,13 @@
 [
- 
+  {
+    "id_no": 55,
+    "age": 39,
+    "gender": "female",
+    "status": "S",
+    "mask": "False",
+    "antibact": 3,
+    "socialDistance": 0
+  },
   {
     "id_no": 80,
     "age": 39,
