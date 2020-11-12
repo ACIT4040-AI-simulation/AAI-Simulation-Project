@@ -15,10 +15,11 @@ from shapely.geometry.point import Point
 import json
 import random
 import geopandas
+import numpy as np
 import os
 
 
-p_init = 100. #initial population
+p_init = 20. #initial population
 
 inf_rate = 0.10 # initial infaction rate in a population
 mask_rate = 0.4 # percentage of mask users
@@ -207,9 +208,12 @@ def update_one_agent():
                 ag.y -= YnoiseLevel
         except IndexError as e:
             pass
-    neighbors = [nb for nb in classroom.agentsList if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
-    print('len =', len(neighbors))
-    ag.behavior(neighbors)
+    # neighbors = [nb for nb in classroom.agentsList if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
+    #np.linalg.norm([x-x,y-y], ord = 2) postion_1 - position_2
+
+
+    # print('len =', len(neighbors))
+    # ag.behavior(neighbors)
   
     
    

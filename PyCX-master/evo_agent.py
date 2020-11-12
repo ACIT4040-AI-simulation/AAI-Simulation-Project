@@ -23,6 +23,8 @@ class evo_agent():
         self.socilDistance = socialDistance # rate setted with local agency
         self.action =''
         self.infected_By = ''
+        self.age = "",
+        self.sex = "",
         self.infect_to_List = []
         self.clock = 0
         self.infclock = 0
@@ -31,7 +33,7 @@ class evo_agent():
         self.classGroup = 1
         
     def tostring(self):
-        print(self.id_no, 'lala')
+        print(self.id_no)
         print(self.age)
         print(self.sex)
         print(self.status)
