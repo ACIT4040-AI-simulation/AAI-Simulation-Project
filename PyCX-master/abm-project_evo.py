@@ -4,25 +4,24 @@ from agent import agent
 from classRoom import classRoom
 import json
 import random
-from random import choice, uniform
-
-
-
 import copy as cp
 p_init = 1000. #initial population
 
+#infected ppl start from one
 inf_rate = 0.10 # initial infaction rate in a population
 mask_rate = 0.4 # percentage of mask users
 dr = 1.0 # death rate of infected ppl
 rr = 0.1 # recovery rate
 
 f_init = 0.10 # initial fox population
-mf = 0.05 # magnitude of movement of foxes
+mA = 0.05 # magnitude of movement of agents move
 df = 0.1 # death rate of foxes when there is no food
 rf = 0.5 # reproduction rate of foxes
 
-cd = 0.02 # radius for collision detection
+cd = 0.05 # radius for collision detection
 cdsq = cd ** 2
+sdata = []
+idata = []
 # =============================================================================
     
 def upload_agents_json(fileName):
@@ -34,7 +33,6 @@ def upload_agents_json(fileName):
         agentObjList.append(temp)
     return agentObjList
 
-
 def upload_classroom_json(fileName):
     classRoomList = json.load(open(fileName))
     classAgentsList = []
@@ -45,7 +43,7 @@ def upload_classroom_json(fileName):
     return classAgentsList    
 
 def initializeAgents():
-    agentsList = upload_agents_json("PyCX-master/agent1000.json")
+    agentsList = upload_agents_json("agent1000.json")
     n_inf_agents = p_init * inf_rate
     
     #randomly assighn mask to the population as per rate of mask usage data
@@ -57,6 +55,7 @@ def initializeAgents():
     infectedList = random.sample(agentsList,int(p_init*inf_rate))
     for ag in infectedList:
         ag.status= 'I'
+        
     
 #this loop will be taken out to classrooms acording to the sizes.
     for ag in agentsList:
@@ -65,18 +64,18 @@ def initializeAgents():
     return agentsList
 
 def initializeRooms():
-    classRoomList = upload_classroom_json('PyCX-master/classrooms2.json')
+    classRoomList = upload_classroom_json('classrooms2.json')
     return classRoomList
         
 def alocateAgentsinclass(agentlist, roomlist):
     x = 0
     for ag in agentlist:
         roomlist[x%15].agentsList.append(ag)
-        ag.whereAmI = roomlist[x%15].class_id
+        ag.whereAmI = roomlist[x%15]
         x+=1
         
 def initialize():
-    global agentsList,inf_data, classRoomList
+    global agentsList,inf_data,classRoomList,sdata, idata
 
     agentsList = initializeAgents()
     classRoomList = initializeRooms()
@@ -84,11 +83,11 @@ def initialize():
     alocateAgentsinclass(agentsList, classRoomList)
     
 def observe():
-    global agentsList, classRoomList
+    global agentsList, classRoomList, sdata, idata
     
     no_classes = len(classRoomList)
     print('no classes = ', no_classes )
-    row = 5
+    row = 6
     col = 3
     
     for i in range(15):  
@@ -106,9 +105,14 @@ def observe():
             y = [ag.y for ag in suspected]
             plot(x, y, 'b.')
         axis('image')
-        axis([0, 1, 0, 1])
+        axis([0, 1, 0, 1]) # we will scale it acording to the size
         title('classRoom ')
-        
+   
+    subplot(row,col , 17)
+    cla()
+    plot(sdata, label = 'prey')
+    plot(idata, label = 'predator')
+    legend()             
 
 def update_one_agent():
     global agentsList
@@ -116,40 +120,26 @@ def update_one_agent():
         return
 
     ag = choice(agentsList)
-    agents = agentsList
-    #print(vars(ag))
     # simulating random movement
-    m = mr if ag.status == 'r' else mf
+    m = mA
     ag.x += uniform(-m, m)
     ag.y += uniform(-m, m)
     ag.x = 1 if ag.x > 1 else 0 if ag.x < 0 else ag.x
     ag.y = 1 if ag.y > 1 else 0 if ag.y < 0 else ag.y
 
-    # detecting collision and simulating death or birth
-    neighbors = [nb for nb in agents if nb.status != ag.status
-                 and (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
-
-    if ag.status == 'r':
-        if len(neighbors) > 0: # if there are foxes nearby
-            if random.random() < dr:
-                agents.remove(ag)
-                return
-        if random.random() < rr*(1-sum([1 for x in agents if x.status == 'r'])/nr):
-            agents.append(cp.copy(ag))
-    else:
-        if len(neighbors) == 0: # if there are no rabbits nearby
-            if random.random() < df:
-                agents.remove(ag)
-                return
-        else: # if there are rabbits nearby
-            if random.random() < rf:
-                agents.append(cp.copy(ag))
-
+    classroom = ag.whereAmI
+    neighbors = [nb for nb in classroom.agentsList if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
+    print('Gorebetoch =', len(neighbors))
+    ag.behavior(neighbors)
+    
 def update():
-    global agentsList, classRoomList
+    global agentsList, classRoomList, sdata, idata
     t = 0.
     while t < 1. and len(agentsList) > 0:
-        t += 1. / len(agentsList)
+        t += 1. / len(agentsList)        
         update_one_agent()
+
+    sdata.append(sum([1 for x in agentsList if x.status == 'S']))
+    idata.append(sum([1 for x in agentsList if x.status == 'I']))
 
 pycxsimulator.GUI().start(func=[initialize, observe, update])

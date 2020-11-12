@@ -30,8 +30,8 @@ def initialize():
     for i in range(r_init + f_init):
         ag = agent()
         ag.type = 'r' if i < r_init else 'f'
-        ag.x = random()
-        ag.y = random()
+        ag.x = random.random()
+        ag.y = random.random()
         agents.append(ag)
 
 def observe():
@@ -43,12 +43,12 @@ def observe():
     if len(rabbits) > 0:
         x = [ag.x for ag in rabbits]
         y = [ag.y for ag in rabbits]
-        plot(x, y, 'b웃')
+        plot(x, y, 'b.')
     foxes = [ag for ag in agents if ag.type == 'f']
     if len(foxes) > 0:
         x = [ag.x for ag in foxes]
         y = [ag.y for ag in foxes]
-        plot(x, y, 'r웃')
+        plot(x, y, 'ro')
     axis('image')
     axis([0, 1, 0, 1])
 
@@ -87,18 +87,18 @@ def update_one_agent():
 
     if ag.type == 'r':
         if len(neighbors) > 0: # if there are foxes nearby
-            if random() < dr:
+            if random.random() < dr:
                 agents.remove(ag)
                 return
-        if random() < rr*(1-sum([1 for x in agents if x.type == 'r'])/nr):
+        if random.random() < rr*(1-sum([1 for x in agents if x.type == 'r'])/nr):
             agents.append(cp.copy(ag))
     else:
         if len(neighbors) == 0: # if there are no rabbits nearby
-            if random() < df:
+            if random.random() < df:
                 agents.remove(ag)
                 return
         else: # if there are rabbits nearby
-            if random() < rf:
+            if random.random() < rf:
                 agents.append(cp.copy(ag))
 
 def update():

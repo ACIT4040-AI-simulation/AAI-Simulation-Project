@@ -21,6 +21,9 @@ class agent():
         self.action =''
         self.infected_By = ''
         self.infect_to_List = []
+        self.whereAmI = 0
+        self.classGroup = 1
+        
         # print("agents class design is under development")
     
     #testing and debug
@@ -40,7 +43,7 @@ class agent():
     #iterate perseption list
         for perception in perceptionsList:
             if isinstance(perception, agent):
-                perceptAgent(self,perception)
+                self.perceptAgent(self,perception)
             else:
                 pass
             '''
