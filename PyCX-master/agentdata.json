@@ -1,8 +1,5 @@
 [
   {
-<<<<<<< HEAD
-    "id_no": 55,
-=======
     "id_no": 0,
     "age": 23,
     "gender": "female",
@@ -526,7 +523,6 @@
   },
   {
     "id_no": 58,
->>>>>>> develop
     "age": 39,
     "gender": "female",
     "status": "S",
@@ -738,8 +734,9 @@
     "gender": "male",
     "status": "S",
     "mask": "False",
-    "antibact": 2,
-    "socialDistance": 1
+    "antibact": 2, // DEfault FALSE
+    "socialDistance": //TRUE 
+    // infectionRate
   },
   {
     "id_no": 82,

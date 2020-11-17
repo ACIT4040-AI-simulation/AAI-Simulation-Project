@@ -64,6 +64,19 @@ edges = cv2.Canny(sobelIMG,100,200)
 ax.imshow(picture)
 
 
+
+"""
+This will change the percentage of Infected agents according the Initial agentsList
+"""
+def changePercentageOfInfectedAgents(numberOfAgents, agentsList):
+    for i in range(numberOfAgents):
+        #agent.Status = 'I';
+    
+    return agentsList
+
+
+
+
 def find_center_of_polygon(vertexes):
      _x_list = [vertex [0] for vertex in vertexes]
      _y_list = [vertex [1] for vertex in vertexes]
@@ -121,17 +134,21 @@ def createFloorOutline():
         p = Polygon(coordinates, facecolor = '#FFFFFF', edgecolor='#000000',linewidth = 4)
         ax.add_patch(p)
     
-def upload_agents_json(fileName):
+def upload_agents_json(fileName, changeIntialPopulation):
     agenList = json.load(open(fileName))
     agentObjList = []
 
-    for agentObj in agenList:
+    for i in range(changeIntialPopulation):
         temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'], agentObj['antibact'], agentObj['socialDistance'])
         agentObjList.append(temp)
+    agentObjList = changePercentageOfInfectedAgents(40, agentObjList)
     return agentObjList
 
  
+"""
+ This will have 4 parameters distance (float), mask (float), sanitizer (float), initial population (INT)
 
+"""
 def initializeAgents():
     global p35_outline
     print("initializeAgents")
@@ -156,7 +173,12 @@ def initializeAgents():
         #ag.x = random.uniform(minX,maxX)
         #ag.y = random.uniform(minY,maxY)
         #getRGB_Color(ag)
-        
+    """
+        40 / 100 
+        change initializaion position of agents until probaility is reached. 
+        Probabilitycounter = 0;
+        ag = choice ag2 chouce, checkDIstance(ag1,ag2): Probabilitycounter++; 5 / 100 = 0.05
+    """
             
     return agentsList
 
@@ -230,11 +252,14 @@ def update_one_agent():
 
 def checkDistanceBetween(ag,ag2):
     distanceBetween = np.linalg.norm([ag.x-ag2.x,ag.y-ag2.y], ord = 2)
-    if(distanceBetween < 40):
-        #print(distanceBetween, "\n", (ag.x,ag.y), (ag2.x,ag2.y)   ,"\n")
+    if(distanceBetween <= 20):
+        print(distanceBetween, "\n", (ag.x,ag.y), (ag2.x,ag2.y)   ,"\n")
         neighbors = []
         neighbors.append(ag)
         neighbors.append(ag2)
+        """
+        ag.socilaDistance = true
+        """
         ag.behavior(neighbors)
     
    
