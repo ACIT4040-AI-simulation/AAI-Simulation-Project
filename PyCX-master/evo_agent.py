@@ -7,6 +7,7 @@ Created on Mon Oct 12 21:30:26 2020
 """
 
 import json
+import os
 import random
 from numpy.random import choice
 import itertools  
@@ -73,14 +74,13 @@ class evo_agent():
                 self.will_get_infected(ag)
           
     def will_get_infected(self, agent_in):
-               
             if ((self.status == 'I' or self.status == 'R') and agent_in.status != 'I'):
                 prob = self.calcprobablity(agent_in)
                 if  choice([True, False], 1, p=[prob, 1-prob]):
                     agent_in.status =  'I'
                     agent_in.infclock = self.clock
                     agent_in.inf_counter +=1
-                    #print(agent_in.id_no, 'get infected', agent_in.status)
+                    print(agent_in.id_no, 'get infected', agent_in.status)
                     agent_in.infect_By = self
                     self.infect_to_List.append(agent_in)
                 
@@ -100,17 +100,17 @@ class evo_agent():
         #mask
         tr = 0
         if ((self.mask == True) and (agent_in.mask == True)):
-            tr = 0.015
+            tr = 0.1
         elif ((self.mask == True and agent_in.mask == False) or (self.mask == False and agent_in.mask == True)):
-            tr = 0.05
+            tr = 0.4
         else:
             tr = 0.70
         
         #Sanitiser antibac
         if ((self.antibac == True ) and (agent_in.antibac == True)):
-            tr = tr*0.16
+            tr = tr*0.36
         elif (self.antibac != agent_in.antibac ):
-            tr = tr*0.08         
+            tr = tr*0.18         
 # =============================================================================
 #         #distance
 #         distance = sqrt((self.x-agent_in.x)**2 + (self.y-agent_in.y)**2)
@@ -122,11 +122,11 @@ class evo_agent():
 #for test purposes
 def main():
 
-    agenList = json.load(open("agentdata.json"))
+    agenList = json.load(open(os.path.abspath(os.path.dirname(__file__)) + "/agentdata.json"))
     agentObjList = []
 
     for agentObj in agenList:
-        temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'], agentObj['antibact'], agentObj['socialDistance'])
+        temp = evo_agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'], agentObj['antibact'], agentObj['socialDistance'])
         temp.x = random.random()
         temp.y = random.random()
         agentObjList.append(temp)
