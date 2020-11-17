@@ -1,6 +1,7 @@
 from random import choice
-
+import cv2
 from matplotlib import colors
+from numpy.core.shape_base import block
 import pycxsimulator
 from evo_agent import evo_agent as agent
 from PIL import Image as img
@@ -41,6 +42,27 @@ numberOfAgentsInP35 = 0
 fig,ax = plt.subplots()
 
 pycx = pycxsimulator.GUI()
+"""
+minX = 10.734699459776635
+maxX = 10.735943200721804
+minY = 59.91914	    
+maxY = 59.919899000945
+"""
+
+im = img.open(imgPath) # Can be many different formats.
+pix = im.load()
+picture = mpimg.imread(imgPath)
+
+validColorZones = [
+    pix[622,985], #Doorcolor
+    pix[329,1113], #FloorColor
+    (215, 201, 198, 255)
+    ]
+
+sobelIMG = cv2.imread(imgPath,0)
+edges = cv2.Canny(sobelIMG,100,200)
+ax.imshow(picture)
+
 
 def find_center_of_polygon(vertexes):
      _x_list = [vertex [0] for vertex in vertexes]
@@ -58,13 +80,13 @@ def plot_4thfloor_rooms():
         if (floor['floorId'] == 1772 and floor['title'] != None):
             #print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
             drawRoomsAndAnnotateLabels(floor)
-        if(floor['floorId'] == 1772 and floor['title'] == None):
+        #if(floor['floorId'] == 1772 and floor['title'] == None):
             #print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
-            ax.plot(xyCoord[0],xyCoord[1], 'g+')
+         #   ax.plot(xyCoord[0],xyCoord[1], 'g+')
 
 def drawRoomsAndAnnotateLabels(floor):
     for coordinates in floor['geometry']['coordinates']:
-        p = Polygon(coordinates, facecolor = '#CEBBB7')
+        p = Polygon(coordinates, fc = "#D1CBCB")  #fc = rgb = 209,203,203
         ax.add_patch(p)
         #givelabelstoclassroom(coordinates, floor) uncomment if seeing labels
         checkIfAgentIsInARoom(coordinates, floor)
@@ -96,7 +118,7 @@ def createFloorOutline():
     response = json.load(open(os.path.abspath(os.path.dirname(__file__)) + "/P35_FloorOutline.geojson"))
     p35_outline = response['features'][0]['geometry']['coordinates']
     for coordinates in p35_outline:
-        p = Polygon(coordinates, facecolor = '#F4F4F4', edgecolor='k',linewidth = 4)
+        p = Polygon(coordinates, facecolor = '#FFFFFF', edgecolor='#000000',linewidth = 4)
         ax.add_patch(p)
     
 def upload_agents_json(fileName):
@@ -129,9 +151,11 @@ def initializeAgents():
 #this loop will be taken out to classrooms acording to the sizes.
     for ag in agentsList:
         ag.classGroup = random.randint(1,3)
-        ag.x = random.uniform(600,1800)
-        ag.y = random.uniform(300,1200)
-        getRGB_Color(ag)
+        ag.x = random.randint(600,1800)
+        ag.y = random.randint(300,1200)
+        #ag.x = random.uniform(minX,maxX)
+        #ag.y = random.uniform(minY,maxY)
+        #getRGB_Color(ag)
         
             
     return agentsList
@@ -141,8 +165,10 @@ def getRGB_Color(ag):
     data.append((ag.x, ag.y))
     im = plt.imshow(data)
     rgb = im.cmap(im.norm( (ag.x,ag.y) ))
-    getHex = colors.rgb2hex(rgb[0])
-    #print(getHex)
+    for color in rgb:
+        getHex = colors.to_hex(color)
+        print(getHex," \n---- ", color)
+    return rgb
 
 def observe():
     global agentsList, numberOfAgentsInP35
@@ -152,7 +178,7 @@ def observe():
     if len(infected) > 0:
         xCoord = [ag.x for ag in infected]
         yCoord = [ag.y for ag in infected]
-        ax.plot(xCoord, yCoord, 'ro')
+        ax.plot(xCoord, yCoord, 'r.')
     
     suspected = [ag for ag in agentsList if ag.status == 'S']
     if len(suspected) > 0:
@@ -165,15 +191,12 @@ def observe():
      #   pycx.running = False
         #print("Simulation stopped because number of agents inside reached 0")
     plt.title('Minimize this figure')
-    fig.suptitle('C-19 Mobility; {} students in P35'.format(numberOfAgentsInP35))
+    #fig.suptitle('C-19 Mobility; {} students in P35'.format(numberOfAgentsInP35))
     plotImage()
 
-def plotImage():
-    picture = mpimg.imread(imgPath)
+def plotImage():    
     ax.imshow(picture)
-    #print(img[2105,1120])
-    #print(img[2038,1120])
-    axis('scaled')
+    axis('image')
 
 
 
@@ -189,42 +212,42 @@ def update_one_agent():
         return
 
     ag = choice(agentsList)
+    ag2 = choice(agentsList)
+    
     XnoiseLevel = random.randint(-50, 50)
     YnoiseLevel = random.randint(-50,50)
-    im = img.open(imgPath) # Can be many different formats.
-    pix = im.load()
-    #print (im.size)  # Get the width and hight of the image for iterating over
-    minX = 600
-    maxX = 1800
-    minY = 300
-    maxY = 1200   
-    if(minX < ag.x < maxX and minY < ag.y < maxY):
-        ag.x += XnoiseLevel
-        ag.y += YnoiseLevel
-        try:
-            #print(pix[ag.y,ag.x])  # Get the RGBA Value of the a pixel of an image
-            if(pix[ag.y,ag.x] != (255,255,255) or (0,0,0) ):
-                ag.x -= XnoiseLevel
-                ag.y -= YnoiseLevel
-        except IndexError as e:
-            pass
-    # neighbors = [nb for nb in classroom.agentsList if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < cdsq]
-    #np.linalg.norm([x-x,y-y], ord = 2) postion_1 - position_2
+                
+    try:
+        pixelColor = pix[ag.y, ag.x]
+        pixelcolorAfterMovement = pix[ag.y + YnoiseLevel, ag.x + XnoiseLevel]
+        if(pixelcolorAfterMovement in validColorZones and pixelColor in validColorZones):
+            ag.x += XnoiseLevel
+            ag.y += YnoiseLevel
+    except IndexError as e:
+        pass
+    if(ag.id_no != ag2.id_no):
+        checkDistanceBetween(ag,ag2)
 
-
-    # print('len =', len(neighbors))
-    # ag.behavior(neighbors)
-  
+def checkDistanceBetween(ag,ag2):
+    distanceBetween = np.linalg.norm([ag.x-ag2.x,ag.y-ag2.y], ord = 2)
+    if(distanceBetween < 40):
+        #print(distanceBetween, "\n", (ag.x,ag.y), (ag2.x,ag2.y)   ,"\n")
+        neighbors = []
+        neighbors.append(ag)
+        neighbors.append(ag2)
+        ag.behavior(neighbors)
     
    
     
 def update():
     global agentsList
     t = 0.
+    ax.margins(1)
     while t < 1. and len(agentsList) > 0:
         t += 1. / len(agentsList)
-        
         update_one_agent()
+
+
 
 pycx.start(func=[initialize, observe, update])
 
