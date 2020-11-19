@@ -1,163 +1,163 @@
 [
   {
     "id_no": 0,
+    "age": 23,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.903
+  },
+  {
+    "id_no": 1,
     "age": 33,
     "gender": "female",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.91"
-  },
-  {
-    "id_no": 1,
-    "age": 35,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.83"
+    "infectionRate": 0.694
   },
   {
     "id_no": 2,
-    "age": 28,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.78"
-  },
-  {
-    "id_no": 3,
-    "age": 29,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.08"
-  },
-  {
-    "id_no": 4,
-    "age": 29,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.11"
-  },
-  {
-    "id_no": 5,
-    "age": 30,
+    "age": 40,
     "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.48"
+    "infectionRate": 0.169
+  },
+  {
+    "id_no": 3,
+    "age": 33,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.497
+  },
+  {
+    "id_no": 4,
+    "age": 40,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.554
+  },
+  {
+    "id_no": 5,
+    "age": 27,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.844
   },
   {
     "id_no": 6,
     "age": 21,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.958
+  },
+  {
+    "id_no": 7,
+    "age": 23,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.765
+  },
+  {
+    "id_no": 8,
+    "age": 27,
     "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.08"
+    "infectionRate": 0.749
   },
   {
-    "id_no": 7,
+    "id_no": 9,
     "age": 34,
     "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.84"
-  },
-  {
-    "id_no": 8,
-    "age": 29,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.57"
-  },
-  {
-    "id_no": 9,
-    "age": 33,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.32"
+    "infectionRate": 0.418
   },
   {
     "id_no": 10,
-    "age": 21,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.15"
-  },
-  {
-    "id_no": 11,
-    "age": 26,
+    "age": 34,
     "gender": "female",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.75"
+    "infectionRate": 0.416
   },
   {
-    "id_no": 12,
+    "id_no": 11,
     "age": 24,
     "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.56"
+    "infectionRate": 0.298
+  },
+  {
+    "id_no": 12,
+    "age": 23,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.844
   },
   {
     "id_no": 13,
-    "age": 36,
+    "age": 27,
     "gender": "female",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.11"
+    "infectionRate": 0.474
   },
   {
     "id_no": 14,
-    "age": 29,
+    "age": 40,
     "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.07"
+    "infectionRate": 0.944
   },
   {
     "id_no": 15,
-    "age": 37,
-    "gender": "male",
+    "age": 38,
+    "gender": "female",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.43"
+    "infectionRate": 0.256
   },
   {
     "id_no": 16,
@@ -167,836 +167,827 @@
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.98"
+    "infectionRate": 0.227
   },
   {
     "id_no": 17,
-    "age": 35,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.51"
-  },
-  {
-    "id_no": 18,
-    "age": 35,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.33"
-  },
-  {
-    "id_no": 19,
-    "age": 27,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.76"
-  },
-  {
-    "id_no": 20,
-    "age": 31,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.78"
-  },
-  {
-    "id_no": 21,
-    "age": 32,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.85"
-  },
-  {
-    "id_no": 22,
-    "age": 36,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.11"
-  },
-  {
-    "id_no": 23,
-    "age": 35,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.17"
-  },
-  {
-    "id_no": 24,
-    "age": 21,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": 0
-  },
-  {
-    "id_no": 25,
-    "age": 29,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.89"
-  },
-  {
-    "id_no": 26,
-    "age": 31,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.33"
-  },
-  {
-    "id_no": 27,
-    "age": 33,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.23"
-  },
-  {
-    "id_no": 28,
-    "age": 33,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.67"
-  },
-  {
-    "id_no": 29,
-    "age": 22,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.46"
-  },
-  {
-    "id_no": 30,
-    "age": 26,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.8"
-  },
-  {
-    "id_no": 31,
-    "age": 27,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.07"
-  },
-  {
-    "id_no": 32,
-    "age": 31,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.19"
-  },
-  {
-    "id_no": 33,
-    "age": 31,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": 1
-  },
-  {
-    "id_no": 34,
-    "age": 21,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.71"
-  },
-  {
-    "id_no": 35,
-    "age": 22,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.05"
-  },
-  {
-    "id_no": 36,
-    "age": 26,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.37"
-  },
-  {
-    "id_no": 37,
-    "age": 39,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.95"
-  },
-  {
-    "id_no": 38,
-    "age": 24,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.61"
-  },
-  {
-    "id_no": 39,
-    "age": 35,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.6"
-  },
-  {
-    "id_no": 40,
-    "age": 36,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.17"
-  },
-  {
-    "id_no": 41,
-    "age": 31,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.59"
-  },
-  {
-    "id_no": 42,
-    "age": 27,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.45"
-  },
-  {
-    "id_no": 43,
-    "age": 29,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.67"
-  },
-  {
-    "id_no": 44,
-    "age": 34,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.14"
-  },
-  {
-    "id_no": 45,
-    "age": 36,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.28"
-  },
-  {
-    "id_no": 46,
-    "age": 33,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.27"
-  },
-  {
-    "id_no": 47,
     "age": 23,
     "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.65"
+    "infectionRate": 0.339
   },
   {
-    "id_no": 48,
-    "age": 35,
+    "id_no": 18,
+    "age": 33,
     "gender": "female",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.58"
-  },
+    "infectionRate": 0.790  },
   {
-    "id_no": 49,
+    "id_no": 19,
     "age": 24,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.9"
-  },
-  {
-    "id_no": 50,
-    "age": 37,
     "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.31"
+    "infectionRate": 0.628
   },
   {
-    "id_no": 51,
-    "age": 28,
-    "gender": "female",
+    "id_no": 20,
+    "age": 39,
+    "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.51"
+    "infectionRate": 0.062
   },
   {
-    "id_no": 52,
+    "id_no": 21,
     "age": 34,
     "gender": "female",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.52"
+    "infectionRate": 0.656
   },
   {
-    "id_no": 53,
-    "age": 27,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.16"
-  },
-  {
-    "id_no": 54,
-    "age": 29,
+    "id_no": 22,
+    "age": 40,
     "gender": "female",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.59"
+    "infectionRate": 0.645
   },
   {
-    "id_no": 55,
+    "id_no": 23,
+    "age": 39,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.61  },
+  {
+    "id_no": 24,
     "age": 22,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.08"
-  },
-  {
-    "id_no": 56,
-    "age": 31,
     "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.58"
-  },
+    "infectionRate": 0.47  },
   {
-    "id_no": 57,
-    "age": 32,
+    "id_no": 25,
+    "age": 22,
     "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.12"
+    "infectionRate": 0.637
   },
   {
-    "id_no": 58,
-    "age": 38,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": 1
-  },
-  {
-    "id_no": 59,
+    "id_no": 26,
     "age": 20,
     "gender": "female",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.49"
+    "infectionRate": 0.537
   },
   {
-    "id_no": 60,
-    "age": 25,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.4"
-  },
-  {
-    "id_no": 61,
-    "age": 34,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.06"
-  },
-  {
-    "id_no": 62,
-    "age": 22,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.11"
-  },
-  {
-    "id_no": 63,
-    "age": 23,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.65"
-  },
-  {
-    "id_no": 64,
+    "id_no": 27,
     "age": 36,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.08"
-  },
-  {
-    "id_no": 65,
-    "age": 38,
     "gender": "female",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.63"
+    "infectionRate": 0.712
   },
   {
-    "id_no": 66,
-    "age": 29,
-    "gender": "male",
+    "id_no": 28,
+    "age": 36,
+    "gender": "female",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.99"
+    "infectionRate": 0.761
   },
   {
-    "id_no": 67,
+    "id_no": 29,
     "age": 37,
     "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.57"
+    "infectionRate": 0.655
   },
   {
-    "id_no": 68,
-    "age": 22,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.88"
-  },
-  {
-    "id_no": 69,
-    "age": 26,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.8"
-  },
-  {
-    "id_no": 70,
-    "age": 25,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.75"
-  },
-  {
-    "id_no": 71,
-    "age": 31,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.6"
-  },
-  {
-    "id_no": 72,
-    "age": 22,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.39"
-  },
-  {
-    "id_no": 73,
-    "age": 22,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.6"
-  },
-  {
-    "id_no": 74,
+    "id_no": 30,
     "age": 32,
     "gender": "female",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.66"
+    "infectionRate": 0.534
   },
   {
-    "id_no": 75,
-    "age": 28,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.47"
-  },
-  {
-    "id_no": 76,
-    "age": 35,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.03"
-  },
-  {
-    "id_no": 77,
-    "age": 30,
+    "id_no": 31,
+    "age": 20,
     "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.64"
+    "infectionRate": 0.476
   },
   {
-    "id_no": 78,
-    "age": 24,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.62"
-  },
-  {
-    "id_no": 79,
-    "age": 38,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.32"
-  },
-  {
-    "id_no": 80,
-    "age": 38,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.46"
-  },
-  {
-    "id_no": 81,
+    "id_no": 32,
     "age": 40,
-    "gender": "male",
+    "gender": "female",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.64"
+    "infectionRate": 0.636
   },
   {
-    "id_no": 82,
+    "id_no": 33,
     "age": 32,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.16"
-  },
-  {
-    "id_no": 83,
-    "age": 22,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.45"
-  },
-  {
-    "id_no": 84,
-    "age": 39,
     "gender": "female",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.3"
-  },
+    "infectionRate": 0.72  },
   {
-    "id_no": 85,
-    "age": 31,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.5"
-  },
-  {
-    "id_no": 86,
-    "age": 36,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.04"
-  },
-  {
-    "id_no": 87,
-    "age": 26,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.19"
-  },
-  {
-    "id_no": 88,
-    "age": 22,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.08"
-  },
-  {
-    "id_no": 89,
+    "id_no": 34,
     "age": 23,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.84"
-  },
-  {
-    "id_no": 90,
-    "age": 26,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.98"
-  },
-  {
-    "id_no": 91,
-    "age": 38,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.16"
-  },
-  {
-    "id_no": 92,
-    "age": 37,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.79"
-  },
-  {
-    "id_no": 93,
-    "age": 28,
-    "gender": "female",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.5"
-  },
-  {
-    "id_no": 94,
-    "age": 29,
     "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.3"
+    "infectionRate": 0.224
   },
   {
-    "id_no": 95,
+    "id_no": 35,
+    "age": 20,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.745
+  },
+  {
+    "id_no": 36,
     "age": 36,
     "gender": "female",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.69"
+    "infectionRate": 0.478
   },
   {
-    "id_no": 96,
+    "id_no": 37,
     "age": 21,
     "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.38"
+    "infectionRate": 0.105
   },
   {
-    "id_no": 97,
-    "age": 37,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.61"
-  },
-  {
-    "id_no": 98,
-    "age": 38,
-    "gender": "male",
-    "status": "S",
-    "mask": false,
-    "antibact": false,
-    "socialDistance": false,
-    "infectionRate": "0.03"
-  },
-  {
-    "id_no": 99,
+    "id_no": 38,
     "age": 26,
     "gender": "male",
     "status": "S",
     "mask": false,
     "antibact": false,
     "socialDistance": false,
-    "infectionRate": "0.96"
-  }
+    "infectionRate": 0.758
+  },
+  {
+    "id_no": 39,
+    "age": 22,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.065
+  },
+  {
+    "id_no": 40,
+    "age": 25,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.809
+  },
+  {
+    "id_no": 41,
+    "age": 38,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.465
+  },
+  {
+    "id_no": 42,
+    "age": 28,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.688
+  },
+  {
+    "id_no": 43,
+    "age": 23,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.547
+  },
+  {
+    "id_no": 44,
+    "age": 33,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.928
+  },
+  {
+    "id_no": 45,
+    "age": 33,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.021
+  },
+  {
+    "id_no": 46,
+    "age": 23,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.230  },
+  {
+    "id_no": 47,
+    "age": 31,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.237
+  },
+  {
+    "id_no": 48,
+    "age": 32,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.023
+  },
+  {
+    "id_no": 49,
+    "age": 31,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.035
+  },
+  {
+    "id_no": 50,
+    "age": 34,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.073
+  },
+  {
+    "id_no": 51,
+    "age": 35,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.102
+  },
+  {
+    "id_no": 52,
+    "age": 20,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.24  },
+  {
+    "id_no": 53,
+    "age": 31,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.667
+  },
+  {
+    "id_no": 54,
+    "age": 40,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.001
+  },
+  {
+    "id_no": 55,
+    "age": 40,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.074
+  },
+  {
+    "id_no": 56,
+    "age": 29,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.731
+  },
+  {
+    "id_no": 57,
+    "age": 26,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.108
+  },
+  {
+    "id_no": 58,
+    "age": 34,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.427
+  },
+  {
+    "id_no": 59,
+    "age": 25,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.752
+  },
+  {
+    "id_no": 60,
+    "age": 33,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.454
+  },
+  {
+    "id_no": 61,
+    "age": 31,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.046
+  },
+  {
+    "id_no": 62,
+    "age": 39,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.001
+  },
+  {
+    "id_no": 63,
+    "age": 33,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.507
+  },
+  {
+    "id_no": 64,
+    "age": 30,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.005
+  },
+  {
+    "id_no": 65,
+    "age": 34,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.599
+  },
+  {
+    "id_no": 66,
+    "age": 20,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.329
+  },
+  {
+    "id_no": 67,
+    "age": 31,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.043
+  },
+  {
+    "id_no": 68,
+    "age": 36,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.902
+  },
+  {
+    "id_no": 69,
+    "age": 30,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.646
+  },
+  {
+    "id_no": 70,
+    "age": 29,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.484
+  },
+  {
+    "id_no": 71,
+    "age": 21,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.166
+  },
+  {
+    "id_no": 72,
+    "age": 38,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.54  },
+  {
+    "id_no": 73,
+    "age": 36,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.602
+  },
+  {
+    "id_no": 74,
+    "age": 26,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.249
+  },
+  {
+    "id_no": 75,
+    "age": 22,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.441
+  },
+  {
+    "id_no": 76,
+    "age": 29,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.016
+  },
+  {
+    "id_no": 77,
+    "age": 26,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.879
+  },
+  {
+    "id_no": 78,
+    "age": 26,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.643
+  },
+  {
+    "id_no": 79,
+    "age": 39,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.401
+  },
+  {
+    "id_no": 80,
+    "age": 25,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.724
+  },
+  {
+    "id_no": 81,
+    "age": 33,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.927
+  },
+  {
+    "id_no": 82,
+    "age": 28,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.921
+  },
+  {
+    "id_no": 83,
+    "age": 26,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.152
+  },
+  {
+    "id_no": 84,
+    "age": 25,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.171
+  },
+  {
+    "id_no": 85,
+    "age": 24,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.363
+  },
+  {
+    "id_no": 86,
+    "age": 22,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.915
+  },
+  {
+    "id_no": 87,
+    "age": 22,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.945
+  },
+  {
+    "id_no": 88,
+    "age": 29,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.171
+  },
+  {
+    "id_no": 89,
+    "age": 26,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.997
+  },
+  {
+    "id_no": 90,
+    "age": 33,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.387
+  },
+  {
+    "id_no": 91,
+    "age": 23,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.181
+  },
+  {
+    "id_no": 92,
+    "age": 21,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.802
+  },
+  {
+    "id_no": 93,
+    "age": 27,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.46  },
+  {
+    "id_no": 94,
+    "age": 23,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.695
+  },
+  {
+    "id_no": 95,
+    "age": 40,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.717
+  },
+  {
+    "id_no": 96,
+    "age": 36,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.337
+  },
+  {
+    "id_no": 97,
+    "age": 31,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.736
+  },
+  {
+    "id_no": 98,
+    "age": 35,
+    "gender": "female",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.707
+  },
+  {
+    "id_no": 99,
+    "age": 33,
+    "gender": "male",
+    "status": "S",
+    "mask": false,
+    "antibact": false,
+    "socialDistance": false,
+    "infectionRate": 0.02  }
 ]

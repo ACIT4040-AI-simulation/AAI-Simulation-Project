@@ -99,7 +99,7 @@ def upload_agents_json(fileName, initialPopulation):
     agentObjList = []
 
     for agentObj in jsonAgentList:
-        temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'], agentObj['antibact'], agentObj['socialDistance'])
+        temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'], agentObj['antibact'], agentObj['socialDistance'], agentObj['infectionRate'])
         agentObjList.append(temp)
 
     agentObjList = changePercentageOfInfectedAgents(initialPopulation, agentObjList)
@@ -156,7 +156,7 @@ def observe():
 
     #print(len(agentsList), "IN OBSERVE", len(suspected), len(infected))
     plt.title('Minimize this figure')
-    fig.suptitle('C-19 Mobility')
+    fig.suptitle('C-19 Mobility : {} suspected and {} infected'.format(len(suspected), len(infected)))
     plotImage()
 
 def plotImage():    
@@ -194,16 +194,11 @@ def update_one_agent():
 def checkDistanceBetween(ag,ag2):
     distanceBetween = np.linalg.norm([ag.x-ag2.x,ag.y-ag2.y], ord = 2)
     if(distanceBetween <= 20):
-        print(distanceBetween, "\n", (ag.x,ag.y), (ag2.x,ag2.y)   ,"\n")
-        neighbors = []
-        neighbors.append(ag)
-        neighbors.append(ag2)
-        """
-        ag.socilaDistance = true
-        """
-        ag.behavior(neighbors)
+        #print(distanceBetween, "\n", (ag.x,ag.y), (ag2.x,ag2.y)   ,"\n")
+        ag.startInfecting(ag, ag2)
     
-   
+
+
     
 def update():
     global agentsList

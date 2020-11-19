@@ -16,22 +16,16 @@ from math import sqrt
 s_distance_standard = 0.004
 
 class evo_agent():
-    def __init__(self, id_no, age, sex, status, mask, antibac, socialDistance):
+    def __init__(self, id_no, age, sex, status, mask, antibac, socialDistance, infectionRate):
         self.id_no = id_no
         self.status = status #infected, recoverd, sesuptable, ,
         self.mask = mask
-        self.antibac = antibac #rate 1-6
+        self.antibac = antibac
         self.socilDistance = socialDistance # rate setted with local agency
-        self.action =''
-        self.infected_By = ''
-        self.age = "",
-        self.sex = "",
-        self.infect_to_List = []
-        self.clock = 0
-        self.infclock = 0
-        self.inf_counter = 0
-        self.whereAmI = 0
+        self.age = age,
+        self.sex = sex,
         self.classGroup = 1
+        self.infectionRate = infectionRate
         
     def tostring(self):
         print(self.id_no)
@@ -69,28 +63,90 @@ class evo_agent():
        
 
     def startInfecting(self, agent1, agent2):
-        pass
-          
-    def will_get_infected(self, agent_in):
-        if ((self.status == 'I' or self.status == 'R') and agent_in.status != 'I'):
-            prob = self.calcprobablity(agent_in)
-            if  choice([True, False], 1, p=[prob, 1-prob]):
-                agent_in.status =  'I'
-                agent_in.infclock = self.clock
-                agent_in.inf_counter +=1
-                print(agent_in.id_no, 'get infected', agent_in.status)
-                agent_in.infect_By = self
-                self.infect_to_List.append(agent_in)
+        if agent1.status == 'S':
+            if agent1.status == 'S' and agent2.status == 'I':
+                self.calcInfectionRate(agent1, agent2)
+            if agent1.infectionRate > random.random():
+                agent2.status = 'I'
+                agent2.infectionRate =0
+                    
+        elif agent1.status == 'I':
+            if random.random() < 0.4 :
+                agent2.status = 'R'
             
-        elif(self.status != 'I' and (agent_in.status == 'I' or agent_in.status == 'R')):
-            prob = self.calcprobablity(agent_in)
-            if  choice([True, False], 1, p=[prob, 1-prob]):
-                self.status =  'I'
-                self.infclock = self.clock
-                self.inf_counter +=1 
-                #print(agent_in.id_no, 'get infected', agent_in.status)
-                self.infect_By = agent_in
-                agent_in.infect_to_List.append(self)
+            if agent2.status == 'S':
+                self.calcInfectionRate(agent1, agent2)
+                #decide wether if greater than or less than 
+            if agent1.infectionRate > random.random():
+                agent2.status = 'I'
+                agent2.infectionRate = 0
+
+    def calcInfectionRate(self, currentNode, neighbourNode):
+        infectionRateList=[]
+    #if the current node infected and the neighbour is susceptible
+        if (currentNode.status == 'I'):
+            if (currentNode.mask == True):
+                if (neighbourNode.mask == True):
+                    neighbourNode.infectionRate = 0.015
+                elif (neighbourNode.mask != True):
+                    neighbourNode.infectionRate = 0.05
+            elif currentNode.mask != True:
+                neighbourNode.infectionRate = 0.7
+            
+            #check if the current node applying HandSani
+            if neighbourNode.antibac == True:
+                neighbourNode.infectionRate = neighbourNode.infectionRate * 0.16
+            
+            #check if the neighbour node applying socialDistance
+            if neighbourNode.socilDistance == True:
+                neighbourNode.infectionRate = neighbourNode.infectionRate * 0.40
+                            
+            if neighbourNode.infectionRate>0:
+                infectionRateList.append(neighbourNode.infectionRate)
+            
+        #if the current node susceptible and the neighbour is infected    
+        elif currentNode.status == 'S':
+            if neighbourNode.mask == True:
+                if currentNode.mask == True:
+                    currentNode.infectionRate = 0.015
+                elif currentNode.mask != True:
+                    currentNode.infectionRate = 0.05
+            elif neighbourNode.mask != True:
+                currentNode.infectionRate = 0.7
+            
+            #check if the current node applying HandSani
+            if currentNode.antibac == True:
+                currentNode.infectionRate = currentNode.infectionRate * 0.16
+            
+            #check if the current node applying socialDistance
+            if currentNode.socilDistance:
+                currentNode.infectionRate = currentNode.infectionRate * 0.40            
+            
+            if currentNode.infectionRate>0:
+                infectionRateList.append(currentNode.infectionRate)
+            print(infectionRateList)
+
+            
+        def will_get_infected(self, agent_in):
+            if ((self.status == 'I' or self.status == 'R') and agent_in.status != 'I'):
+                prob = self.calcprobablity(agent_in)
+                if  choice([True, False], 1, p=[prob, 1-prob]):
+                    agent_in.status =  'I'
+                    agent_in.infclock = self.clock
+                    agent_in.inf_counter +=1
+                    print(agent_in.id_no, 'get infected', agent_in.status)
+                    agent_in.infect_By = self
+                    self.infect_to_List.append(agent_in)
+                
+            elif(self.status != 'I' and (agent_in.status == 'I' or agent_in.status == 'R')):
+                prob = self.calcprobablity(agent_in)
+                if  choice([True, False], 1, p=[prob, 1-prob]):
+                    self.status =  'I'
+                    self.infclock = self.clock
+                    self.inf_counter +=1 
+                    #print(agent_in.id_no, 'get infected', agent_in.status)
+                    self.infect_By = agent_in
+                    agent_in.infect_to_List.append(self)
                     
     
 
