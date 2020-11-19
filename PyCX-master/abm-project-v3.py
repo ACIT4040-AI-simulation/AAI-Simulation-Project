@@ -20,7 +20,7 @@ import numpy as np
 import os
 
 
-p_init = 20. #initial population
+p_init = 40 #initial population
 
 inf_rate = 0.10 # initial infaction rate in a population
 mask_rate = 0.4 # percentage of mask users
@@ -50,18 +50,16 @@ maxY = 59.919899000945
 """
 
 im = img.open(imgPath) # Can be many different formats.
-pix = im.load()
+palette = im.getpixel((1113, 329))
+print(palette, "\n")
 picture = mpimg.imread(imgPath)
 
 validColorZones = [
-    pix[622,985], #Doorcolor
-    pix[329,1113], #FloorColor
+    im.getpixel((985, 622)), #Doorcolor
+    im.getpixel((1113, 329)), #FloorColor
     (215, 201, 198, 255)
     ]
 
-sobelIMG = cv2.imread(imgPath,0)
-edges = cv2.Canny(sobelIMG,100,200)
-ax.imshow(picture)
 
 
 
@@ -69,79 +67,51 @@ ax.imshow(picture)
 This will change the percentage of Infected agents according the Initial agentsList
 """
 def changePercentageOfInfectedAgents(numberOfAgents, agentsList):
-    for i in range(numberOfAgents):
-        #agent.Status = 'I';
+    agentList = random.sample(agentsList,numberOfAgents)
+    for i in agentList:
+        i.status = 'I'
+
+    return agentsList
+
+"""
+This will change the percentage of Infected agents according the Initial agentsList
+"""
+def changePercentageOfMaskUsers(numberOfAgents, agentsList):
+    agentList = random.sample(agentsList,numberOfAgents)
+    for i in agentList:
+        i.mask = True    
     
     return agentsList
 
-
-
-
-def find_center_of_polygon(vertexes):
-     _x_list = [vertex [0] for vertex in vertexes]
-     _y_list = [vertex [1] for vertex in vertexes]
-     _len = len(vertexes)
-     _x = sum(_x_list) / _len
-     _y = sum(_y_list) / _len
-     return(_x, _y)
-
-def plot_4thfloor_rooms():
-    response = json.load(open(os.path.abspath(os.path.dirname(__file__)) + "/P35_4thfloor_rooms.json"))
-    pois = response['pois']
-    for floor in pois:
-        xyCoord = floor['geometry']['coordinates']
-        if (floor['floorId'] == 1772 and floor['title'] != None):
-            #print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
-            drawRoomsAndAnnotateLabels(floor)
-        #if(floor['floorId'] == 1772 and floor['title'] == None):
-            #print("Room: " ,floor['title'], "\n Coordinates:  \n", floor['geometry'], "\n")
-         #   ax.plot(xyCoord[0],xyCoord[1], 'g+')
-
-def drawRoomsAndAnnotateLabels(floor):
-    for coordinates in floor['geometry']['coordinates']:
-        p = Polygon(coordinates, fc = "#D1CBCB")  #fc = rgb = 209,203,203
-        ax.add_patch(p)
-        #givelabelstoclassroom(coordinates, floor) uncomment if seeing labels
-        checkIfAgentIsInARoom(coordinates, floor)
-
-
-def givelabelstoclassroom(coordinates, floor):
-    center = find_center_of_polygon(coordinates)
-    ax.text(center[0], center[1], floor['title'], ha="center", family='sans-serif', size=5)
-
-
-def checkIfAgentIsInARoom(coordinates, floor):
-    global agentsList, numberOfAgentsInP35
-    for agent in agentsList:
-        agentPoint = Point(agent.x,agent.y)
-        isWithin = checkAgentInClassroom(agentPoint,ply(coordinates))
-        if(isWithin):
-            numberOfAgentsInP35 += 1
-            agent.whereAmI = floor['poiId']
-            #print(agent.id_no, " with coordinates ", agentPoint , " is inside ", floor['title'])
-        # else:
-        #     print("not within", agent.id_no)
-        #     agentsList.remove(agent)
-
-def checkAgentInClassroom(point, polygon):
-    return point.within(polygon)
-
-
-def createFloorOutline():
-    response = json.load(open(os.path.abspath(os.path.dirname(__file__)) + "/P35_FloorOutline.geojson"))
-    p35_outline = response['features'][0]['geometry']['coordinates']
-    for coordinates in p35_outline:
-        p = Polygon(coordinates, facecolor = '#FFFFFF', edgecolor='#000000',linewidth = 4)
-        ax.add_patch(p)
+"""
+This will change the percentage of Infected agents according the Initial agentsList
+"""
+def changePercentageOfSanitizerUsers(numberOfAgents, agentsList):
+    agentList = random.sample(agentsList,numberOfAgents)
+    for i in agentList:
+        i.sanitizer = True    
     
-def upload_agents_json(fileName, changeIntialPopulation):
-    agenList = json.load(open(fileName))
+    return agentsList
+
+    
+def upload_agents_json(fileName, initialPopulation):
+    jsonAgentList = json.load(open(fileName))
     agentObjList = []
 
-    for i in range(changeIntialPopulation):
+    for agentObj in jsonAgentList:
         temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'], agentObj['antibact'], agentObj['socialDistance'])
         agentObjList.append(temp)
-    agentObjList = changePercentageOfInfectedAgents(40, agentObjList)
+
+    agentObjList = changePercentageOfInfectedAgents(initialPopulation, agentObjList)
+    agentObjList = changePercentageOfMaskUsers(initialPopulation, agentObjList)
+    agentObjList = changePercentageOfSanitizerUsers(initialPopulation, agentObjList)
+    print(len(agentObjList))
+    maskCount = 0
+    for i in agentObjList:
+        if(i.mask == True):
+            maskCount+=1
+    print(maskCount)
+
     return agentObjList
 
  
@@ -149,30 +119,15 @@ def upload_agents_json(fileName, changeIntialPopulation):
  This will have 4 parameters distance (float), mask (float), sanitizer (float), initial population (INT)
 
 """
-def initializeAgents():
+def initializeAgents(initPop):
     global p35_outline
     print("initializeAgents")
-    agentsList = upload_agents_json(os.path.abspath(os.path.dirname(__file__)) + "/agentdata.json")
-    n_inf_agents = p_init * inf_rate
-    
-    #randomly assighn mask to the population as per rate of mask usage data
-    maskedList = random.sample(agentsList,int(p_init*mask_rate))
-    for ag in maskedList:
-        ag.mask= True
-        
-    #randomly make ppl infected as per rate of infection rate data
-    infectedList = random.sample(agentsList,int(p_init*inf_rate))
-    for ag in infectedList:
-        ag.status= 'I'
-    
-#this loop will be taken out to classrooms acording to the sizes.
+    agentsList = upload_agents_json(os.path.abspath(os.path.dirname(__file__)) + "/100_Agents.json", initPop)
     for ag in agentsList:
         ag.classGroup = random.randint(1,3)
         ag.x = random.randint(600,1800)
         ag.y = random.randint(300,1200)
-        #ag.x = random.uniform(minX,maxX)
-        #ag.y = random.uniform(minY,maxY)
-        #getRGB_Color(ag)
+       
     """
         40 / 100 
         change initializaion position of agents until probaility is reached. 
@@ -182,20 +137,11 @@ def initializeAgents():
             
     return agentsList
 
-def getRGB_Color(ag):
-    data = []
-    data.append((ag.x, ag.y))
-    im = plt.imshow(data)
-    rgb = im.cmap(im.norm( (ag.x,ag.y) ))
-    for color in rgb:
-        getHex = colors.to_hex(color)
-        print(getHex," \n---- ", color)
-    return rgb
 
 def observe():
-    global agentsList, numberOfAgentsInP35
-    numberOfAgentsInP35 = 0
+    global agentsList
     ax.cla()
+
     infected = [ag for ag in agentsList if ag.status == 'I']
     if len(infected) > 0:
         xCoord = [ag.x for ag in infected]
@@ -207,45 +153,40 @@ def observe():
         xCoord = [ag.x for ag in suspected]
         yCoord = [ag.y for ag in suspected]
         ax.plot(xCoord, yCoord, 'b.')
-    #createFloorOutline()
-    #plot_4thfloor_rooms()
-    #if(numberOfAgentsInP35 <= -1):
-     #   pycx.running = False
-        #print("Simulation stopped because number of agents inside reached 0")
+
+    #print(len(agentsList), "IN OBSERVE", len(suspected), len(infected))
     plt.title('Minimize this figure')
-    #fig.suptitle('C-19 Mobility; {} students in P35'.format(numberOfAgentsInP35))
+    fig.suptitle('C-19 Mobility')
     plotImage()
 
 def plotImage():    
     ax.imshow(picture)
     axis('image')
-
-
-
         
 def initialize():
-    print("initialize")
     global agentsList
-    agentsList = initializeAgents()
+    agentsList = initializeAgents(p_init)
         
 def update_one_agent():
     global agentsList
     if agentsList == []:
         return
 
-    ag = choice(agentsList)
-    ag2 = choice(agentsList)
+    selectTwoAgentsRandom = random.sample(agentsList, 2)
+    ag = selectTwoAgentsRandom[0]
+    ag2 = selectTwoAgentsRandom[1]
     
     XnoiseLevel = random.randint(-50, 50)
     YnoiseLevel = random.randint(-50,50)
                 
     try:
-        pixelColor = pix[ag.y, ag.x]
-        pixelcolorAfterMovement = pix[ag.y + YnoiseLevel, ag.x + XnoiseLevel]
+        pixelColor = im.getpixel((ag.x, ag.y))
+        pixelcolorAfterMovement = im.getpixel((ag.x + XnoiseLevel, ag.y + YnoiseLevel))
         if(pixelcolorAfterMovement in validColorZones and pixelColor in validColorZones):
             ag.x += XnoiseLevel
             ag.y += YnoiseLevel
     except IndexError as e:
+        print(e)
         pass
     if(ag.id_no != ag2.id_no):
         checkDistanceBetween(ag,ag2)
