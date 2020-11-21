@@ -39,16 +39,6 @@ imgPath = os.path.abspath(os.path.dirname(__file__)) + "/p35-4thfloor_withdoors.
 p35_outline = []
 numberOfAgentsInP35 = 0
 #buildingID 471, id 3991, 4th floor id 1772  "floorOutlineId": 1146047,
-fig,ax = plt.subplots()
-
-pycx = pycxsimulator.GUI()
-"""
-minX = 10.734699459776635
-maxX = 10.735943200721804
-minY = 59.91914	    
-maxY = 59.919899000945
-"""
-
 im = img.open(imgPath) # Can be many different formats.
 palette = im.getpixel((1113, 329))
 print(palette, "\n")
@@ -125,7 +115,6 @@ def upload_agents_json(fileName, initialPopulation):
 """
 def initializeAgents(initPop):
     global p35_outline
-    print("initializeAgents")
     agentsList = upload_agents_json(os.path.abspath(os.path.dirname(__file__)) + "/100_Agents.json", initPop)
     for ag in agentsList:
         ag.classGroup = random.randint(1,3)
@@ -159,36 +148,33 @@ def initializeAgents(initPop):
 
 def observe():
     global agentsList
-    ax.cla()
+    #ax.cla()
 
     infected = [ag for ag in agentsList if ag.status == 'I']
     if len(infected) > 0:
         xCoord = [ag.x for ag in infected]
         yCoord = [ag.y for ag in infected]
-        ax.plot(xCoord, yCoord, 'r.')
+        #ax.plot(xCoord, yCoord, 'r.')
     
     suspected = [ag for ag in agentsList if ag.status == 'S']
     if len(suspected) > 0:
         xCoord = [ag.x for ag in suspected]
         yCoord = [ag.y for ag in suspected]
-        ax.plot(xCoord, yCoord, 'b.')
+        #ax.plot(xCoord, yCoord, 'b.')
 
     recovered = [ag for ag in agentsList if ag.status == 'R']
     if len(recovered) > 0:
         xCoord = [ag.x for ag in recovered]
         yCoord = [ag.y for ag in recovered]
-        ax.plot(xCoord, yCoord, 'g.')
+        #ax.plot(xCoord, yCoord, 'g.')
 
     #print(len(agentsList), "IN OBSERVE", len(suspected), len(infected))
-    plt.title('Minimize this figure')
-    fig.suptitle('C-19 Mobility : {} suspected, {} infected and {} recovered \n Time: {}'.format(len(suspected), len(infected), len(recovered) , pycx.currentStep))
-    plotImage()
-    if(pycx.currentStep == 5):
-        returnAvgRate()
+    #plt.title('Minimize this figure')
+    #fig.suptitle('C-19 Mobility : {} suspected, {} infected and {} recovered \n Time: {}'.format(len(suspected), len(infected), len(recovered) , pycx.currentStep))
+    #plotImage()
 
 
 def returnAvgRate():
-    pycx.running = False
     avgRateForSupsceptible = 0
     for ag in agentsList:
         if(ag.status == 'S'):
@@ -197,7 +183,7 @@ def returnAvgRate():
     return round(avgRate, 2)
 
 def plotImage():    
-    ax.imshow(picture)
+    #ax.imshow(picture)
     axis('image')
         
 def initialize():
@@ -240,12 +226,29 @@ def checkDistanceBetween(ag,ag2):
 def update():
     global agentsList
     t = 0.
-    ax.margins(1)
+    #ax.margins(1)
     while t < 1. and len(agentsList) > 0:
         t += 1. / len(agentsList)
         update_one_agent()
 
 
 
-pycx.start(func=[initialize, observe, update])
+def getInfectionRateNetworkMain(sorted_pop):
+    totalInfectionRate=[]
+    sorted_pop_arr = sorted_pop.tolist()
+    for i in range(len(sorted_pop_arr)):
+        initialize(sorted_pop_arr[i][0],sorted_pop_arr[i][1],sorted_pop_arr[i][2],sorted_pop_arr[i][3])
+        observe()
+        update(sorted_pop_arr[i][4])
+        totalInfectionRate.append(round(sum(infectionRateList),2))
+        infectionRateList.clear()
+    return totalInfectionRate
+
+def getInfectionRateNetwork(sorted_pop):
+    sorted_pop_arr = sorted_pop.tolist()
+    for i in range(len(sorted_pop_arr)):
+        initialize()
+        observe()
+        update()
+    return returnAvgRate()
 

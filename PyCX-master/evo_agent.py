@@ -124,29 +124,11 @@ class evo_agent():
             
             if currentNode.infectionRate>0:
                 infectionRateList.append(currentNode.infectionRate)
-            print(infectionRateList)
 
             
-        def will_get_infected(self, agent_in):
-            if ((self.status == 'I' or self.status == 'R') and agent_in.status != 'I'):
-                prob = self.calcprobablity(agent_in)
-                if  choice([True, False], 1, p=[prob, 1-prob]):
-                    agent_in.status =  'I'
-                    agent_in.infclock = self.clock
-                    agent_in.inf_counter +=1
-                    print(agent_in.id_no, 'get infected', agent_in.status)
-                    agent_in.infect_By = self
-                    self.infect_to_List.append(agent_in)
-                
-            elif(self.status != 'I' and (agent_in.status == 'I' or agent_in.status == 'R')):
-                prob = self.calcprobablity(agent_in)
-                if  choice([True, False], 1, p=[prob, 1-prob]):
-                    self.status =  'I'
-                    self.infclock = self.clock
-                    self.inf_counter +=1 
-                    #print(agent_in.id_no, 'get infected', agent_in.status)
-                    self.infect_By = agent_in
-                    agent_in.infect_to_List.append(self)
+    def getInfectionRate(self):
+        return self.infectionRate
+            
                     
     
 
