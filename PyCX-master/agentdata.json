@@ -734,8 +734,9 @@
     "gender": "male",
     "status": "S",
     "mask": "False",
-    "antibact": 2,
-    "socialDistance": 1
+    "antibact": 2, // DEfault FALSE
+    "socialDistance": //TRUE 
+    // infectionRate
   },
   {
     "id_no": 82,

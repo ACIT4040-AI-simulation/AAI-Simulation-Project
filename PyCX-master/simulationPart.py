@@ -6,7 +6,6 @@ Created on Fri Oct 30 12:26:27 2020
 @author: emanazab
 """
 
-import pycxsimulator
 import networkx as nx
 import numpy as np
 from pylab import *
