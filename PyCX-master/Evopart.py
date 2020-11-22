@@ -12,43 +12,47 @@ from heapq import nsmallest
 
 optimal_solution=[]
 
-#Infection_rate =[8.22, 7.63, 6.45, 5.25, 4.21, 2.33, 3.98] 
 def random_array_generator():
-    #to generate an random array between 0-1
     random_float_array = np.random.uniform(0, 1.0, size=(10, 3))
-    #to get upto 3 decimal no.s(can be changed if needed)
-    random_generator=np.around(random_float_array,2) 
+    random_generator=np.around(random_float_array,2)
+    random_generator=random_generator.tolist()
+    for i in random_generator :
+        i.append((random.randint(50,200)))
+    
+    random_generator=np.array(random_generator)
+    
     #print(random_generator)
     return random_generator
 
 def sorted_population(random_generator): #it will return the random nos who are in the cost budget
     #arr=random_array_generator()
-    #print(arr)
+    #print(random_generator, "inside sorted")
     Mask_cost=0.5
     HS_cost=0.3
     SD_cost=0.6
     costs= np.array([Mask_cost, HS_cost, SD_cost])
     sorted_pop=[]
     sorted_pop_final=[]
-
+    PopulationNumberArray = []
     for i in random_generator:
-        arr_cost=np.around(i*costs, 2)
+        arr_cost=np.around(i[0:3]*costs, 2)
         sum_cost=np.sum(arr_cost)
         #print(sum_cost)
     
         if sum_cost<=0.80:
            sorted_pop=np.append([sorted_pop],[i])
-           #print(type(sorted_pop))
+           PopulationNumberArray.append(i[3])
+           #print(type(sorted_pop)),
 
-    sorted_pop = sorted_pop.reshape(-1,3)#gives an array of measures which are in the budget
+    sorted_pop = sorted_pop.reshape(-1,4)#gives an array of measures which are in the budget
     
     sorted_pop_list= sorted_pop.tolist()
-    #print(sorted_pop_list)
+    
     for i in sorted_pop_list:
-        i.append((random.randint(1,200)))
-        if i[3]<=180 and i[3]>=20:
+        if i[3]<=180 and i[3]>=70:
            sorted_pop_final.append(i)
-    #print(sorted_pop_final)
+        
+    print("check",sorted_pop_final)
     sorted_population_final= np.array(sorted_pop_final)
     #print np.array_str(sorted_population_final, precision=2, suppress_small=True)
            
@@ -56,7 +60,7 @@ def sorted_population(random_generator): #it will return the random nos who are 
 
 def fitness_score(sorted_arr, Infection_rate):
    lowest_two_infections = nsmallest(2, Infection_rate)
-   #print(x)
+   print(lowest_two_infections, "2 lowest rates")
    lowest_infection_rate = lowest_two_infections[0]
    lowest_index = Infection_rate.index(lowest_infection_rate)
    parent1 = sorted_arr[lowest_index]
@@ -93,6 +97,7 @@ def selectOptimalSolution(parents):
             optimal_solution.append(min_infection_parent)
     print ("The optimal Solution is:" ,optimal_solution)
     #print np.array_str(optimal_solution, precision=2, suppress_small=True)
+    return optimal_solution
 def crossover(parents):
     parents=np.array(parents)
     parents = np.delete(parents, 4, axis=1)
@@ -141,15 +146,3 @@ def mutation(mutated_offsprings):# does swaping within 1st and 3rd column also r
     return mutated_offsprings
 random_arr= random_array_generator()
 sorted_arr=sorted_population(random_arr)
-
-#Delete this part when you have the infection rate. This part just made fake data to start working. It generates an array of the length of the sorted population
-# col_no= sorted_arr.shape[0]
-# infection_rate = np.random.uniform(0, 1.0, size=(col_no, 1))
-# infection_rate=np.around(infection_rate,2) 
-# Infection_rate= infection_rate.tolist() 
-# print ("The created list for infection rates:", Infection_rate)
-
-#parents= fitness_score(sorted_arr, )
-#children=crossover(parents)
-#mutation(children)
-#optimal_solution = selectOptimalSolution(parents)
