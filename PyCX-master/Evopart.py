@@ -17,7 +17,7 @@ def random_array_generator():
     random_generator=np.around(random_float_array,2)
     random_generator=random_generator.tolist()
     for i in random_generator :
-        i.append((random.randint(50,200)))
+        i.append((random.randint(50,100)))
     
     random_generator=np.array(random_generator)
     
@@ -49,7 +49,7 @@ def sorted_population(random_generator): #it will return the random nos who are 
     sorted_pop_list= sorted_pop.tolist()
     
     for i in sorted_pop_list:
-        if i[3]<=180 and i[3]>=70:
+        if i[3]<= 95 and i[3]>=55:
            sorted_pop_final.append(i)
         
     print("check",sorted_pop_final)

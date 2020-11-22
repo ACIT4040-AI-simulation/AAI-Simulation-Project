@@ -39,19 +39,10 @@ imgPath = os.path.abspath(os.path.dirname(__file__)) + "/p35-4thfloor_withdoors.
 p35_outline = []
 numberOfAgentsInP35 = 0
 #buildingID 471, id 3991, 4th floor id 1772  "floorOutlineId": 1146047,
-fig,ax = plt.subplots()
-
+fig, (ax, ax2) = plt.subplots(2)
 pycx = pycxsimulator.GUI()
-"""
-minX = 10.734699459776635
-maxX = 10.735943200721804
-minY = 59.91914	    
-maxY = 59.919899000945
-"""
 
 im = img.open(imgPath) # Can be many different formats.
-palette = im.getpixel((1113, 329))
-print(palette, "\n")
 picture = mpimg.imread(imgPath)
 
 validColorZones = [
@@ -109,12 +100,6 @@ def upload_agents_json(fileName, initialPopulation):
     agentObjList = changePercentageOfInfectedAgents(initialPopulation, agentObjList)
     agentObjList = changePercentageOfMaskUsers(initialPopulation, agentObjList)
     agentObjList = changePercentageOfSanitizerUsers(initialPopulation, agentObjList)
-    print(len(agentObjList))
-    maskCount = 0
-    for i in agentObjList:
-        if(i.mask == True):
-            maskCount+=1
-    print(maskCount)
 
     return agentObjList
 
@@ -124,8 +109,6 @@ def upload_agents_json(fileName, initialPopulation):
 
 """
 def initializeAgents(initPop):
-    global p35_outline
-    print("initializeAgents")
     agentsList = upload_agents_json(os.path.abspath(os.path.dirname(__file__)) + "/100_Agents.json", initPop)
     for ag in agentsList:
         ag.classGroup = random.randint(1,3)
@@ -146,13 +129,6 @@ def initializeAgents(initPop):
             if(randomPlacement == 4):
                 ag.x = random.randint(1300, 1400)
                 ag.y = random.randint(126,306)
-                   
-    """
-        40 / 100 
-        change initializaion position of agents until probaility is reached. 
-        Probabilitycounter = 0;
-        ag = choice ag2 chouce, checkDIstance(ag1,ag2): Probabilitycounter++; 5 / 100 = 0.05
-    """
             
     return agentsList
 
@@ -179,11 +155,19 @@ def observe():
         yCoord = [ag.y for ag in recovered]
         ax.plot(xCoord, yCoord, 'g.')
 
-    #print(len(agentsList), "IN OBSERVE", len(suspected), len(infected))
     plt.title('Minimize this figure')
     fig.suptitle('C-19 Mobility : {} suspected, {} infected and {} recovered \n Time: {}'.format(len(suspected), len(infected), len(recovered) , pycx.currentStep))
     plotImage()
-    if(pycx.currentStep == 5):
+
+    ax2.plot(2, 1, 2)
+    
+    ax2.plot(pycx.currentStep, len(infected), color = 'red', marker = "o")
+    ax2.plot(pycx.currentStep, len(suspected), color = 'blue', marker = "o")
+    ax2.plot(pycx.currentStep, len(recovered), color = 'green', marker = "o")
+    ax2.set(xlabel = "time", ylabel = "No of nodes")
+
+    ax2.axis([0,200,0,50])
+    if(pycx.currentStep == 50):
         returnAvgRate()
 
 
@@ -230,7 +214,7 @@ def update_one_agent():
 
 def checkDistanceBetween(ag,ag2):
     distanceBetween = np.linalg.norm([ag.x-ag2.x,ag.y-ag2.y], ord = 2)
-    if(distanceBetween <= 200):
+    if(distanceBetween <= 50):
         #print(distanceBetween, "\n", (ag.x,ag.y), (ag2.x,ag2.y)   ,"\n")
         ag.startInfecting(ag, ag2)
     
@@ -240,7 +224,6 @@ def checkDistanceBetween(ag,ag2):
 def update():
     global agentsList
     t = 0.
-    ax.margins(1)
     while t < 1. and len(agentsList) > 0:
         t += 1. / len(agentsList)
         update_one_agent()
