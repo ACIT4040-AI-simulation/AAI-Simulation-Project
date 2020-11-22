@@ -1,64 +1,45 @@
-from random import choice
-import cv2
-from matplotlib import colors
-from numpy.core.shape_base import block
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Nov  22 23:30:47 2020
+
+@author: Ilham Jilani, Kassahun Gedlu
+"""
+
 import pycxsimulator
 from evo_agent import evo_agent as agent
 from PIL import Image as img
 import matplotlib.pyplot as plt
-from matplotlib.pyplot import axis, title
+from matplotlib.pyplot import axis
 import matplotlib.image as mpimg
-from matplotlib.patches import Polygon
-from matplotlib.widgets import Button
-import matplotlib.colors as colors
-from shapely.geometry.polygon import Polygon as ply
-from shapely.geometry.point import Point
 import json
 import random
-import geopandas
 import numpy as np
 import os
 
 
-p_init = 40 #initial population
 initPop = 70
-inf_rate = 0.10 # initial infaction rate in a population
-mask_rate = 0.4 # percentage of mask users
-dr = 1.0 # death rate of infected ppl
-rr = 0.1 # recovery rate
+infRate = 0.10
+maskRate = 0.40
+sanitizerRate = 0.60
 
-f_init = 0.10 # initial fox population
-mA = 0.05 # magnitude of movement of agents move
-df = 0.1 # death rate of foxes when there is no food
-rf = 0.5 # reproduction rate of foxes
-
-cd = 0.02 # radius for collision detection
-cdsq = cd ** 2
-# =============================================================================
 imgPath = os.path.abspath(os.path.dirname(__file__)) + "/p35-4thfloor_withdoors.png"
-p35_outline = []
-numberOfAgentsInP35 = 0
-#buildingID 471, id 3991, 4th floor id 1772  "floorOutlineId": 1146047,
-fig, (ax, ax2) = plt.subplots(2)
+fig, (ax, ax2, ax3) = plt.subplots(1,3)
 pycx = pycxsimulator.GUI()
 
-im = img.open(imgPath) # Can be many different formats.
+im = img.open(imgPath)
 picture = mpimg.imread(imgPath)
+DOOR_COLOR = im.getpixel((985, 622))
+FLOOR_COLOR = im.getpixel((1113, 329))
+NUANCE_COLOR = (215, 201, 198, 255)
 
-validColorZones = [
-    im.getpixel((985, 622)), #Doorcolor
-    im.getpixel((1113, 329)), #FloorColor
-    (215, 201, 198, 255)
-    ]
-
-
-
+validColorZones = [ DOOR_COLOR, FLOOR_COLOR, NUANCE_COLOR]
 
 """
 This will change the percentage of Infected agents according the Initial agentsList
 """
-def changePercentageOfInfectedAgents(numberOfAgents, agentsList):
-    agentList = random.sample(agentsList,numberOfAgents)
+def changePercentageOfInfectedAgents(infectedPercentage, agentsList):
+    numberOfAgents = len(agentsList) * infectedPercentage
+    agentList = random.sample(agentsList, round(numberOfAgents))
     for i in agentList:
         i.status = 'I'
 
@@ -67,8 +48,9 @@ def changePercentageOfInfectedAgents(numberOfAgents, agentsList):
 """
 This will change the percentage of Infected agents according the Initial agentsList
 """
-def changePercentageOfMaskUsers(numberOfAgents, agentsList):
-    agentList = random.sample(agentsList,numberOfAgents)
+def changePercentageOfMaskUsers(maskPercentage, agentsList):
+    numberOfAgents = len(agentsList) * maskPercentage
+    agentList = random.sample(agentsList, round(numberOfAgents))
     for i in agentList:
         i.mask = True    
     
@@ -77,15 +59,18 @@ def changePercentageOfMaskUsers(numberOfAgents, agentsList):
 """
 This will change the percentage of Infected agents according the Initial agentsList
 """
-def changePercentageOfSanitizerUsers(numberOfAgents, agentsList):
-    agentList = random.sample(agentsList,numberOfAgents)
+def changePercentageOfSanitizerUsers(sanitizerPercentage, agentsList):
+    numberOfAgents = len(agentsList) * sanitizerPercentage
+    agentList = random.sample(agentsList, round(numberOfAgents))
     for i in agentList:
         i.sanitizer = True    
     
     return agentsList
 
-    
-def upload_agents_json(fileName, initialPopulation):
+"""
+This will first retrive the agents from a json file and manipulate their attributes and size based on the given parameters
+"""
+def upload_agents_json(fileName, infRate, maskRate, sanitizerRate, initPop):
     counter = 0
     jsonAgentList = json.load(open(fileName))
     agentObjList = []
@@ -97,9 +82,9 @@ def upload_agents_json(fileName, initialPopulation):
         if(counter == initPop):
             break
 
-    agentObjList = changePercentageOfInfectedAgents(initialPopulation, agentObjList)
-    agentObjList = changePercentageOfMaskUsers(initialPopulation, agentObjList)
-    agentObjList = changePercentageOfSanitizerUsers(initialPopulation, agentObjList)
+    agentObjList = changePercentageOfInfectedAgents(infRate, agentObjList)
+    agentObjList = changePercentageOfMaskUsers(maskRate, agentObjList)
+    agentObjList = changePercentageOfSanitizerUsers(sanitizerRate, agentObjList)
 
     return agentObjList
 
@@ -108,8 +93,8 @@ def upload_agents_json(fileName, initialPopulation):
  This will have 4 parameters distance (float), mask (float), sanitizer (float), initial population (INT)
 
 """
-def initializeAgents(initPop):
-    agentsList = upload_agents_json(os.path.abspath(os.path.dirname(__file__)) + "/100_Agents.json", initPop)
+def initializeAgents(infRate, maskRate, sanitizerRate, initPop):
+    agentsList = upload_agents_json(os.path.abspath(os.path.dirname(__file__)) + "/100_Agents.json", infRate, maskRate, sanitizerRate, initPop)
     for ag in agentsList:
         ag.classGroup = random.randint(1,3)
         ag.x = random.randint(600,1800)
@@ -129,10 +114,12 @@ def initializeAgents(initPop):
             if(randomPlacement == 4):
                 ag.x = random.randint(1300, 1400)
                 ag.y = random.randint(126,306)
-            
+                               
     return agentsList
 
-
+"""
+This will update/observe the current values of the agents
+"""
 def observe():
     global agentsList
     ax.cla()
@@ -159,18 +146,29 @@ def observe():
     fig.suptitle('C-19 Mobility : {} suspected, {} infected and {} recovered \n Time: {}'.format(len(suspected), len(infected), len(recovered) , pycx.currentStep))
     plotImage()
 
-    ax2.plot(2, 1, 2)
+    # Pie chart, where the slices will be ordered and plotted counter-clockwise:
+    labels = 'S' , 'I', 'R'
+    sizes = [len(suspected), len(infected), len(recovered)]
+    explode = (0, 0, 0)
+    ax2.cla()
+    ax2.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
+            shadow=True, startangle=90)
+    ax2.axis('equal') 
     
-    ax2.plot(pycx.currentStep, len(infected), color = 'red', marker = "o")
-    ax2.plot(pycx.currentStep, len(suspected), color = 'blue', marker = "o")
-    ax2.plot(pycx.currentStep, len(recovered), color = 'green', marker = "o")
-    ax2.set(xlabel = "time", ylabel = "No of nodes")
+    ax3.plot(2, 1, 2)
+    
+    ax3.plot(pycx.currentStep, len(infected), color = 'red', marker = "o")
+    ax3.plot(pycx.currentStep, len(suspected), color = 'blue', marker = "o")
+    ax3.plot(pycx.currentStep, len(recovered), color = 'green', marker = "o")
+    ax3.set(xlabel = "time", ylabel = "No of nodes")
 
-    ax2.axis([0,200,0,50])
+    ax3.axis([0,200,0,100])
     if(pycx.currentStep == 50):
         returnAvgRate()
 
-
+"""
+This will return the average infection rate
+"""
 def returnAvgRate():
     pycx.running = False
     avgRateForSupsceptible = 0
@@ -180,14 +178,23 @@ def returnAvgRate():
     avgRate = len(agentsList) / avgRateForSupsceptible
     return round(avgRate, 2)
 
+"""
+This will plot the fourth floor of P35 in the figure
+"""
 def plotImage():    
     ax.imshow(picture)
     axis('image')
-        
+
+"""
+This will initialize the agents
+"""
 def initialize():
     global agentsList
-    agentsList = initializeAgents(p_init)
-        
+    agentsList = initializeAgents(infRate, maskRate, sanitizerRate, initPop)
+
+"""
+This will update the status, check neighbours and move the agent
+"""
 def update_one_agent():
     global agentsList
     if agentsList == []:
@@ -212,6 +219,9 @@ def update_one_agent():
     if(ag.id_no != ag2.id_no):
         checkDistanceBetween(ag,ag2)
 
+"""
+This will check the distance between two agents, and check if the distance is 50 or less to investigate infection
+"""
 def checkDistanceBetween(ag,ag2):
     distanceBetween = np.linalg.norm([ag.x-ag2.x,ag.y-ag2.y], ord = 2)
     if(distanceBetween <= 50):
@@ -220,7 +230,9 @@ def checkDistanceBetween(ag,ag2):
     
 
 
-    
+"""
+This will update the environment
+"""
 def update():
     global agentsList
     t = 0.

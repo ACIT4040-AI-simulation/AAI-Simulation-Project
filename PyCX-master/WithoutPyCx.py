@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Nov  22 23:30:47 2020
+
+@author: Ilham Jilani
+"""
+
 from evo_agent import evo_agent as agent
 from PIL import Image as img
 import json
@@ -7,13 +14,13 @@ import os
 
 
 imgPath = os.path.abspath(os.path.dirname(__file__)) + "/p35-4thfloor_withdoors.png"
-im = img.open(imgPath) # Can be many different formats.
+im = img.open(imgPath)
 
-validColorZones = [
-    im.getpixel((985, 622)), #Doorcolor
-    im.getpixel((1113, 329)), #FloorColor
-    (215, 201, 198, 255)
-    ]
+DOOR_COLOR = im.getpixel((985, 622))
+FLOOR_COLOR = im.getpixel((1113, 329))
+NUANCE_COLOR = (215, 201, 198, 255)
+
+validColorZones = [ DOOR_COLOR, FLOOR_COLOR, NUANCE_COLOR]
 
 
 
