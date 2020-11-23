@@ -37,31 +37,7 @@ class evo_agent():
         print(self.socilDistance)
         print("----------------------------")
         
-    #perceptionsList is a list of objects around (object, agent, .....
-    # )
-    def distance(self, agent_in):
-        return sqrt((self.x-agent_in.x)**2 + (self.y-agent_in.y)**2)
-    
-    def behavior(self,perceptionsList):
-# =============================================================================
-#       #agent actions[   [1,"passing"], 
-#                         [2,"cuffing"],
-#                         [3,"greeting_by_hand"], 
-#                         [4,"talking_to_one"],
-#                         [5,"Talking with group"]]
-#
-# =============================================================================
-        myaction = random.randint(1,2)
-        print(myaction)
-        if myaction == 1:
-            pass
-        else:
-            self.startInfecting(perceptionsList[0], perceptionsList[1])
-            for ag in perceptionsList:
-                self.will_get_infected(ag)
-            
-       
-
+   
     def startInfecting(self, agent1, agent2):
         if agent1.status == 'S':
             if agent1.status == 'S' and agent2.status == 'I':
@@ -132,30 +108,8 @@ class evo_agent():
                     
     
 
-    def calcprobablity(self, agent_in):
-        #mask
-        tr = 0
-        if ((self.mask == True) and (agent_in.mask == True)):
-            tr = 0.1
-        elif ((self.mask == True and agent_in.mask == False) or (self.mask == False and agent_in.mask == True)):
-            tr = 0.4
-        else:
-            tr = 0.70
-        
-        #Sanitiser antibac
-        if ((self.antibac == True ) and (agent_in.antibac == True)):
-            tr = tr*0.36
-        elif (self.antibac != agent_in.antibac ):
-            tr = tr*0.18         
-# =============================================================================
-#         #distance
-#         distance = sqrt((self.x-agent_in.x)**2 + (self.y-agent_in.y)**2)
-# =============================================================================
-        if self.distance(agent_in) >= s_distance_standard:
-            tr = tr * 0.82
-        return tr
-
-#for test purposes
+   
+# , DONT USE THIS IN PYTEST!!!!!!!!!!!!!!!
 def main():
 
     agenList = json.load(open(os.path.abspath(os.path.dirname(__file__)) + "/agentdata.json"))
