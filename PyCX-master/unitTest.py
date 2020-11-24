@@ -1,5 +1,5 @@
 import pytest
-# from PyCX-master import evo_agent.py
+#from PyCX-master import evo_agent.py
 
 @pytest.fixture()
 def startInfecting():
@@ -54,8 +54,8 @@ def test_for_getInfectionRate(getInfectionRate):
 
 import os
 
-import WithoutPyCx as wPyCx
-from evo_agent import evo_agent as agent
+#import WithoutPyCx as wPyCx
+#from evo_agent import evo_agent as agent
 
 
 agentList = [ {
@@ -100,7 +100,7 @@ def test_changePercentageOfInfectedAgents():
         temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'],
                      agentObj['antibact'], agentObj['socialDistance'], agentObj['infectionRate'])
         agentObjList.append(temp)
-    f =   wPyCx.changePercentageOfInfectedAgents(0.8, agentObjList)
+    f = wPyCx.changePercentageOfInfectedAgents(0.8, agentObjList)
     for i in f:
         if i.status == "I":
             infectedList.append(i)
@@ -144,7 +144,7 @@ def test_changePercentageOfSanitizerUsers():
     assert len(sanitizerUsageList) == 2
 
 """
-Testing the upload_agents_json func, this func incorprates all the attributes changing functions (mask,sanitizer,infectionrate) based on 100 agents 
+Testing the upload_agents_json func, this func incorprates all the attributes changing functions (mask,sanitizer,infectionrate) based on 100 agents
 """
 def test_upload_agents_json():
     sanitizerUsageList = []
