@@ -54,7 +54,7 @@ def changePercentageOfSanitizerUsers(sanitizerPercentage, agentsList):
     numberOfAgents = len(agentsList) * sanitizerPercentage
     agentList = random.sample(agentsList, round(numberOfAgents))
     for i in agentList:
-        i.sanitizer = True    
+        i.antibac = True
     
     return agentsList
 

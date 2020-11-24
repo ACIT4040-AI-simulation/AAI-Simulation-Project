@@ -21,6 +21,7 @@ def getFinalSolution(selected_population):
     #print(filtered_individuals, "filtered")
     totalInfectionRate= sim.getInfectionRateNetwork(filtered_individuals)
     selected_parents= evo.fitness_score(filtered_individuals,totalInfectionRate)
+    print(selected_parents)
     offsprings =evo.crossover(selected_parents)
     mutated_offspring = evo.mutation(offsprings)
     optimized_solution= evo.selectOptimalSolution(selected_parents)
