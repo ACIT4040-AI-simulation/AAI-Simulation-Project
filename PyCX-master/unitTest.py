@@ -165,7 +165,7 @@ def test_observe():
 
 
 #Unit Test function for initialize() function
-def initialize():
+def test_initialize():
     #global agentsList
     x_count=0
     y_count=0
