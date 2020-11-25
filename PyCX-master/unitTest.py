@@ -164,4 +164,8 @@ def test_upload_agents_json():
     assert len(maskUsageList) == 40
     assert len(sanitizerUsageList) == 80
 
+##This a random generator function, dont know how to test randomness
+#def test_random_array_generator():
+
+#def test_sorted_population():
 
