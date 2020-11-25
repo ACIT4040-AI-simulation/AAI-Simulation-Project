@@ -24,7 +24,6 @@ validColorZones = [ DOOR_COLOR, FLOOR_COLOR, NUANCE_COLOR]
 
 
 
-
 """
 This will change the percentage of Infected agents according the Initial agentsList
 """
@@ -125,8 +124,6 @@ def observe():
         xCoord = [ag.x for ag in recovered]
         yCoord = [ag.y for ag in recovered]
 
-    
-
 
 def returnAvgRate():
     avgRateForSupsceptible = 0
@@ -136,10 +133,11 @@ def returnAvgRate():
     avgRate = len(agentsList) / avgRateForSupsceptible
     return round(avgRate, 2)
         
-def initialize(infRate, maskRate, sanitizerRate, initPop):
+def initialize():
     global agentsList
     agentsList = initializeAgents(infRate, maskRate, sanitizerRate, initPop)
-        
+
+
 def update_one_agent():
     global agentsList
     

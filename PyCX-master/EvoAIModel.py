@@ -40,3 +40,5 @@ print('optimal solution is:','\n',
       'SD_prob:', optimized_solution[0][2],'\n',
       'Population:', optimized_solution[0][3], '\n',
       'Total Infection Rate:', optimized_solution[0][4])
+
+
