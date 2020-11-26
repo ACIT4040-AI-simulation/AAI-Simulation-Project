@@ -3,7 +3,7 @@
 """
 Created on Mon Oct 12 21:30:26 2020
 
-@author: kassahundegena
+@author: kassahundegena 
 """
 
 import json
@@ -42,7 +42,7 @@ class evo_agent():
                 self.calcInfectionRate(agent1, agent2)
             if agent1.infectionRate > random.random():
                 agent2.status = 'I'
-                agent2.infectionRate =0
+                agent2.infectionRate = 0
                     
         elif agent1.status == 'I':
             if random.random() < 0.4 :
@@ -56,7 +56,7 @@ class evo_agent():
                 agent2.infectionRate = 0
 
     def calcInfectionRate(self, currentNode, neighbourNode):
-        infectionRateList=[]
+        infectionRateList = []
     #if the current node infected and the neighbour is susceptible
         if (currentNode.status == 'I'):
             if (currentNode.mask == True):
@@ -96,14 +96,13 @@ class evo_agent():
             if currentNode.socilDistance:
                 currentNode.infectionRate = currentNode.infectionRate * 0.40            
             
-            if currentNode.infectionRate>0:
+            if currentNode.infectionRate > 0:
                 infectionRateList.append(currentNode.infectionRate)
 
             
     def getInfectionRate(self):
         return self.infectionRate
-            
-                    
+
     
 
    
