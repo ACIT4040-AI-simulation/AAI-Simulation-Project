@@ -9,10 +9,9 @@ from PIL import Image as img
 import json
 import random
 import numpy as np
-import os
 
 json_agent_filepath = "EvoSimulator/100_Agents.json"
-imgPath = os.path.abspath(os.path.dirname(__file__)) + "\\p35-4thfloor_withdoors.png"
+imgPath = "EvoSimulator/p35-4thfloor_withdoors.png"
 im = img.open(imgPath)
 
 DOOR_COLOR = im.getpixel((985, 622))
