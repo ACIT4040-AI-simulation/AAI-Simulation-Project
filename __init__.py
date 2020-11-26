@@ -1,10 +1,9 @@
-#from PyCX-master import evo_agent.py
 from unittest import mock
 import os
 import numpy as np
 import pytest
-import WithoutPyCx as wPyCx
-import Evopart as evopart
+import EvoSimulator.WithoutPyCx as wPyCx
+import EvoSimulator.Evopart as evopart
 from evo_agent import evo_agent as agent
 import numpy as np
 
