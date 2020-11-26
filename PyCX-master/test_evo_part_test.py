@@ -7,18 +7,18 @@ import random
 def selectOptimalSolution():
     parents = 0
     optimal_solution = []
-    parents = np.array(parents)
-
-    min_infection_parent = parents[parents[:, 4].argsort()]
-    min_infection_parent = min_infection_parent[0:1, :]
-    min_infection_parent = min_infection_parent[0].tolist()
-    if len(optimal_solution) == 0:
-        optimal_solution.append(min_infection_parent)
-    else:
-        if optimal_solution[0][4] > min_infection_parent[4]:
-            optimal_solution.pop()
-            optimal_solution.append(min_infection_parent)
-    print("The optimal Solution is:", optimal_solution)
+    # parents = np.array(parents)
+    #
+    # min_infection_parent = parents[parents[:, 4].argsort()]
+    # min_infection_parent = min_infection_parent[0:1, :]
+    # min_infection_parent = min_infection_parent[0].tolist()
+    # if len(optimal_solution) == 0:
+    #     optimal_solution.append(min_infection_parent)
+    # else:
+    #     if optimal_solution[0][4] > min_infection_parent[4]:
+    #         optimal_solution.pop()
+    #         optimal_solution.append(min_infection_parent)
+    # print("The optimal Solution is:", optimal_solution)
     return [optimal_solution]
 
 
@@ -27,15 +27,15 @@ def test_for_selectOptimalSolution(selectOptimalSolution):
     O_S = []
 
     parents = np.array(selectOptimalSolution)
-    min_infection_parent = parents[parents[:, 4].argsort()]
-    min_infection_parent = min_infection_parent[0:1, :]
-    min_infection_parent = min_infection_parent[0].tolist()
-    if len(O_S) == 0:
-        O_S.append(min_infection_parent)
-    else:
-        if O_S[0][4] > min_infection_parent[4]:
-            O_S.pop()
-            O_S.append(min_infection_parent)
+    # min_infection_parent = parents[parents[:, 4].argsort()]
+    # min_infection_parent = min_infection_parent[0:1, :]
+    # min_infection_parent = min_infection_parent[0].tolist()
+    # if len(O_S) == 0:
+    #     O_S.append(min_infection_parent)
+    # else:
+    #     if O_S[0][4] > min_infection_parent[4]:
+    #         O_S.pop()
+    #         O_S.append(min_infection_parent)
 
     assert selectOptimalSolution[0] == O_S
 
