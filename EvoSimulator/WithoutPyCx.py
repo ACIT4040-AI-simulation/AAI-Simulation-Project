@@ -5,7 +5,7 @@ Created on Sun Nov  22 23:30:47 2020
 @author: Ilham Jilani
 """
 
-from evo_agent import evo_agent as agent
+import EvoSimulator.evo_agent as agent
 from PIL import Image as img
 import json
 import random
