@@ -129,7 +129,6 @@ def crossover(parents):
     return offsprings
 
 def mutation(mutated_offsprings):# does swaping within 1st and 3rd column also randomly changes the last column which is agents within the range 20 to 180
-    
     start_index = 0 # swaping points
     last_index = 2
     mutated_offsprings [:, [start_index, last_index]] = mutated_offsprings[:, [last_index, start_index]] 
@@ -139,5 +138,6 @@ def mutation(mutated_offsprings):# does swaping within 1st and 3rd column also r
     print ("After mutation: It is swaping betn the 1st&3rd column and changing the last column")
     print (np.array_str(mutated_offsprings, precision=2, suppress_small=True))
     return mutated_offsprings
+
 random_arr= random_array_generator()
 sorted_arr=sorted_population(random_arr)
