@@ -1,4 +1,6 @@
 import pytest
+import unittest
+from unittest import mock
 # from PyCX-master import evo_agent.py
 
 @pytest.fixture()
@@ -55,7 +57,12 @@ def test_for_getInfectionRate(getInfectionRate):
 import os
 
 import WithoutPyCx as wPyCx
+import Evopart as evopart
 from evo_agent import evo_agent as agent
+import heapq
+import numpy as np
+
+
 
 
 agentList = [ {
@@ -164,8 +171,45 @@ def test_upload_agents_json():
     assert len(maskUsageList) == 40
     assert len(sanitizerUsageList) == 80
 
-##This a random generator function, dont know how to test randomness
-#def test_random_array_generator():
+"""
+Checks the lenght of the radomarray to see if its euqal to 10
+"""
+def test_random_array_generator():
+    f = evopart.random_array_generator()
+    assert len(f) == 10
 
-#def test_sorted_population():
+"""
+Checks if the fitness score function is choosing the two parents with the lowest infection rates
+"""
+def test_fitness_score():
+
+    sortedPop = [
+        [0.3,0.4,0.3,100],
+        [0.2,0.7,0.1, 70],
+        [0.9,0.6,0.85, 90]
+    ]
+
+    Infectionrate = [3.50, 2.40, 1.4]
+    f = evopart.fitness_score(sortedPop, Infectionrate)
+    
+    assert f[0][4] == 1.4 and f[1][4] == 2.4
+
+
+def test_sorted_population():
+    mock_randomArray = mock.Mock(return_value = 5)
+    mock_sortedpop = mock.Mock(return_value = 5)
+    randomArray = evopart.random_array_generator()
+
+    f = evopart.sorted_population(randomArray)
+    f = mock_sortedpop 
+    randomArray = mock_randomArray
+
+
+    assert mock_sortedpop() == mock_randomArray()
+
+    
+
+
+
+
 
