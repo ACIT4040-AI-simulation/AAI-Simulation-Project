@@ -1,7 +1,12 @@
 import pytest
-import unittest
 from unittest import mock
-# from PyCX-master import evo_agent.py
+import os
+import numpy as np
+import pytest
+import WithoutPyCx as wPyCx
+import Evopart as evopart
+from evo_agent import evo_agent as agent
+import numpy as np
 
 @pytest.fixture()
 def startInfecting():
@@ -53,20 +58,6 @@ def getInfectionRate():
 def test_for_getInfectionRate(getInfectionRate):
     infectionRate = 10
     assert getInfectionRate[0] ==infectionRate
-
-import os
-from os import name
-import numpy as np
-import pytest
-import unittest
-from unittest import mock
-import WithoutPyCx as wPyCx
-import Evopart as evopart
-from evo_agent import evo_agent as agent
-import heapq
-import numpy as np
-
-
 
 
 agentList = [ {
@@ -209,9 +200,55 @@ def test_sorted_population():
 
     assert mock_sortedpop() == mock_randomArray()
 
+
+def test_initialize_agents():
+    initAgents = [
+        agent('1','20', 'M', 'S', True, True, True, 1.0) ,
+        agent('2','20', 'M', 'S', True, True, True, 1.0) ,
+        agent('3','20', 'M', 'S', True, True, True, 1.0) ,
+        agent('4','20', 'M', 'S', True, True, True, 1.0) 
+    ]
+    mock_upload_json = mock.Mock(name="upload_json", return_value= initAgents)
+    wPyCx.upload_agents_json = mock_upload_json
+    f = wPyCx.initializeAgents(0.5, 0.5, 0.5, 4)
+    mock_upload_json.assert_called()
+    assert len(f) == len(initAgents)
+
+
+def test_observe():
+    initAgents = [
+        agent('1','20', 'M', 'S', True, True, True, 1.0) ,
+        agent('2','20', 'M', 'I', True, True, True, 1.0) ,
+        agent('3','20', 'M', 'R', True, True, True, 1.0) ,
+        agent('4','20', 'M', 'S', True, True, True, 1.0) 
+    ]
+    wPyCx.agentsList = initAgents
+    infected = [ag for ag in wPyCx.agentsList if ag.status == 'I']
+    suspected = [ag for ag in wPyCx.agentsList if ag.status == 'S']
+    recovered = [ag for ag in wPyCx.agentsList if ag.status == 'R']
     
+    assert len(infected) == 1
+    assert len(suspected) == 2
+    assert len(recovered) == 1
+
+def test_initialize():
+    mock_initAgents = mock.Mock(name="initAgents")
+    wPyCx.initializeAgents = mock_initAgents
+    wPyCx.initialize(0.5,0.5,0.5,100)
+    mock_initAgents.assert_called_once_with(0.5,0.5,0.5,100)
 
 
+def test_returnAvgRate():
+    initAgents = [
+        agent('1','20', 'M', 'S', True, True, True, 1.0) ,
+        agent('2','20', 'M', 'I', True, True, True, 1.0) ,
+        agent('3','20', 'M', 'R', True, True, True, 1.0) ,
+        agent('4','20', 'M', 'S', True, True, True, 1.0) 
+    ]
+    wPyCx.agentsList = initAgents
+    avgRate = len(initAgents) / 2.0
+    f = wPyCx.returnAvgRate()
+    assert f == round(avgRate, 2)
 
 def test_checkDistanceBetween():
     mock_startInfecting = mock.Mock(name="startInfecting")
