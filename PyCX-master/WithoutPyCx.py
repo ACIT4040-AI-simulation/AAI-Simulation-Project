@@ -148,7 +148,7 @@ def update_one_agent():
     ag2 = selectTwoAgentsRandom[1]
     
     XnoiseLevel = random.randint(-50, 50)
-    YnoiseLevel = random.randint(-50,50)
+    YnoiseLevel = random.randint(-50, 50)
                 
     try:
         pixelColor = im.getpixel((ag.x, ag.y))
@@ -173,7 +173,6 @@ def checkDistanceBetween(ag,ag2):
 def update():
     global agentsList
     t = 0.
-    #ax.margins(1)
     while t < 1. and len(agentsList) > 0:
         t += 1. / len(agentsList)
         update_one_agent()
@@ -186,7 +185,6 @@ def getInfectionRateNetwork(sorted_pop):
     for i in range(len(sorted_pop_arr)):
         initialize(sorted_pop_arr[i][0],sorted_pop_arr[i][1],sorted_pop_arr[i][2],sorted_pop_arr[i][3])
         observe()
-        #update(sorted_pop_arr[i][4])
         update()
         avgRate = returnAvgRate()
         totalInfectionRate.append(avgRate)

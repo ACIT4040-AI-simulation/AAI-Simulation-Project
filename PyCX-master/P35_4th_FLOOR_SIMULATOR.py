@@ -156,7 +156,7 @@ def observe():
     explode = (0, 0, 0)
     ax2.cla()
     ax2.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
+            shadow=True, startangle=90, colors=['blue','red','green'])
     ax2.axis('equal') 
     
     ax3.plot(2, 1, 2)

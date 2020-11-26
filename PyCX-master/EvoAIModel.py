@@ -13,27 +13,36 @@ import numpy as np
 new_mutated_offspring =[]
 population = evo.random_array_generator()
 optimized_solution = None
-
+generation_counter = 0
 
 def getFinalSolution(selected_population):
     global optimized_solution
-    filtered_individuals=evo.sorted_population(selected_population)
+    try:
+        filtered_individuals=evo.sorted_population(selected_population)
+        if(len(filtered_individuals) > 2):
+            totalInfectionRate= sim.getInfectionRateNetwork(filtered_individuals)
+            selected_parents= evo.fitness_score(filtered_individuals,totalInfectionRate)
+            print(selected_parents)
+            offsprings =evo.crossover(selected_parents)
+            mutated_offspring = evo.mutation(offsprings)
+            optimized_solution= evo.selectOptimalSolution(selected_parents)
+            return mutated_offspring
+    except TypeError as e:
+        print("")
+        pass
+    
+
     #print(filtered_individuals, "filtered")
-    totalInfectionRate= sim.getInfectionRateNetwork(filtered_individuals)
-    selected_parents= evo.fitness_score(filtered_individuals,totalInfectionRate)
-    print(selected_parents)
-    offsprings =evo.crossover(selected_parents)
-    mutated_offspring = evo.mutation(offsprings)
-    optimized_solution= evo.selectOptimalSolution(selected_parents)
-    return mutated_offspring
+    pass
 
-
-for i in range(3):
+for i in range(500):
+    generation_counter += 1
     if i == 0:
         new_mutated_offspring= getFinalSolution(population)
     else:
         new_mutated_offspring= getFinalSolution(new_mutated_offspring)
 
+print(generation_counter, "THE GENERATION COUNTER \n")
 
 print('optimal solution is:','\n',
       'Mask_prob:',optimized_solution[0][0],'\n',
