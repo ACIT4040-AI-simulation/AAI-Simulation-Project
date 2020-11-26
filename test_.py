@@ -262,7 +262,6 @@ def test_checkDistanceBetween():
     assert distanceBetween <= 200
     mock_startInfecting.assert_called()
 
-
 def test_update_one_agent():
     from PIL import Image as img
     import random
@@ -272,14 +271,14 @@ def test_update_one_agent():
     ag2 = agent.evo_agent('2','20', 'M', 'S', True, True, True, 1.0)
     ag.x = 622
     ag.y = 985
-    ag2.x = 625
-    ag2.y = 980
+    ag2.x = 622
+    ag2.y = 985
     wPyCx.agentsList = [ag, ag2]
     wPyCx.checkDistanceBetween = mock_checkDistance
     random.randint = mock_randomrand
     wPyCx.update_one_agent()
     mock_checkDistance.assert_called()
-    assert ag.x != 622 and ag.y != 985 
+    assert (ag.x != 622 and ag.y != 985) or (ag2.x != 622 and ag2.y != 985) 
 
 
 def test_update():
