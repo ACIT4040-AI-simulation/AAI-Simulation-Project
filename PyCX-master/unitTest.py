@@ -59,9 +59,6 @@ def test_for_getInfectionRate(getInfectionRate):
     infectionRate = 10
     assert getInfectionRate[0] ==infectionRate
 
-#import WithoutPyCx as wPyCx
-#from evo_agent import evo_agent as agent
-
 
 agentList = [ {
     "id_no": 0,
