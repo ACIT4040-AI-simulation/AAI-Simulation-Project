@@ -4,16 +4,15 @@ Created on Sun Nov  22 23:30:47 2020
 
 @author: Ilham Jilani
 """
-
-import EvoSimulator.evo_agent as agent
+from .evo_agent import evo_agent as agent
 from PIL import Image as img
 import json
 import random
 import numpy as np
 import os
 
-
-imgPath = os.path.abspath(os.path.dirname(__file__)) + "/p35-4thfloor_withdoors.png"
+json_agent_filepath = "EvoSimulator/100_Agents.json"
+imgPath = os.path.abspath(os.path.dirname(__file__)) + "\\p35-4thfloor_withdoors.png"
 im = img.open(imgPath)
 
 DOOR_COLOR = im.getpixel((985, 622))
@@ -83,7 +82,7 @@ def upload_agents_json(fileName, infRate, maskRate, sanitizerRate, initPop):
 
 """
 def initializeAgents(infRate, maskRate, sanitizerRate, initPop):
-    agentsList = upload_agents_json(os.path.abspath(os.path.dirname(__file__)) + "/100_Agents.json", infRate, maskRate, sanitizerRate, initPop)
+    agentsList = upload_agents_json(json_agent_filepath, infRate, maskRate, sanitizerRate, initPop)
     for ag in agentsList:
         ag.classGroup = random.randint(1,3)
         ag.x = random.randint(600,1800)

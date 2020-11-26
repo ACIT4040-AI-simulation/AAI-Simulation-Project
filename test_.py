@@ -1,5 +1,4 @@
 from unittest import mock
-import os
 import numpy as np
 import pytest
 import EvoSimulator.WithoutPyCx as wPyCx
@@ -96,7 +95,7 @@ def test_changePercentageOfInfectedAgents():
     infectedList = []
 
     for agentObj in agentList:
-        temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'],
+        temp = agent.evo_agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'],
                     agentObj['antibact'], agentObj['socialDistance'], agentObj['infectionRate'])
         agentObjList.append(temp)
     f = wPyCx.changePercentageOfInfectedAgents(0.8, agentObjList)
@@ -114,7 +113,7 @@ def test_changePercentageOfmaskUsers():
     maskUsageList = []
 
     for agentObj in agentList:
-        temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'],
+        temp = agent.evo_agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'],
                     agentObj['antibact'], agentObj['socialDistance'], agentObj['infectionRate'])
         agentObjList.append(temp)
     f = wPyCx.changePercentageOfMaskUsers(0.4, agentObjList)
@@ -132,7 +131,7 @@ def test_changePercentageOfSanitizerUsers():
     sanitizerUsageList = []
 
     for agentObj in agentList:
-        temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'],
+        temp = agent.evo_agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'],
                     agentObj['antibact'], agentObj['socialDistance'], agentObj['infectionRate'])
         agentObjList.append(temp)
     f = wPyCx.changePercentageOfSanitizerUsers(0.8, agentObjList)
@@ -150,7 +149,7 @@ def test_upload_agents_json():
     infectedList = []
     maskUsageList = []
 
-    f = wPyCx.upload_agents_json(os.path.abspath(os.path.dirname(__file__)) + "/100_Agents.json", 0.8, 0.4, 0.8, 100)
+    f = wPyCx.upload_agents_json(wPyCx.json_agent_filepath, 0.8, 0.4, 0.8, 100)
 
     for i in f:
         if i.antibac:
@@ -202,10 +201,10 @@ def test_sorted_population():
 
 def test_initialize_agents():
     initAgents = [
-        agent('1','20', 'M', 'S', True, True, True, 1.0) ,
-        agent('2','20', 'M', 'S', True, True, True, 1.0) ,
-        agent('3','20', 'M', 'S', True, True, True, 1.0) ,
-        agent('4','20', 'M', 'S', True, True, True, 1.0) 
+        agent.evo_agent('1','20', 'M', 'S', True, True, True, 1.0) ,
+        agent.evo_agent('2','20', 'M', 'I', True, True, True, 1.0) ,
+        agent.evo_agent('3','20', 'M', 'R', True, True, True, 1.0) ,
+        agent.evo_agent('4','20', 'M', 'S', True, True, True, 1.0) 
     ]
     mock_upload_json = mock.Mock(name="upload_json", return_value= initAgents)
     wPyCx.upload_agents_json = mock_upload_json
@@ -216,10 +215,10 @@ def test_initialize_agents():
 
 def test_observe():
     initAgents = [
-        agent('1','20', 'M', 'S', True, True, True, 1.0) ,
-        agent('2','20', 'M', 'I', True, True, True, 1.0) ,
-        agent('3','20', 'M', 'R', True, True, True, 1.0) ,
-        agent('4','20', 'M', 'S', True, True, True, 1.0) 
+        agent.evo_agent('1','20', 'M', 'S', True, True, True, 1.0) ,
+        agent.evo_agent('2','20', 'M', 'I', True, True, True, 1.0) ,
+        agent.evo_agent('3','20', 'M', 'R', True, True, True, 1.0) ,
+        agent.evo_agent('4','20', 'M', 'S', True, True, True, 1.0) 
     ]
     wPyCx.agentsList = initAgents
     infected = [ag for ag in wPyCx.agentsList if ag.status == 'I']
@@ -239,10 +238,10 @@ def test_initialize():
 
 def test_returnAvgRate():
     initAgents = [
-        agent('1','20', 'M', 'S', True, True, True, 1.0) ,
-        agent('2','20', 'M', 'I', True, True, True, 1.0) ,
-        agent('3','20', 'M', 'R', True, True, True, 1.0) ,
-        agent('4','20', 'M', 'S', True, True, True, 1.0) 
+        agent.evo_agent('1','20', 'M', 'S', True, True, True, 1.0) ,
+        agent.evo_agent('2','20', 'M', 'I', True, True, True, 1.0) ,
+        agent.evo_agent('3','20', 'M', 'R', True, True, True, 1.0) ,
+        agent.evo_agent('4','20', 'M', 'S', True, True, True, 1.0) 
     ]
     wPyCx.agentsList = initAgents
     avgRate = len(initAgents) / 2.0
@@ -251,10 +250,10 @@ def test_returnAvgRate():
 
 def test_checkDistanceBetween():
     mock_startInfecting = mock.Mock(name="startInfecting")
-    ag = agent('1','20', 'M', 'S', True, True, True, 1.0) 
+    ag = agent.evo_agent('1','20', 'M', 'S', True, True, True, 1.0) 
     ag.x = 500
     ag.y = 500
-    ag2 = agent('2','20', 'M', 'S', True, True, True, 1.0) 
+    ag2 = agent.evo_agent('2','20', 'M', 'S', True, True, True, 1.0) 
     ag2.x = 505
     ag2.y = 500
     ag.startInfecting = mock_startInfecting
@@ -269,8 +268,8 @@ def test_update_one_agent():
     import random
     mock_checkDistance = mock.Mock(name="checkDistance")
     mock_randomrand = mock.Mock(name="random", return_value = 3)
-    ag = agent('1','20', 'M', 'S', True, True, True, 1.0)
-    ag2 = agent('2','20', 'M', 'S', True, True, True, 1.0)
+    ag = agent.evo_agent('1','20', 'M', 'S', True, True, True, 1.0)
+    ag2 = agent.evo_agent('2','20', 'M', 'S', True, True, True, 1.0)
     ag.x = 622
     ag.y = 985
     ag2.x = 625
