@@ -55,7 +55,11 @@ def test_for_getInfectionRate(getInfectionRate):
     assert getInfectionRate[0] ==infectionRate
 
 import os
-
+from os import name
+import numpy as np
+import pytest
+import unittest
+from unittest import mock
 import WithoutPyCx as wPyCx
 import Evopart as evopart
 from evo_agent import evo_agent as agent
@@ -96,16 +100,14 @@ agentList = [ {
     "infectionRate": 0.169
   },]
 
-"""
-Testing the changePercentageOfInfectedAgents checking the number of infected people in a list of 3 people, when infection rate is 80%, expected result:2
-"""
+
 def test_changePercentageOfInfectedAgents():
     agentObjList = []
     infectedList = []
 
     for agentObj in agentList:
         temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'],
-                     agentObj['antibact'], agentObj['socialDistance'], agentObj['infectionRate'])
+                    agentObj['antibact'], agentObj['socialDistance'], agentObj['infectionRate'])
         agentObjList.append(temp)
     f =   wPyCx.changePercentageOfInfectedAgents(0.8, agentObjList)
     for i in f:
@@ -123,7 +125,7 @@ def test_changePercentageOfmaskUsers():
 
     for agentObj in agentList:
         temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'],
-                     agentObj['antibact'], agentObj['socialDistance'], agentObj['infectionRate'])
+                    agentObj['antibact'], agentObj['socialDistance'], agentObj['infectionRate'])
         agentObjList.append(temp)
     f = wPyCx.changePercentageOfMaskUsers(0.4, agentObjList)
     for i in f:
@@ -141,7 +143,7 @@ def test_changePercentageOfSanitizerUsers():
 
     for agentObj in agentList:
         temp = agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'],
-                     agentObj['antibact'], agentObj['socialDistance'], agentObj['infectionRate'])
+                    agentObj['antibact'], agentObj['socialDistance'], agentObj['infectionRate'])
         agentObjList.append(temp)
     f = wPyCx.changePercentageOfSanitizerUsers(0.8, agentObjList)
     for i in f:
@@ -211,5 +213,70 @@ def test_sorted_population():
 
 
 
+def test_checkDistanceBetween():
+    mock_startInfecting = mock.Mock(name="startInfecting")
+    ag = agent('1','20', 'M', 'S', True, True, True, 1.0) 
+    ag.x = 500
+    ag.y = 500
+    ag2 = agent('2','20', 'M', 'S', True, True, True, 1.0) 
+    ag2.x = 505
+    ag2.y = 500
+    ag.startInfecting = mock_startInfecting
+    wPyCx.checkDistanceBetween(ag,ag2)
+    distanceBetween = np.linalg.norm([ag.x-ag2.x,ag.y-ag2.y], ord = 2)
+    assert distanceBetween <= 200
+    mock_startInfecting.assert_called()
 
 
+def test_update_one_agent():
+    from PIL import Image as img
+    import random
+    mock_checkDistance = mock.Mock(name="checkDistance")
+    mock_randomrand = mock.Mock(name="random", return_value = 3)
+    ag = agent('1','20', 'M', 'S', True, True, True, 1.0)
+    ag2 = agent('2','20', 'M', 'S', True, True, True, 1.0)
+    ag.x = 622
+    ag.y = 985
+    ag2.x = 625
+    ag2.y = 980
+    wPyCx.agentsList = [ag, ag2]
+    wPyCx.checkDistanceBetween = mock_checkDistance
+    random.randint = mock_randomrand
+    wPyCx.update_one_agent()
+    mock_checkDistance.assert_called()
+    assert ag.x != 622 and ag.y != 985 
+
+
+def test_update():
+    mock_update_one = mock.Mock(name="update_one")
+    wPyCx.update_one_agent = mock_update_one
+    wPyCx.agentsList = agentList
+    wPyCx.update()
+    mock_update_one.assert_called()
+
+
+"""
+    Testing if the return valule consists of 3 elements, which should be infection rates for the three arrays in sorted pop
+"""
+def test_getInfectionRateNetwork():
+    mock_update = mock.Mock(name="update")
+    mock_initialize = mock.Mock(name="initialize")
+    mock_observe = mock.Mock(name="observe")
+    mock_returnAvgRate = mock.Mock(name="returnAvgRate")
+
+    wPyCx.update = mock_update
+    wPyCx.initialize = mock_initialize
+    wPyCx.observe = mock_observe
+    wPyCx.returnAvgRate = mock_returnAvgRate
+
+    sorted_pop = np.array( [
+        [0.8, 0.5, 0.6, 70],
+        [0.5, 0.8, 0.2, 90],
+        [0.2, 0.3, 0.8, 50]
+    ])
+    f = wPyCx.getInfectionRateNetwork(sorted_pop)
+    mock_initialize.assert_called()
+    mock_observe.assert_called()
+    mock_update.assert_called()
+    mock_returnAvgRate.assert_called()
+    assert len(f) == 3

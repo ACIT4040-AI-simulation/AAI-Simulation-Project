@@ -10,9 +10,7 @@ import json
 import os
 import random
 from numpy.random import choice
-import itertools  
 
-from math import sqrt
 s_distance_standard = 0.004
 
 class evo_agent():
@@ -115,7 +113,7 @@ def main():
     agentObjList = []
 
     for agentObj in agenList:
-        temp = evo_agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'], agentObj['antibact'], agentObj['socialDistance'])
+        temp = evo_agent(agentObj['id_no'], agentObj['age'], agentObj['gender'], agentObj['status'], agentObj['mask'], agentObj['antibact'], agentObj['socialDistance'], 0)
         temp.x = random.random()
         temp.y = random.random()
         agentObjList.append(temp)
