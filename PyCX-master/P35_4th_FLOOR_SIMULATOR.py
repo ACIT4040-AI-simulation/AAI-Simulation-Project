@@ -8,6 +8,10 @@ Created on Sun Nov  22 23:30:47 2020
 import pycxsimulator
 from evo_agent import evo_agent as agent
 from PIL import Image as img
+from sys import platform as sys_pf
+if sys_pf == 'darwin':
+    import matplotlib
+    matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import axis
 import matplotlib.image as mpimg
@@ -152,7 +156,7 @@ def observe():
     explode = (0, 0, 0)
     ax2.cla()
     ax2.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
+            shadow=True, startangle=90, colors=['blue','red','green'])
     ax2.axis('equal') 
     
     ax3.plot(2, 1, 2)
