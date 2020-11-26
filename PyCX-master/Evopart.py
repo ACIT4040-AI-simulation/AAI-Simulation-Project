@@ -79,12 +79,7 @@ def fitness_score(sorted_arr, Infection_rate):
    return parent1_IR, parent2_IR
 
 def selectOptimalSolution(parents):
-    #parents=np.append(parent1,parent2)
-   
-    #parents = parents.reshape(-1,5)
-    parents=np.array(parents)
-    #print(parents)
-    
+    parents=np.array(parents)    
     min_infection_parent=parents[parents[:,4].argsort()]
     min_infection_parent= min_infection_parent[0:1, :]
     min_infection_parent= min_infection_parent[0].tolist()
@@ -95,8 +90,9 @@ def selectOptimalSolution(parents):
             optimal_solution.pop()
             optimal_solution.append(min_infection_parent)
     print ("The optimal Solution is:" ,optimal_solution)
-    #print np.array_str(optimal_solution, precision=2, suppress_small=True)
     return optimal_solution
+
+    
 def crossover(parents):
     parents=np.array(parents)
     parents = np.delete(parents, 4, axis=1)
