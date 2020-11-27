@@ -2,9 +2,13 @@
 Project repository for code and documentation
 
 
-To see what the SIR model looks like you can run EpidemicModel.py
+# How to run the code after unittests are added
+If you try to run the EvoAIModel.py normally the IDE might complain about "No module EvoSimulator ....", then in the terminal you can run it with the following command
+```
+python -m EvoSimulator.EvoAIModel.py
+```
 
-The development team is working with the sir.py and ODESolver.py file
+The Simulator still runs normally 
 
 # DEPENDENCIES
 Matplotlib
@@ -14,7 +18,7 @@ PIL
 
 
 # RANDOM JSON API
-https://next.json-generator.com/api/json/get/Nyak4bMHF, did also add a file if API does not work, some of the numbers are from VG
+https://next.json-generator.com/api/json was used to create the EvoSimulator/100_Agents.Json file
 
 # HOW TO WORK WITH BRANCHES
 
