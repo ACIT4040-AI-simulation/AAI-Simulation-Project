@@ -5,7 +5,6 @@ Created on Sat Nov  7 15:01:47 2020
 """
 
 import numpy as np
-from random import randrange
 import random
 from heapq import nsmallest
 

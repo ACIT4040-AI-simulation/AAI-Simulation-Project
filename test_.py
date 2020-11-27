@@ -4,7 +4,12 @@ import pytest
 import EvoSimulator.WithoutPyCx as wPyCx
 import EvoSimulator.Evopart as evopart
 import EvoSimulator.evo_agent as agent
+import EvoSimulator.EvoAIModel as model
 import numpy as np
+
+
+###########################   evo_agent.py      ###########
+
 
 @pytest.fixture()
 def startInfecting():
@@ -90,6 +95,86 @@ agentList = [ {
   },]
 
 
+############################      Evopart.py           ###############################################
+
+
+"""
+Checks the lenght of the radomarray to see if its euqal to 10
+"""
+def test_random_array_generator():
+    f = evopart.random_array_generator()
+    assert len(f) == 10
+
+"""
+Checks if the fitness score function is choosing the two parents with the lowest infection rates
+"""
+def test_fitness_score():
+
+    sortedPop = [
+        [0.3,0.4,0.3,100],
+        [0.2,0.7,0.1, 70],
+        [0.9,0.6,0.85, 90]
+    ]
+
+    Infectionrate = [3.50, 2.40, 1.4]
+    f = evopart.fitness_score(sortedPop, Infectionrate)
+    
+    assert f[0][4] == 1.4 and f[1][4] == 2.4
+
+
+def test_sorted_population():
+    mock_randomArray = mock.Mock(return_value = 5)
+    mock_sortedpop = mock.Mock(return_value = 5)
+    randomArray = evopart.random_array_generator()
+
+    f = evopart.sorted_population(randomArray)
+    f = mock_sortedpop 
+    randomArray = mock_randomArray
+
+
+    assert mock_sortedpop() == mock_randomArray()
+
+
+def test_selectOptimalSolution():
+    optimalSol = [[0.9, 0.6, 0.85, 90, 1.4]]
+    sortedPop = [
+        [0.3,0.4,0.3,100],
+        [0.2,0.7,0.1, 70],
+        [0.9,0.6,0.85, 90]
+    ]
+
+    Infectionrate = [3.50, 2.40, 1.4]
+    parents = evopart.fitness_score(sortedPop, Infectionrate)
+    f = evopart.selectOptimalSolution(parents)
+    assert f == optimalSol
+
+def test_for_crossover():
+    sortedPop = [
+        [0.3,0.4,0.3,100],
+        [0.2,0.7,0.1, 70],
+        [0.9,0.6,0.85, 90]
+    ]
+    Infectionrate = [3.50, 2.40, 1.4]
+    parents = evopart.fitness_score(sortedPop, Infectionrate)
+    f = evopart.crossover(parents)
+    assert len(f) == 8
+
+def test_mutation():
+    sortedPop = [
+        [0.3,0.4,0.3,100],
+        [0.2,0.7,0.1, 70],
+        [0.9,0.6,0.85, 90]
+    ]
+    Infectionrate = [3.50, 2.40, 1.4]
+    parents = evopart.fitness_score(sortedPop, Infectionrate)
+    offspring = evopart.crossover(parents)
+    f = evopart.mutation(offspring)
+    assert len(f) == 8
+
+
+
+############################      WithoutPyCx.py           ###############################################
+
 def test_changePercentageOfInfectedAgents():
     agentObjList = []
     infectedList = []
@@ -162,41 +247,7 @@ def test_upload_agents_json():
     assert len(maskUsageList) == 40
     assert len(sanitizerUsageList) == 80
 
-"""
-Checks the lenght of the radomarray to see if its euqal to 10
-"""
-def test_random_array_generator():
-    f = evopart.random_array_generator()
-    assert len(f) == 10
 
-"""
-Checks if the fitness score function is choosing the two parents with the lowest infection rates
-"""
-def test_fitness_score():
-
-    sortedPop = [
-        [0.3,0.4,0.3,100],
-        [0.2,0.7,0.1, 70],
-        [0.9,0.6,0.85, 90]
-    ]
-
-    Infectionrate = [3.50, 2.40, 1.4]
-    f = evopart.fitness_score(sortedPop, Infectionrate)
-    
-    assert f[0][4] == 1.4 and f[1][4] == 2.4
-
-
-def test_sorted_population():
-    mock_randomArray = mock.Mock(return_value = 5)
-    mock_sortedpop = mock.Mock(return_value = 5)
-    randomArray = evopart.random_array_generator()
-
-    f = evopart.sorted_population(randomArray)
-    f = mock_sortedpop 
-    randomArray = mock_randomArray
-
-
-    assert mock_sortedpop() == mock_randomArray()
 
 
 def test_initialize_agents():
@@ -292,7 +343,7 @@ def test_update():
 """
     Testing if the return valule consists of 3 elements, which should be infection rates for the three arrays in sorted pop
 """
-def test_getInfectionRateNetwork():
+def test_getInfectionRate_ABM():
     mock_update = mock.Mock(name="update")
     mock_initialize = mock.Mock(name="initialize")
     mock_observe = mock.Mock(name="observe")
@@ -308,7 +359,7 @@ def test_getInfectionRateNetwork():
         [0.5, 0.8, 0.2, 90],
         [0.2, 0.3, 0.8, 50]
     ])
-    f = wPyCx.getInfectionRateNetwork(sorted_pop)
+    f = wPyCx.getInfectionRate_ABM(sorted_pop)
     mock_initialize.assert_called()
     mock_observe.assert_called()
     mock_update.assert_called()
@@ -316,38 +367,41 @@ def test_getInfectionRateNetwork():
     assert len(f) == 3
 
 
-def test_selectOptimalSolution():
-    optimalSol = [[0.9, 0.6, 0.85, 90, 1.4]]
-    sortedPop = [
+#############################  EvoAIModel.py ################################
+
+def test_getFinalSolution():
+
+    random__array_gen = [
         [0.3,0.4,0.3,100],
         [0.2,0.7,0.1, 70],
         [0.9,0.6,0.85, 90]
     ]
 
-    Infectionrate = [3.50, 2.40, 1.4]
-    parents = evopart.fitness_score(sortedPop, Infectionrate)
-    f = evopart.selectOptimalSolution(parents)
-    assert f == optimalSol
+    mock_evo_sorted_pop = mock.Mock(name="sorted_pop", return_value=random__array_gen)
+    mock_sim_getInfectionRate_ABM_ = mock.Mock(name="getInfectionRate_ABM", return_value=[2.5, 3.5])
+    mock_evo_fitness = mock.Mock(name="fitness")
+    mock_evo_crossover_ = mock.Mock(name="crossover")
+    mock_evo_mutation_ = mock.Mock(name="mutation", return_value = 2)
+    mock_evo_select_optimal_solution_ = mock.Mock(name="optimalSol")
+    mock_random_generator_ = mock.Mock(name="random_gen", return_value= random__array_gen)
 
-def test_for_crossover():
-    sortedPop = [
-        [0.3,0.4,0.3,100],
-        [0.2,0.7,0.1, 70],
-        [0.9,0.6,0.85, 90]
-    ]
-    Infectionrate = [3.50, 2.40, 1.4]
-    parents = evopart.fitness_score(sortedPop, Infectionrate)
-    f = evopart.crossover(parents)
-    assert len(f) == 8
+    evopart.random_array_generator = mock_random_generator_
+    evopart.sorted_population = mock_evo_sorted_pop
+    evopart.fitness_score = mock_evo_fitness
+    evopart.crossover = mock_evo_crossover_
+    evopart.mutation = mock_evo_mutation_
+    evopart.selectOptimalSolution = mock_evo_select_optimal_solution_
+    wPyCx.getInfectionRate_ABM = mock_sim_getInfectionRate_ABM_
 
-def test_mutation():
-    sortedPop = [
-        [0.3,0.4,0.3,100],
-        [0.2,0.7,0.1, 70],
-        [0.9,0.6,0.85, 90]
-    ]
-    Infectionrate = [3.50, 2.40, 1.4]
-    parents = evopart.fitness_score(sortedPop, Infectionrate)
-    offspring = evopart.crossover(parents)
-    f = evopart.mutation(offspring)
-    assert len(f) == 8
+
+    f = model.getFinalSolution(evopart.random_array_generator())
+
+    mock_evo_sorted_pop.assert_called()
+    mock_evo_fitness.assert_called()
+    mock_evo_crossover_.assert_called()
+    mock_evo_mutation_.assert_called()
+    mock_evo_select_optimal_solution_.assert_called()
+    mock_sim_getInfectionRate_ABM_.assert_called()
+
+    assert f == 2
+    

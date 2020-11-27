@@ -6,9 +6,8 @@ Created on Fri Oct 30 13:34:11 2020
 @author: emanazab
 """
 
-import WithoutPyCx as sim
-import Evopart as evo
-import numpy as np
+import EvoSimulator.WithoutPyCx as sim
+import EvoSimulator.Evopart as evo
 
 new_mutated_offspring =[]
 population = evo.random_array_generator()
@@ -20,7 +19,7 @@ def getFinalSolution(selected_population):
     try:
         filtered_individuals=evo.sorted_population(selected_population)
         if(len(filtered_individuals) > 2):
-            totalInfectionRate= sim.getInfectionRateNetwork(filtered_individuals)
+            totalInfectionRate= sim.getInfectionRate_ABM(filtered_individuals)
             selected_parents= evo.fitness_score(filtered_individuals,totalInfectionRate)
             print(selected_parents)
             offsprings =evo.crossover(selected_parents)
@@ -28,7 +27,6 @@ def getFinalSolution(selected_population):
             optimized_solution= evo.selectOptimalSolution(selected_parents)
             return mutated_offspring
     except TypeError as e:
-        print("")
         pass
     
 

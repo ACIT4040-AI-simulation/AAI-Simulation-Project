@@ -177,7 +177,7 @@ def update():
 
 
 
-def getInfectionRateNetwork(sorted_pop):
+def getInfectionRate_ABM(sorted_pop):
     totalInfectionRate=[]
     sorted_pop_arr = sorted_pop.tolist()
     for i in range(len(sorted_pop_arr)):
